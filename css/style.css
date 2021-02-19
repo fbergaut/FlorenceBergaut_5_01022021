@@ -12,6 +12,11 @@
   font-size: .9rem;
   letter-spacing: .1rem;
   background: rgba(0, 0, 0, .2) !important;
+  padding: 1rem !important;
+}
+
+.navbar-brand img {
+  height: 2.5rem;
 }
 
 .navbar-nav li {
@@ -110,7 +115,38 @@ h5.card-title {
   cursor: zoom-in;
 }
 
+/*---------footer----------*/
 
+footer {
+  background-color: #f3e9f1;
+  color: rgb(104, 104, 104);
+  padding: 2rem 0
+}
+
+footer img {
+  height: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+footer a {
+  color: rgb(104, 104, 104);
+}
+
+footer .fab {
+  font-size: 1.6rem;
+  padding: .3rem;
+}
+
+footer .fab:hover,
+.list-inline-item > a:hover {
+  color: #8f5bfe;
+  text-decoration: none;
+}
+
+hr.socket {
+  border-top: .1rem solid #fff;
+  width: 100%;
+}
 
 /*!
  * Bootstrap v4.6.0 (https://getbootstrap.com/)
