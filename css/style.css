@@ -1,5 +1,6 @@
 @charset "UTF-8";
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&display=swap');
 
 /*---------Overrides----------*/
 
@@ -26,29 +27,90 @@
 
 .carousel-caption {
   position: absolute;
-  top: 38%;
-  text-transform: uppercase;
+  top: 25%;
+  text-align: start !important;
 }
 
 .carousel-caption h1 {
-  font-size: 3.8rem;
-  font-weight: 700;
+  font-size: .9rem;
+  text-transform: uppercase;
   letter-spacing: .3rem;
+  font-weight: 700;
   text-shadow: .1rem .1rem .8rem black;
   padding-bottom: 1rem;
 }
 
 .carousel-caption h3 {
-  font-size: 2rem;
+  font-family: 'Lora', serif;
+  font-size: 4rem;
   text-shadow: .1rem .1rem .5rem black;
   padding-bottom: 1.6rem;
 }
 
 .btn-lg {
-  border-width: medium !important;
   font-weight: 700 !important;
   border-radius: 0 !important;
 }
+
+/*---------headings----------*/
+
+h2.heading {
+  color: #495057;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: .4rem;
+  font-weight: 700;
+  padding: 5rem 0 .8rem 0;
+}
+
+h3.heading {
+  font-family: 'Lora', serif;
+  color: #495057;
+  font-size: 4rem;
+}
+
+.heading-underline {
+  width: 3rem;
+  height: .2rem;
+  background-color: #f3e9f1;
+  margin: 0 auto 4rem;
+}
+
+/*---------products----------*/
+
+.products {
+  padding: 5rem 0;
+}
+
+h5.card-title {
+  color: #000;
+}
+
+.productsLink {
+  text-decoration: none;
+  color: #000;
+}
+
+.productsLink:hover {
+  text-decoration: none;
+  color: #ff6600;
+}
+
+.bearProduct {
+  overflow: hidden;
+}
+
+.bearProduct img {
+  max-width: 100%;
+  transition: .5s ease;
+}
+
+.bearProduct img:hover {
+  transform: scale(1.1);
+  cursor: zoom-in;
+}
+
+
 
 /*!
  * Bootstrap v4.6.0 (https://getbootstrap.com/)
