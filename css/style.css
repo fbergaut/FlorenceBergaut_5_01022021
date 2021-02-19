@@ -20,9 +20,35 @@
 .navbar-dark .navbar-nav .nav-link .active,
 .navbar-dark .navbar-nav .nav-link:hover {
   color: #ff6600 !important;
-
 }
 
+/*---------carousel----------*/
+
+.carousel-caption {
+  position: absolute;
+  top: 38%;
+  text-transform: uppercase;
+}
+
+.carousel-caption h1 {
+  font-size: 3.8rem;
+  font-weight: 700;
+  letter-spacing: .3rem;
+  text-shadow: .1rem .1rem .8rem black;
+  padding-bottom: 1rem;
+}
+
+.carousel-caption h3 {
+  font-size: 2rem;
+  text-shadow: .1rem .1rem .5rem black;
+  padding-bottom: 1.6rem;
+}
+
+.btn-lg {
+  border-width: medium !important;
+  font-weight: 700 !important;
+  border-radius: 0 !important;
+}
 
 /*!
  * Bootstrap v4.6.0 (https://getbootstrap.com/)
