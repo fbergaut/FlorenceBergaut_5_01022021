@@ -59,6 +59,12 @@
 
 /*---------headings----------*/
 
+h1.heading {
+  font-family: 'Lora', serif;
+  color: #495057;
+  font-size: 2rem;
+}
+
 h2.heading {
   color: #495057;
   font-size: 1rem;
