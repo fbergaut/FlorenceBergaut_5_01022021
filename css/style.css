@@ -93,6 +93,10 @@ h3.heading {
   padding: 5rem 0;
 }
 
+.productImg {
+  padding-top: 9rem;
+}
+
 h5.card-title {
   color: #000;
 }
@@ -120,6 +124,27 @@ h5.card-title {
   transform: scale(1.1);
   cursor: zoom-in;
 }
+
+.miniImg {
+  display: flex;
+  padding-top: 1rem;
+  width: 100%;
+}
+
+.btn-outline-pink {
+  color: #04040c !important;
+  border-color: #04040c !important;
+}
+.btn-outline-pink:hover {
+  color: #04040c;
+  background-color: #f3e9f1;
+  border-color: #f3e9f1 !important;
+}
+.btn-outline-pink:focus, .btn-outline-pink.focus {
+  box-shadow: 0 0 0 0.2rem rgba(4, 4, 12, 0.5);
+}
+
+
 
 /*---------footer----------*/
 
