@@ -125,10 +125,19 @@ h5.card-title {
   cursor: zoom-in;
 }
 
+.mainImg {
+  cursor: zoom-in;
+}
+
 .miniImg {
   display: flex;
+  justify-content: space-between;
   padding-top: 1rem;
   width: 100%;
+}
+
+.blank  {
+  width: 4%;
 }
 
 .btn-outline-pink {
