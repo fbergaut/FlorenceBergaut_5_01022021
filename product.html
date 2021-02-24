@@ -80,42 +80,49 @@
               </div>
             </div>
           </div>
+          <!-- product info -->          
           <div class="col-12 col-lg-6">
-            <div>
+            <div class="wrapperHeading">
               <h1 class="heading">Ours en peluche</h1>
-              <div>
+              <a href="#" class="heartBtn">
                 <i class="fas fa-heart"></i>
+              </a>
+            </div>
+            <div class="text">
+              <p> Ce compagnon fidèle dont votre enfant a besoin pour l'accompagner au quotidien n'est pas seulement un jouet, c'est aussi son meilleur ami, son confident et surtout un personnage créé par ses soins, adapté à ses besoins. Découvrez également les grandes marques de peluches.</p>
+            </div>
+            <!-- product review -->  
+            <div class="reviewWrapper">
+              <i class="fas fa-star reviewBtn"></i>
+              <i class="fas fa-star reviewBtn"></i>
+              <i class="fas fa-star reviewBtn"></i>
+              <i class="fas fa-star reviewBtn"></i>
+              <i class="fas fa-star reviewBtn"></i>
+            </div>
+            <!-- product price --> 
+            <p class="price">24,90 €</p>
+            <!-- product color --> 
+            <div class="colorWrapper">
+              <select class="productColor" aria-label="Default select example">
+                <option class="productColorOption" selected>Choisir la couleur</option>
+                <option class="productColorOption" value="1">One</option>
+                <option class="productColorOption" value="2">Two</option>
+                <option class="productColorOption" value="3">Three</option>
+              </select>
+            </div>
+            <!-- product quantity + add to cart button -->            
+            <div class="wrapper">
+              <div class="wrapperQuantity">
+                <label for="quantity" class="hidden">Quantité</label>
+                  <input type="text" class="quantity" value="1" id="quantity" pattern="[0-9]*">
+                  <div class="wrapperBtn">
+                    <button type="button" class="quantityBtn"><i class="fas fa-sort-up"></i></button>
+                    <button type="button" class="quantityBtn"><i class="fas fa-sort-down"></i></button>
+                  </div>
               </div>
-            </div>
-            <p> Ce compagnon fidèle dont votre enfant a besoin pour l'accompagner au quotidien n'est pas seulement un jouet, c'est aussi son meilleur ami, son confident et surtout un personnage créé par ses soins, adapté à ses besoins. Découvrez également les grandes marques de peluches.</p>
-            <div class="">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <p>24,90 €</p>
-            <div>
-              <form>
-                <legend for="color">Couleur</legend>
-                  <fieldset>
-                    <input type="radio" id="huey" name="drone" value="huey" checked>
-                    <label for=""></label>
-                    <input type="radio" id="huey" name="drone" value="huey">
-                    <label for=""></label>
-                    <input type="radio" id="huey" name="drone" value="huey">
-                    <label for=""></label>
-                  </fieldset>
-              </form>
-            </div>
-            <div>
-              <label for="quantity">Quantité</label>
-                <input type="text" value="1" id="quantity" pattern="[0-9]*">
-                <button type="button"><i class="fas fa-sort-up"></i></button>
-                <button type="button"><i class="fas fa-sort-down"></i></button>
-            </div>
-            <div>
-              <button type="submit" class="btn btn-outline-pink btn-lg rounded-0">Ajouter au panier</button>
+              <div class="">
+                <button type="submit" class="btn btn-outline-pink btn-lg rounded-0 addCartBtn">Ajouter au panier</button>
+              </div>
             </div>
           </div>
           
