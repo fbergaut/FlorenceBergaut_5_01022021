@@ -59,6 +59,12 @@
 
 /*---------headings----------*/
 
+h1.heading {
+  font-family: 'Lora', serif;
+  color: #495057;
+  font-size: 2rem;
+}
+
 h2.heading {
   color: #495057;
   font-size: 1rem;
@@ -85,6 +91,10 @@ h3.heading {
 
 .products {
   padding: 5rem 0;
+}
+
+.productImg {
+  padding-top: 9rem;
 }
 
 h5.card-title {
@@ -114,6 +124,149 @@ h5.card-title {
   transform: scale(1.1);
   cursor: zoom-in;
 }
+
+.mainImg {
+  overflow: hidden;
+}
+
+.mainImg img {
+  max-width: 100%;
+  transition: .5s ease;
+}
+
+.mainImg img:hover {
+  transform: scale(1.1);
+  cursor: zoom-in;
+}
+
+.miniImg {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 1rem;
+  width: 100%;
+}
+
+.miniImgWrapper {
+  background-color: #f3e9f1;
+}
+
+.miniImgWrapper img {
+  opacity: 1;
+  -webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+
+.miniImgWrapper:hover img {
+	opacity: .5;
+}
+
+.blank  {
+  width: 4%;
+}
+
+.btn-outline-pink {
+  color: #04040c !important;
+  border-color: #04040c !important;
+}
+.btn-outline-pink:hover {
+  color: #04040c;
+  background-color: #f3e9f1;
+  border-color: #f3e9f1 !important;
+}
+.btn-outline-pink:focus {
+  box-shadow: 0 0 0 0.2rem rgba(4, 4, 12, 0.5);
+  outline: none;
+}
+
+.price {
+  font-size: 2rem;
+}
+
+.wrapper {
+  display: flex;
+}
+
+.wrapperHeading {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 2rem;
+}
+
+.heartBtn {
+  color: #f3e9f1;
+  font-size: 1.5rem;
+}
+
+.heartBtn:hover, .reviewBtn:hover {
+  color: #ff6600;
+}
+
+.text {
+  padding-bottom: 1rem;
+}
+
+.reviewWrapper {
+  color: #f3e9f1;
+  padding-bottom: 1rem;
+}
+
+.colorWrapper {
+  padding-bottom: 2rem;
+}
+
+.productColor {
+  padding: 1rem;
+  font-size: 1rem;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.productColorOption {
+  font-weight: 500;
+}
+
+.productColorOption:hover {
+  background-color: #f3e9f1 !important;
+}
+
+.wrapperBtn {
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapperQuantity {
+  display: flex;
+  border-bottom: solid .1rem black;
+  height: 3rem;
+  margin-right: 2rem;
+}
+
+.quantity {
+  border: none;
+}
+
+.quantity:focus-visible {
+  outline: none;
+}
+
+.quantityBtn {
+  border: none;
+  background: none;
+  height: 1rem;
+}
+
+.addCartBtn {
+  text-transform: uppercase;
+  font-size: 1rem !important;
+  padding: .7rem !important;
+  width: 15rem;
+}
+
+.hidden {
+  display: none;
+}
+
+
 
 /*---------footer----------*/
 
