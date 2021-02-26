@@ -301,6 +301,137 @@ hr.socket {
   width: 100%;
 }
 
+/*---------cart.html----------*/
+
+.cart {
+  margin: 10rem 0 6rem 0;
+}
+
+.productCartWrapper {
+  display: flex;
+
+}
+
+.headingCart {
+  color: #000;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: .1rem;
+}
+
+.infoCartWrapper {
+  width: 100%;
+}
+
+.firstLineCart, .secondtLineCart {
+  display: flex;
+  justify-content: space-between;
+}
+
+.imgCartWrapper {
+  max-width: 13%;
+  padding-right: 1rem;
+}
+
+.imgCart {
+  max-width: 100%;
+}
+
+.productName {
+   width: 60%;
+}
+
+.productName_link:hover {
+  text-decoration: none;
+}
+
+.productName_heading {
+  color: #535353;
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.productName_color {
+  color: #535353;
+  font-size: 1rem;
+}
+
+.productQuantityCart {
+  width: 6rem;
+  padding: .6rem 1rem;
+  font-size: 1rem;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.productQuantityOption {
+  font-weight: 500;
+}
+
+.deleteCartBtn, .moveCartBtn {
+  border: none;
+  background: none;
+  color: #bfbfbf;
+}
+
+.deleteCartBtn:hover, .moveCartBtn:hover {
+  color: #ff6600;
+}
+
+.deleteCartBtn::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f1f8";
+  color: #bfbfbf;
+  padding-right: .2rem;
+}
+
+.moveCartBtn::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f004";
+  color: #bfbfbf;
+  padding-right: .2rem;
+}
+
+.cartPrice {
+  font-weight: 700;
+}
+
+.headingCart {
+  padding-bottom: 2rem;
+}
+
+.totalWrapper {
+  background: #f3e9f1;
+  padding: 2rem;
+}
+
+hr.strokeWhite {
+  border-top: .1rem solid rgb(0, 0, 0);
+  width: 100%;
+}
+
+.sous-total, .delivery, .totalTva {
+  display: flex;
+  justify-content: space-between;
+}
+
+.totalTva {
+  padding-bottom: 1rem;
+}
+
+.btn-outline-white {
+  width: 100%;
+  color: #04040c !important;
+  border-color: #04040c !important;
+}
+
+.btn-outline-white:hover {
+  background: white;
+}
+
 /*!
  * Bootstrap v4.6.0 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors
