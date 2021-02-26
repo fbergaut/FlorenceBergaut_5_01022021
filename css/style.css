@@ -408,7 +408,7 @@ hr.socket {
   padding: 2rem;
 }
 
-hr.strokeWhite {
+hr.strokeBlack {
   border-top: .1rem solid rgb(0, 0, 0);
   width: 100%;
 }
@@ -432,6 +432,14 @@ hr.strokeWhite {
   background: white;
 }
 
+/*---------orderConfirmation.html----------*/
+
+h2.thankYou {
+  color: #000;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: .1rem;
+}
 /*!
  * Bootstrap v4.6.0 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors
