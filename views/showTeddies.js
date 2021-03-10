@@ -68,7 +68,7 @@ let bears = getTeddies()
           // On affiche le nom des Teddies ainsi que leurs prix
 
           h5TeddyName.innerHTML = bear.name;
-          pTeddyPrice.innerHTML = bear.price.toPrecision(4) + " €";
+          pTeddyPrice.innerHTML = bear.price + " €";
 
           // On ajoute les élments au DOM pour créer la partie présentation de produit sur index.html
 
