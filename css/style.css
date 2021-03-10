@@ -116,7 +116,9 @@ h5.card-title {
 }
 
 .bearProduct img {
-  max-width: 100%;
+  width: 270px;
+  height: 300px;
+  object-fit: cover;
   transition: .5s ease;
 }
 
