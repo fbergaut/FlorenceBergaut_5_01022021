@@ -132,7 +132,9 @@ h5.card-title {
 }
 
 .mainImg img {
-  max-width: 100%;
+  width: 550px;
+  height: 675px;
+  object-fit: cover;
   transition: .5s ease;
 }
 
@@ -197,6 +199,7 @@ h5.card-title {
 .heartBtn {
   color: #f3e9f1;
   font-size: 1.5rem;
+  cursor: pointer;
 }
 
 .heartBtn:hover, .reviewBtn:hover {
