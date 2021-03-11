@@ -17,7 +17,7 @@
 //   .then((response) => alert(JSON.stringify(response)))
 //   .catch((error) => alert("Erreur : " + error));
 
-// Connecte à l'API et récupère tous les teddies de la base
+// On se connecte à l'API et récupère tous les teddies de la base
 
 async function getTeddies(){
     let rep = await fetch("http://localhost:3000/api/teddies", {
@@ -63,15 +63,12 @@ let bears = getTeddies()
         imgProduct.src = bear.imageUrl;
         imgProduct.alt = bear.name;
 
-        // imgProduct.style.width = '220px';
-        // imgProduct.style.height = "270px";
-
         // On affiche le nom des Teddies ainsi que leurs prix
 
         h5TeddyName.innerHTML = bear.name;
         pTeddyPrice.innerHTML = bear.price + " €";
 
-        // On ajoute les élments au DOM pour créer la partie présentation de produit sur index.html
+        // On ajoute les éléments au DOM pour créer la partie présentation de produit sur index.html
 
         bears.appendChild(divRowProduct);
 
@@ -111,7 +108,7 @@ let bears = getTeddies()
       });
 
 
-    })
+    });
 
 
 
