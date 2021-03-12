@@ -15,7 +15,7 @@ let bears = getTeddies()
       let bears = document.getElementById("productPage");
       // On stock les datas du array[0] dans la variable norbert
       let norbert = data[0];
-      console.log(norbert);
+      // console.log(norbert);
 
       /*------------------------MainImg-------------------------*/
 
@@ -177,7 +177,7 @@ let bears = getTeddies()
       let colorsOption = norbert.colors;
 
       colorsOption.forEach((color) => {
-        console.log(color);
+        // console.log(color);
         const optionProductColor = document.createElement("option");
         optionProductColor.setAttribute("class", "productColorOption");
         optionProductColor.innerHTML = color;

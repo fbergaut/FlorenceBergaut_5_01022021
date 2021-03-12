@@ -22,7 +22,7 @@
 <body data-spy="scroll" data-target="#navbarResponsive">
 
 <!-- Header -->
-   <div class="row">
+   <div class="row" id="productPage">
 <!-- Navigation -->
       <nav class="col navbar navbar-expand-md navbar-dark bg-dark fixed-top">
          <a class="navbar-brand" href="index.html">
@@ -46,83 +46,6 @@
          </div>
       </nav>
    </div>
-
-<!-- product image -->
-   <div class="container productImg">
-      <div class="row">
-          <div class="col-lg-6">
-            <div class="mainImg">
-              <img class="card-img-top" src="src/img/products/ours1_550x675.jpg"  alt="ours1">
-            </div>
-            <div class="miniImg">
-              <div class="miniImgWrapper">
-                <a href="#">
-                    <img class="card-img-top" src="src/img/products/ours1_200x270.jpg"  alt="mini ours1">
-                </a>
-              </div>
-              <div class="blank"></div>
-              <div class="miniImgWrapper">
-                <a href="#">
-                    <img class="card-img-top" src="src/img/products/ours1_200x270.jpg"  alt="mini ours2">
-                </a>
-              </div>
-              <div class="blank"></div>
-              <div class="miniImgWrapper">
-                <a href="#">
-                    <img class="card-img-top" src="src/img/products/ours1_200x270.jpg"  alt="mini ours3">
-                </a>
-              </div>
-            </div>
-          </div>
-          <!-- product info -->          
-          <div class="col-12 col-lg-6">
-            <div class="wrapperHeading">
-              <h1 class="heading">Ours en peluche</h1>
-              <a href="#" class="heartBtn">
-                <i class="fas fa-heart"></i>
-              </a>
-            </div>
-            <div class="text">
-              <p> Ce compagnon fidèle dont votre enfant a besoin pour l'accompagner au quotidien n'est pas seulement un jouet, c'est aussi son meilleur ami, son confident et surtout un personnage créé par ses soins, adapté à ses besoins. Découvrez également les grandes marques de peluches.</p>
-            </div>
-            <!-- product review -->  
-            <div class="reviewWrapper">
-              <i class="fas fa-star reviewBtn"></i>
-              <i class="fas fa-star reviewBtn"></i>
-              <i class="fas fa-star reviewBtn"></i>
-              <i class="fas fa-star reviewBtn"></i>
-              <i class="fas fa-star reviewBtn"></i>
-            </div>
-            <!-- product price --> 
-            <p class="price">24,90 €</p>
-            <!-- product color --> 
-            <div class="colorWrapper">
-              <select class="productColor" aria-label="Default select example">
-                <option class="productColorOption" selected>Choisir la couleur</option>
-                <option class="productColorOption" value="1">Blanc</option>
-                <option class="productColorOption" value="2">Noir</option>
-                <option class="productColorOption" value="3">Marron</option>
-              </select>
-            </div>
-            <!-- product quantity + add to cart button -->            
-            <div class="wrapper">
-              <div class="wrapperQuantity">
-                <label for="quantity" class="hidden">Quantité</label>
-                  <input type="text" class="quantity" value="1" id="quantity" pattern="[0-9]*">
-                  <div class="wrapperBtn">
-                    <button type="button" class="quantityBtn"><i class="fas fa-sort-up"></i></button>
-                    <button type="button" class="quantityBtn"><i class="fas fa-sort-down"></i></button>
-                  </div>
-              </div>
-              <div class="">
-                <button type="submit" class="btn btn-outline-pink btn-lg rounded-0 addCartBtn">Ajouter au panier</button>
-              </div>
-            </div>
-          </div>
-          
-      </div>
-    </div>
-
 
 <!-- Slider Products -->
    <div id="products" class="container">
@@ -265,6 +188,7 @@
 <!-- Optional JavaScript -->
 
 <script type="text/javascript" src="src/js/carousel.js"></script>
+<script src="views\showArnold.js"></script>
 
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
