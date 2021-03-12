@@ -12,155 +12,178 @@ async function getTeddies() {
 
 let bears = getTeddies()
     .then(data =>{
-      let bears = document.getElementById("products");
-      data.map((bear) => {
-        /*------------------------MainImg-------------------------*/
+      let bears = document.getElementById("productPage");
+      // On stock les datas du array[0] dans la variable norbert
+      let norbert = data[0];
+      console.log(norbert);
 
-        // On crée les éléments html nécessaire afin d'acceuillir l'<img>
+      /*------------------------MainImg-------------------------*/
 
-        const divProductImg = document.createElement("div");
-        const divRowProductImg = document.createElement("div");
-        const divColProductImg = document.createElement("div");
-        const divMainImg = document.createElement("div");
-        const mainImg = document.createElement("img");
+      // On crée les éléments html nécessaire afin d'acceuillir l'<img>
 
-        // On attribut des noms de class à tous les éléments créés afin de les stylisés
+      const divProductImg = document.createElement("div");
+      const divRowProductImg = document.createElement("div");
+      const divColProductImg = document.createElement("div");
+      const divMainImg = document.createElement("div");
+      const mainImg = document.createElement("img");
 
-        divProductImg.setAttribute("class", "container productImg");
-        divRowProductImg.setAttribute("class", "row");
-        divColProductImg.setAttribute("class", "col-lg-6");
-        divMainImg.setAttribute("class", "mainImg");
-        mainImg.setAttribute("class", "card-img-top");
+      // On attribut des noms de class à tous les éléments créés afin de les stylisés
 
-        // On définit la source de l'élément <img> à imageUrl et l'attribut alt est renseigné avec le nom du produit
+      divProductImg.setAttribute("class", "container productImg");
+      divRowProductImg.setAttribute("class", "row");
+      divColProductImg.setAttribute("class", "col-lg-6");
+      divMainImg.setAttribute("class", "mainImg");
+      mainImg.setAttribute("class", "card-img-top");
 
-        mainImg.src = bear.imageUrl;
-        mainImg.alt = bear.name;
+      // On définit la source de l'élément <img> à imageUrl et l'attribut alt est renseigné avec le nom du produit
 
-        // On ajoute les éléments au DOM
+      mainImg.src = norbert.imageUrl;
+      mainImg.alt = norbert.name;
 
-        bears.appendChild(divProductImg);
-        divProductImg.appendChild(divRowProductImg);
-        divRowProductImg.appendChild(divColProductImg);
-        divColProductImg.appendChild(divMainImg);
-        divMainImg.appendChild(mainImg);
+      // On ajoute les éléments au DOM
 
-        /*------------------------Infos Produit-------------------------*/
+      bears.appendChild(divProductImg);
+      divProductImg.appendChild(divRowProductImg);
+      divRowProductImg.appendChild(divColProductImg);
+      divColProductImg.appendChild(divMainImg);
+      divMainImg.appendChild(mainImg);
 
-        // On crée les éléments html nécessaire afin d'acceuillir les infos produit
+      /*------------------------Infos Produit-------------------------*/
 
-        const divColProductInfo = document.createElement("div");
-        const divWrapperHeading = document.createElement("div");
-        const h1Info = document.createElement("h1");
-        const aHeartBtn = document.createElement("a");
-        const iconHeart = document.createElement("i");
-        const divDescriptionProduct = document.createElement("div");
-        const divPriceProduct = document.createElement("p");
-        const divColorWrapper = document.createElement("div");
-        const selectColor = document.createElement("select");
-        const divQuantity = document.createElement("div");
-        const divQuantityWrapper = document.createElement("div");
-        const labelQuantity = document.createElement("label");
-        const inputQuantity = document.createElement("input");
-        const divBtnWrapper = document.createElement("div");
-        const buttonUp = document.createElement("button");
-        const iconUp = document.createElement("i");
-        const buttonDown = document.createElement("button");
-        const iconDown = document.createElement("i");
-        const divSubmitBtnWrapper = document.createElement("div");
-        const buttonSubmit = document.createElement("button");
+      // On crée les éléments html nécessaire afin d'acceuillir les infos produit
 
-        // On attribut des noms de class à tous les éléments créés afin de les stylisés
+      const divColProductInfo = document.createElement("div");
+      const divWrapperHeading = document.createElement("div");
+      const h1Info = document.createElement("h1");
+      const aHeartBtn = document.createElement("a");
+      const iconHeart = document.createElement("i");
+      const divDescriptionProduct = document.createElement("div");
+      const divReviewWrapper = document.createElement("div");
+      const divPriceProduct = document.createElement("p");
+      const divColorWrapper = document.createElement("div");
+      const selectColor = document.createElement("select");
+      const optionChooseColor = document.createElement("option");
+      const divQuantity = document.createElement("div");
+      const divQuantityWrapper = document.createElement("div");
+      const labelQuantity = document.createElement("label");
+      const inputQuantity = document.createElement("input");
+      const divBtnWrapper = document.createElement("div");
+      const buttonUp = document.createElement("button");
+      const iconUp = document.createElement("i");
+      const buttonDown = document.createElement("button");
+      const iconDown = document.createElement("i");
+      const divSubmitBtnWrapper = document.createElement("div");
+      const buttonSubmit = document.createElement("button");
 
-        divColProductInfo.setAttribute("class", "col-12 col-lg-6");
-        divWrapperHeading.setAttribute("class", "wrapperHeading");
-        h1Info.setAttribute("class", "heading");
-        aHeartBtn.setAttribute("class", "heartBtn");
-        iconHeart.setAttribute("class", "fas fa-heart");
-        divDescriptionProduct.setAttribute("class", "text");
-        divPriceProduct.setAttribute("class", "price");
-        divColorWrapper.setAttribute("class", "colorWrapper");
-        selectColor.setAttribute("class", "productColor");
-        divQuantity.setAttribute("class", "wrapper");
-        divQuantityWrapper.setAttribute("class", "wrapperQuantity");
-        labelQuantity.setAttribute("class", "hidden");
-        inputQuantity.setAttribute("class", "quantity");
-        divBtnWrapper.setAttribute("class", "wrapperBtn");
-        buttonUp.setAttribute("class", "quantityBtn");
-        iconUp.setAttribute("class", "fas fa-sort-up");
-        buttonDown.setAttribute("class", "quantityBtn");
-        iconDown.setAttribute("class", "fas fa-sort-down");
-        buttonSubmit.setAttribute(
-          "class",
-          "btn btn-outline-pink btn-lg rounded-0 addCartBtn"
-        );
+      // On attribut des noms de class à tous les éléments créés afin de les stylisés
 
-        // On attribut "for" à l'élément <label>
+      divColProductInfo.setAttribute("class", "col-12 col-lg-6");
+      divWrapperHeading.setAttribute("class", "wrapperHeading");
+      h1Info.setAttribute("class", "heading");
+      aHeartBtn.setAttribute("class", "heartBtn");
+      iconHeart.setAttribute("class", "fas fa-heart");
+      divDescriptionProduct.setAttribute("class", "text");
+      divReviewWrapper.setAttribute("class", "reviewWrapper");
+      divPriceProduct.setAttribute("class", "price");
+      divColorWrapper.setAttribute("class", "colorWrapper");
+      selectColor.setAttribute("class", "productColor");
+      optionChooseColor.setAttribute("class", "productColorOption");
+      divQuantity.setAttribute("class", "wrapper");
+      divQuantityWrapper.setAttribute("class", "wrapperQuantity");
+      labelQuantity.setAttribute("class", "hidden");
+      inputQuantity.setAttribute("class", "quantity");
+      divBtnWrapper.setAttribute("class", "wrapperBtn");
+      buttonUp.setAttribute("class", "quantityBtn");
+      iconUp.setAttribute("class", "fas fa-sort-up");
+      buttonDown.setAttribute("class", "quantityBtn");
+      iconDown.setAttribute("class", "fas fa-sort-down");
+      buttonSubmit.setAttribute(
+        "class",
+        "btn btn-outline-pink btn-lg rounded-0 addCartBtn"
+      );
 
-        labelQuantity.setAttribute("for", "quantity");
+      // On attribut "for" à l'élément <label>
 
-        // On attribut "type", "value", "id", "pattern" à l'élément <input>
+      optionChooseColor.setAttribute("selected", true);
 
-        inputQuantity.setAttribute("type", "text");
-        inputQuantity.setAttribute("value", "1");
-        inputQuantity.setAttribute("id", "quantity");
-        inputQuantity.setAttribute("pattern", "[0-9]*");
+      // On attribut "for" à l'élément <label>
 
-        // On attribut "type" aux éléments <button> de l'input
+      labelQuantity.setAttribute("for", "quantity");
 
-        buttonUp.setAttribute("type", "button");
-        buttonDown.setAttribute("type", "button");
+      // On attribut "type", "value", "id", "pattern" à l'élément <input>
 
-        // On attribut "type" à l'élément <button> du formulaire
+      inputQuantity.setAttribute("type", "text");
+      inputQuantity.setAttribute("value", "1");
+      inputQuantity.setAttribute("id", "quantity");
+      inputQuantity.setAttribute("pattern", "[0-9]*");
 
-        buttonSubmit.setAttribute("type", "submit");
+      // On attribut "type" aux éléments <button> de l'input
 
-        // On affiche les infos produit
+      buttonUp.setAttribute("type", "button");
+      buttonDown.setAttribute("type", "button");
 
-        h1Info.innerHTML = bear.name;
-        divDescriptionProduct.innerHTML = bear.description;
-        divPriceProduct.innerHTML = bear.price + " €";
+      // On attribut "type" à l'élément <button> du formulaire
 
-        labelQuantity.innerHTML = "Quantité";
-        buttonSubmit.innerHTML = "Ajouter au panier";
+      buttonSubmit.setAttribute("type", "submit");
 
-        // On ajoute les éléments au DOM pour créer la partie présentation de produit sur index.html
+      // On affiche les infos produit
 
-        divRowProductImg.appendChild(divColProductInfo);
-        divColProductInfo.appendChild(divWrapperHeading);
-        divWrapperHeading.appendChild(h1Info);
-        divWrapperHeading.appendChild(aHeartBtn);
-        aHeartBtn.appendChild(iconHeart);
+      h1Info.innerHTML = norbert.name;
+      divDescriptionProduct.innerHTML = norbert.description;
+      divPriceProduct.innerHTML = norbert.price + " €";
 
-        divColProductInfo.appendChild(divDescriptionProduct);
-        divColProductInfo.appendChild(divPriceProduct);
-        divColProductInfo.appendChild(divColorWrapper);
-        divColorWrapper.appendChild(selectColor);
+      optionChooseColor.innerHTML = "Choisir la couleur";
+      labelQuantity.innerHTML = "Quantité";
+      buttonSubmit.innerHTML = "Ajouter au panier";
 
-        divColProductInfo.appendChild(divQuantity);
-        divQuantity.appendChild(divQuantityWrapper);
-        divQuantityWrapper.appendChild(labelQuantity);
-        divQuantityWrapper.appendChild(inputQuantity);
-        divQuantityWrapper.appendChild(divBtnWrapper);
-        divBtnWrapper.appendChild(buttonUp);
-        buttonUp.appendChild(iconUp);
-        divBtnWrapper.appendChild(buttonDown);
-        buttonDown.appendChild(iconDown);
+      // On ajoute les éléments au DOM pour créer la partie présentation de produit sur index.html
 
-        divQuantity.appendChild(divSubmitBtnWrapper);
-        divSubmitBtnWrapper.appendChild(buttonSubmit);
+      divRowProductImg.appendChild(divColProductInfo);
+      divColProductInfo.appendChild(divWrapperHeading);
+      divWrapperHeading.appendChild(h1Info);
+      divWrapperHeading.appendChild(aHeartBtn);
+      aHeartBtn.appendChild(iconHeart);
+
+      divColProductInfo.appendChild(divDescriptionProduct);
+      divColProductInfo.appendChild(divReviewWrapper);
+      divColProductInfo.appendChild(divPriceProduct);
+      divColProductInfo.appendChild(divColorWrapper);
+      divColorWrapper.appendChild(selectColor);
+      selectColor.appendChild(optionChooseColor);
+
+      divColProductInfo.appendChild(divQuantity);
+      divQuantity.appendChild(divQuantityWrapper);
+      divQuantityWrapper.appendChild(labelQuantity);
+      divQuantityWrapper.appendChild(inputQuantity);
+      divQuantityWrapper.appendChild(divBtnWrapper);
+      divBtnWrapper.appendChild(buttonUp);
+      buttonUp.appendChild(iconUp);
+      divBtnWrapper.appendChild(buttonDown);
+      buttonDown.appendChild(iconDown);
+
+      divQuantity.appendChild(divSubmitBtnWrapper);
+      divSubmitBtnWrapper.appendChild(buttonSubmit);
+
+      // On crée une boucle pour créer les <i> (étoiles) de reviewWrapper
+
+      for (let i = 0; i <= 4; i++) {
+        const iconReviewBtn = document.createElement("i");
+        iconReviewBtn.setAttribute("class", "fas fa-star reviewBtn");
+        divReviewWrapper.appendChild(iconReviewBtn);
+      }
+
+      // On affiche les options de couleurs
+
+      let colorsOption = norbert.colors;
+
+      colorsOption.forEach((color) => {
+        console.log(color);
+        const optionProductColor = document.createElement("option");
+        optionProductColor.setAttribute("class", "productColorOption");
+        optionProductColor.innerHTML = color;
+        selectColor.appendChild(optionProductColor);
       });
-});
+      
+    });
 
 
-// On affiche les options de couleurs
-
-        // function afficherLesCouleur (bears) {
-        //     for (let i = 0; (i < bear.colors.lenght); i++) {
-        //       const optionColor = document.createElement("option");
-        //       optionColor.setAttribute("class", "productColorOption");
-        //       selectColor.appendChild(optionColor);
-        //     }
-        // };
-
-        // afficherLesCouleur();

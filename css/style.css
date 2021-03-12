@@ -211,8 +211,11 @@ h5.card-title {
 }
 
 .reviewWrapper {
+  width: 110px;
   color: #f3e9f1;
   padding-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .colorWrapper {
