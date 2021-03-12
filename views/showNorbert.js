@@ -58,12 +58,11 @@ let bears = getTeddies()
       const aHeartBtn = document.createElement("a");
       const iconHeart = document.createElement("i");
       const divDescriptionProduct = document.createElement("div");
-
       const divReviewWrapper = document.createElement("div");
-
       const divPriceProduct = document.createElement("p");
       const divColorWrapper = document.createElement("div");
       const selectColor = document.createElement("select");
+      const optionChooseColor = document.createElement("option");
       const divQuantity = document.createElement("div");
       const divQuantityWrapper = document.createElement("div");
       const labelQuantity = document.createElement("label");
@@ -84,12 +83,11 @@ let bears = getTeddies()
       aHeartBtn.setAttribute("class", "heartBtn");
       iconHeart.setAttribute("class", "fas fa-heart");
       divDescriptionProduct.setAttribute("class", "text");
-
       divReviewWrapper.setAttribute("class", "reviewWrapper");
-
       divPriceProduct.setAttribute("class", "price");
       divColorWrapper.setAttribute("class", "colorWrapper");
       selectColor.setAttribute("class", "productColor");
+      optionChooseColor.setAttribute("class", "productColorOption");
       divQuantity.setAttribute("class", "wrapper");
       divQuantityWrapper.setAttribute("class", "wrapperQuantity");
       labelQuantity.setAttribute("class", "hidden");
@@ -103,6 +101,10 @@ let bears = getTeddies()
         "class",
         "btn btn-outline-pink btn-lg rounded-0 addCartBtn"
       );
+
+      // On attribut "for" à l'élément <label>
+
+      optionChooseColor.setAttribute("selected", true);
 
       // On attribut "for" à l'élément <label>
 
@@ -130,6 +132,7 @@ let bears = getTeddies()
       divDescriptionProduct.innerHTML = norbert.description;
       divPriceProduct.innerHTML = norbert.price + " €";
 
+      optionChooseColor.innerHTML = "Choisir la couleur";
       labelQuantity.innerHTML = "Quantité";
       buttonSubmit.innerHTML = "Ajouter au panier";
 
@@ -142,12 +145,11 @@ let bears = getTeddies()
       aHeartBtn.appendChild(iconHeart);
 
       divColProductInfo.appendChild(divDescriptionProduct);
-
       divColProductInfo.appendChild(divReviewWrapper);
-
       divColProductInfo.appendChild(divPriceProduct);
       divColProductInfo.appendChild(divColorWrapper);
       divColorWrapper.appendChild(selectColor);
+      selectColor.appendChild(optionChooseColor);
 
       divColProductInfo.appendChild(divQuantity);
       divQuantity.appendChild(divQuantityWrapper);
@@ -164,8 +166,6 @@ let bears = getTeddies()
 
       // On crée une boucle pour créer les <i> (étoiles) de reviewWrapper
 
-      
-
       for (let i = 0; i <= 4; i++) {
         const iconReviewBtn = document.createElement("i");
         iconReviewBtn.setAttribute("class", "fas fa-star reviewBtn");
@@ -175,15 +175,15 @@ let bears = getTeddies()
       // On affiche les options de couleurs
 
       let colorsOption = norbert.colors;
-      console.log(colorsOption);
 
-      function afficherLesCouleur() {
-        let productColor = document.querySelector(".productColor");
-        colorsOption.forEach((indice) => {
-          productColor.options[indice] = new Option(indice);
-        });
-      }
-      console.log(afficherLesCouleur(norbert));
+      colorsOption.forEach((color) => {
+        console.log(color);
+        const optionProductColor = document.createElement("option");
+        optionProductColor.setAttribute("class", "productColorOption");
+        optionProductColor.innerHTML = color;
+        selectColor.appendChild(optionProductColor);
+      });
+      
     });
 
 
