@@ -13,6 +13,7 @@ async function getTeddies() {
 let bears = getTeddies()
     .then(data =>{
       let bears = document.getElementById("productPage");
+      // On stock les datas du array[0] dans la variable norbert
       let norbert = data[0];
       console.log(norbert);
 
@@ -57,6 +58,9 @@ let bears = getTeddies()
       const aHeartBtn = document.createElement("a");
       const iconHeart = document.createElement("i");
       const divDescriptionProduct = document.createElement("div");
+
+      const divReviewWrapper = document.createElement("div");
+
       const divPriceProduct = document.createElement("p");
       const divColorWrapper = document.createElement("div");
       const selectColor = document.createElement("select");
@@ -80,6 +84,9 @@ let bears = getTeddies()
       aHeartBtn.setAttribute("class", "heartBtn");
       iconHeart.setAttribute("class", "fas fa-heart");
       divDescriptionProduct.setAttribute("class", "text");
+
+      divReviewWrapper.setAttribute("class", "reviewWrapper");
+
       divPriceProduct.setAttribute("class", "price");
       divColorWrapper.setAttribute("class", "colorWrapper");
       selectColor.setAttribute("class", "productColor");
@@ -135,6 +142,9 @@ let bears = getTeddies()
       aHeartBtn.appendChild(iconHeart);
 
       divColProductInfo.appendChild(divDescriptionProduct);
+
+      divColProductInfo.appendChild(divReviewWrapper);
+
       divColProductInfo.appendChild(divPriceProduct);
       divColProductInfo.appendChild(divColorWrapper);
       divColorWrapper.appendChild(selectColor);
@@ -152,21 +162,28 @@ let bears = getTeddies()
       divQuantity.appendChild(divSubmitBtnWrapper);
       divSubmitBtnWrapper.appendChild(buttonSubmit);
 
-      // On affiche les options de couleurs
-
-      let colorsOption = bear.colors;
-      console.log(colorsOption);
-
-      // function afficherLesCouleur() {
-      //       let productColor = document.querySelector(".productColor");
-      //       colorsOption.forEach(valeur, indice => {
-      //         productColor.options[indice] = new Option(valeur,indice);
-      //       });
-      // }
-
-    
+      // On crée une boucle pour créer les <i> (étoiles) de reviewWrapper
 
       
+
+      for (let i = 0; i <= 4; i++) {
+        const iconReviewBtn = document.createElement("i");
+        iconReviewBtn.setAttribute("class", "fas fa-star reviewBtn");
+        divReviewWrapper.appendChild(iconReviewBtn);
+      }
+
+      // On affiche les options de couleurs
+
+      let colorsOption = norbert.colors;
+      console.log(colorsOption);
+
+      function afficherLesCouleur() {
+        let productColor = document.querySelector(".productColor");
+        colorsOption.forEach((indice) => {
+          productColor.options[indice] = new Option(indice);
+        });
+      }
+      console.log(afficherLesCouleur(norbert));
     });
 
 
