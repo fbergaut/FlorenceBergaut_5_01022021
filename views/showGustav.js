@@ -129,7 +129,7 @@ let bears = getTeddies().then((data) => {
 
   h1Info.innerHTML = gustav.name;
   divDescriptionProduct.innerHTML = gustav.description;
-  divPriceProduct.innerHTML = gustav.price + " €";
+  divPriceProduct.innerHTML = gustav.price/100 + " €";
 
   optionChooseColor.innerHTML = "Choisir la couleur";
   labelQuantity.innerHTML = "Quantité";

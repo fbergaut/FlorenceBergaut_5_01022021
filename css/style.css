@@ -251,6 +251,18 @@ h5.card-title {
 
 .quantity {
   border: none;
+  width: 200px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  opacity:1;
+}
+
+/* Firefox */
+input[type=number] {
+  opacity:1;
 }
 
 .quantity:focus-visible {

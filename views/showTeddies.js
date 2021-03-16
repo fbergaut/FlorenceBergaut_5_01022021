@@ -1,22 +1,3 @@
-// var bearsRequest = new XMLHttpRequest();
-// bearsRequest.onreadystatechange = function () {
-//   if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-//     var response = JSON.parse(this.responseText);
-//     console.log(response);
-//   }
-// };
-
-// const e = require("express");
-
-// bearsRequest.open("GET", "http://localhost:3000/api/teddies");
-// bearsRequest.send();
-
-// fetch("http://localhost:3000/api/teddies")
-//   .then((response) => response.json())
-//   .then((data) => console.log(data[1].name))
-//   .then((response) => alert(JSON.stringify(response)))
-//   .catch((error) => alert("Erreur : " + error));
-
 // On se connecte à l'API et récupère tous les teddies de la base
 
 async function getTeddies(){
@@ -27,69 +8,56 @@ async function getTeddies(){
     return reponse;
 }
 
-// On crée un élément <div> et lui attribut un nom de class afin d'acceuillir les autres éléments qui vont être créés un peu plus bas
+// On crée la variable "teddies" qui nous permettra d'afficher les éléments html
 
-const divRowProduct = document.createElement("div");
-divRowProduct.setAttribute("class", "row products");
+let teddies = "";
+
+
+// On crée la variable "products" qui nous permettra d'insérer les éléments html au bon endroit de la page index
+
+let products = document.querySelector(".products");
 
 // On stock dans la variable bears les datas récupérées de l'API et on les boucle avec map() afin d'afficher chaque teddy
 
 let bears = getTeddies()
     .then(data =>{
-      let bears = document.getElementById("products");
       data.map((bear) => {
-        // On crée les éléments html qui vont permettre d'afficher les datas
-
-        const divProduct = document.createElement("div");
-        const aTeddyLinkProduct = document.createElement("a");
-        const divImgProduct = document.createElement("div");
-        const imgProduct = document.createElement("img");
-        const divCardProduct = document.createElement("div");
-        const h5TeddyName = document.createElement("h5");
-        const pTeddyPrice = document.createElement("p");
-
-        // On attribut des noms de class à tous les éléments créés afin de les stylisés
-
-        divProduct.setAttribute("class", "col-12 col-lg-3");
-        aTeddyLinkProduct.setAttribute("class", "productsLink");
-        divImgProduct.setAttribute("class", "card border-0 bearProduct");
-        imgProduct.setAttribute("class", "card-img-top");
-        divCardProduct.setAttribute("class", "card-body bg-white");
-        h5TeddyName.setAttribute("class", "card-title text-center");
-        pTeddyPrice.setAttribute("class", "card-text text-center");
-
-        // On définit la source de l'élément <img> à imageUrl et l'attribut alt est renseigné avec le nom du produit
-
-        imgProduct.src = bear.imageUrl;
-        imgProduct.alt = bear.name;
-
-        // On affiche le nom des Teddies ainsi que leurs prix
-
-        h5TeddyName.innerHTML = bear.name;
-        pTeddyPrice.innerHTML = bear.price + " €";
-
-        // On ajoute les éléments au DOM pour créer la partie présentation de produit sur index.html
-
-        bears.appendChild(divRowProduct);
-
-        divRowProduct.appendChild(divProduct);
-
-        divProduct.appendChild(aTeddyLinkProduct);
-
-        aTeddyLinkProduct.appendChild(divImgProduct);
-        aTeddyLinkProduct.appendChild(divCardProduct);
-
-        divImgProduct.appendChild(imgProduct);
-
-        divCardProduct.appendChild(h5TeddyName);
-        divCardProduct.appendChild(pTeddyPrice);
+        // On stock dans la variable "teddies" les éléments html qui vont permettre d'afficher les datas sur index.html
+        teddies += `<div class="col-12 col-lg-3">
+                      <a class="productsLink">
+                          <div class="card border-0 bearProduct">
+                            <img class="card-img-top" src="${
+                              bear.imageUrl
+                            }" alt="${bear.name}">
+                          </div>
+                          <div class="card-body bg-white">
+                            <h5 class="card-title text-center">${bear.name}</h5>
+                            <p class="card-text text-center">${
+                              bear.price / 100
+                            } €</p>
+                          </div>
+                      </a>
+                    </div>`;
 
       });
+
+      products.innerHTML = teddies;
 
       // On récupère tous les liens produits, on les transforme en tableau et à l'évènement onClick, on va vers la page produit du teddy concerné.
 
       const liens = document.querySelectorAll(".productsLink");
       const liensArray = Array.from(liens);
+
+      // liensArray.forEach((liensArray) => {
+      //   console.log(liensArray);
+      //   liensArray.addEventListener("click", function () {
+      //     location.href.liensArray[0] = "product-norbert.html";
+      //     location.href = "product-arnold.html";
+      //     location.href = "product-lenny-et-carl.html";
+      //     location.href = "product-gustav.html";
+      //     location.href = "product-garfunkel.html";
+      //   });
+      // });
 
       liensArray[0].addEventListener("click", function () {
         location.href = "product-norbert.html";
@@ -107,8 +75,66 @@ let bears = getTeddies()
         location.href = "product-garfunkel.html";
       });
 
-
     });
+
+    // .then(data =>{
+    //     oneTeddy += `<div class="row">
+    //                     <div class="col-lg-6">
+    //                       <div class="mainImg">
+    //                         <img class="card-img-top" src="${
+    //                           bear.imageUrl
+    //                         }" alt="${bear.name}">
+    //                       </div>
+    //                     </div>
+    //                     <div class="col-12 col-lg-6">
+    //                       <div class="wrapperHeading">
+    //                         <h1 class="heading">${bear.name}</h1>
+    //                           <a class="heartBtn">
+    //                             <i class="fas fa-heart" aria-hidden="true"></i>
+    //                           </a>
+    //                         </div>
+    //                       <div class="text">${bear.description}</div>
+    //                       <div class="reviewWrapper">
+    //                         <i class="fas fa-star reviewBtn" aria-hidden="true"></i>
+    //                         <i class="fas fa-star reviewBtn" aria-hidden="true"></i>
+    //                         <i class="fas fa-star reviewBtn" aria-hidden="true"></i>
+    //                         <i class="fas fa-star reviewBtn" aria-hidden="true"></i>
+    //                         <i class="fas fa-star reviewBtn" aria-hidden="true"></i>
+    //                       </div>
+    //                       <p class="price">2900 €</p>
+    //                       <div class="colorWrapper">
+    //                         <select class="productColor">
+    //                           <option class="productColorOption" selected="true">Choisir la couleur</option>
+    //                           <option class="productColorOption">Tan</option>
+    //                           <option class="productColorOption">Chocolate</option>
+    //                           <option class="productColorOption">Black</option>
+    //                           <option class="productColorOption">White</option>
+    //                         </select>
+    //                       </div>
+    //                       <div class="wrapper">
+    //                         <div class="wrapperQuantity">
+    //                           <label class="hidden" for="quantity">Quantité</label>
+    //                             <input class="quantity" type="text" value="1" id="quantity" pattern="[0-9]*">
+    //                           <div class="wrapperBtn">
+    //                             <button class="quantityBtn" type="button">
+    //                               <i class="fas fa-sort-up" aria-hidden="true"></i>
+    //                             </button>
+    //                             <button class="quantityBtn" type="button">
+    //                               <i class="fas fa-sort-down" aria-hidden="true"></i>
+    //                             </button>
+    //                           </div>
+    //                         </div>
+    //                         <div>
+    //                           <button class="btn btn-outline-pink btn-lg rounded-0 addCartBtn" type="submit">Ajouter au panier</button>
+    //                         </div>
+    //                       </div>
+    //                     </div>
+    //                   </div>`
+        
+    //   });
+
+      // console.log(getTeddies());
+      // oneBearProduct.innerHTML = oneTeddy;
 
 
 
