@@ -60,19 +60,19 @@ let bears = getTeddies()
       // });
 
       liensArray[0].addEventListener("click", function () {
-        location.href = "product-norbert.html";
+        location.href = "../products/product-norbert.html";
       });
       liensArray[1].addEventListener("click", function () {
-        location.href = "product-arnold.html";
+        location.href = "../products/product-arnold.html";
       });
       liensArray[2].addEventListener("click", function () {
-        location.href = "product-lenny-et-carl.html";
+        location.href = "../products/product-lenny-et-carl.html";
       });
       liensArray[3].addEventListener("click", function () {
-        location.href = "product-gustav.html";
+        location.href = "../products/product-gustav.html";
       });
       liensArray[4].addEventListener("click", function () {
-        location.href = "product-garfunkel.html";
+        location.href = "../products/product-garfunkel.html";
       });
 
     });

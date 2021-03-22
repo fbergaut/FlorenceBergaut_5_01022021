@@ -8,179 +8,70 @@ async function getTeddies() {
   return reponse;
 }
 
+let oneTeddy = "";
+let oneBearProduct = document.querySelector(".productImg");
+
 // On stock dans la variable bears les datas récupérées de l'API
 
-let bears = getTeddies()
-.then((data) => {
-  let bears = document.getElementById("productPage");
+let bears = getTeddies().then((data) => {
   // On stock les datas du array[0] dans la variable norbert
   let lennyAndCarl = data[2];
-  // console.log(norbert);
 
-  /*------------------------MainImg-------------------------*/
-
-  // On crée les éléments html nécessaire afin d'acceuillir l'<img>
-
-  const divProductImg = document.createElement("div");
-  const divRowProductImg = document.createElement("div");
-  const divColProductImg = document.createElement("div");
-  const divMainImg = document.createElement("div");
-  const mainImg = document.createElement("img");
-
-  // On attribut des noms de class à tous les éléments créés afin de les stylisés
-
-  divProductImg.setAttribute("class", "container productImg");
-  divRowProductImg.setAttribute("class", "row");
-  divColProductImg.setAttribute("class", "col-lg-6");
-  divMainImg.setAttribute("class", "mainImg");
-  mainImg.setAttribute("class", "card-img-top");
-
-  // On définit la source de l'élément <img> à imageUrl et l'attribut alt est renseigné avec le nom du produit
-
-  mainImg.src = lennyAndCarl.imageUrl;
-  mainImg.alt = lennyAndCarl.name;
-
-  // On ajoute les éléments au DOM
-
-  bears.appendChild(divProductImg);
-  divProductImg.appendChild(divRowProductImg);
-  divRowProductImg.appendChild(divColProductImg);
-  divColProductImg.appendChild(divMainImg);
-  divMainImg.appendChild(mainImg);
-
-  /*------------------------Infos Produit-------------------------*/
-
-  // On crée les éléments html nécessaire afin d'acceuillir les infos produit
-
-  const divColProductInfo = document.createElement("div");
-  const divWrapperHeading = document.createElement("div");
-  const h1Info = document.createElement("h1");
-  const aHeartBtn = document.createElement("a");
-  const iconHeart = document.createElement("i");
-  const divDescriptionProduct = document.createElement("div");
-  const divReviewWrapper = document.createElement("div");
-  const divPriceProduct = document.createElement("p");
-  const divColorWrapper = document.createElement("div");
-  const selectColor = document.createElement("select");
-  const optionChooseColor = document.createElement("option");
-  const divQuantity = document.createElement("div");
-  const divQuantityWrapper = document.createElement("div");
-  const labelQuantity = document.createElement("label");
-  const inputQuantity = document.createElement("input");
-  const divBtnWrapper = document.createElement("div");
-  const buttonUp = document.createElement("button");
-  const iconUp = document.createElement("i");
-  const buttonDown = document.createElement("button");
-  const iconDown = document.createElement("i");
-  const divSubmitBtnWrapper = document.createElement("div");
-  const buttonSubmit = document.createElement("button");
-
-  // On attribut des noms de class à tous les éléments créés afin de les stylisés
-
-  divColProductInfo.setAttribute("class", "col-12 col-lg-6");
-  divWrapperHeading.setAttribute("class", "wrapperHeading");
-  h1Info.setAttribute("class", "heading");
-  aHeartBtn.setAttribute("class", "heartBtn");
-  iconHeart.setAttribute("class", "fas fa-heart");
-  divDescriptionProduct.setAttribute("class", "text");
-  divReviewWrapper.setAttribute("class", "reviewWrapper");
-  divPriceProduct.setAttribute("class", "price");
-  divColorWrapper.setAttribute("class", "colorWrapper");
-  selectColor.setAttribute("class", "productColor");
-  optionChooseColor.setAttribute("class", "productColorOption");
-  divQuantity.setAttribute("class", "wrapper");
-  divQuantityWrapper.setAttribute("class", "wrapperQuantity");
-  labelQuantity.setAttribute("class", "hidden");
-  inputQuantity.setAttribute("class", "quantity");
-  divBtnWrapper.setAttribute("class", "wrapperBtn");
-  buttonUp.setAttribute("class", "quantityBtn");
-  iconUp.setAttribute("class", "fas fa-sort-up");
-  buttonDown.setAttribute("class", "quantityBtn");
-  iconDown.setAttribute("class", "fas fa-sort-down");
-  buttonSubmit.setAttribute(
-    "class",
-    "btn btn-outline-pink btn-lg rounded-0 addCartBtn"
-  );
-
-  // On attribut "for" à l'élément <label>
-
-  optionChooseColor.setAttribute("selected", true);
-
-  // On attribut "for" à l'élément <label>
-
-  labelQuantity.setAttribute("for", "quantity");
-
-  // On attribut "type", "value", "id", "pattern" à l'élément <input>
-
-  inputQuantity.setAttribute("type", "text");
-  inputQuantity.setAttribute("value", "1");
-  inputQuantity.setAttribute("id", "quantity");
-  inputQuantity.setAttribute("pattern", "[0-9]*");
-
-  // On attribut "type" aux éléments <button> de l'input
-
-  buttonUp.setAttribute("type", "button");
-  buttonDown.setAttribute("type", "button");
-
-  // On attribut "type" à l'élément <button> du formulaire
-
-  buttonSubmit.setAttribute("type", "submit");
-
-  // On affiche les infos produit
-
-  h1Info.innerHTML = lennyAndCarl.name;
-  divDescriptionProduct.innerHTML = lennyAndCarl.description;
-  divPriceProduct.innerHTML = lennyAndCarl.price + " €";
-
-  optionChooseColor.innerHTML = "Choisir la couleur";
-  labelQuantity.innerHTML = "Quantité";
-  buttonSubmit.innerHTML = "Ajouter au panier";
-
-  // On ajoute les éléments au DOM pour créer la partie présentation de produit sur index.html
-
-  divRowProductImg.appendChild(divColProductInfo);
-  divColProductInfo.appendChild(divWrapperHeading);
-  divWrapperHeading.appendChild(h1Info);
-  divWrapperHeading.appendChild(aHeartBtn);
-  aHeartBtn.appendChild(iconHeart);
-
-  divColProductInfo.appendChild(divDescriptionProduct);
-  divColProductInfo.appendChild(divReviewWrapper);
-  divColProductInfo.appendChild(divPriceProduct);
-  divColProductInfo.appendChild(divColorWrapper);
-  divColorWrapper.appendChild(selectColor);
-  selectColor.appendChild(optionChooseColor);
-
-  divColProductInfo.appendChild(divQuantity);
-  divQuantity.appendChild(divQuantityWrapper);
-  divQuantityWrapper.appendChild(labelQuantity);
-  divQuantityWrapper.appendChild(inputQuantity);
-  divQuantityWrapper.appendChild(divBtnWrapper);
-  divBtnWrapper.appendChild(buttonUp);
-  buttonUp.appendChild(iconUp);
-  divBtnWrapper.appendChild(buttonDown);
-  buttonDown.appendChild(iconDown);
-
-  divQuantity.appendChild(divSubmitBtnWrapper);
-  divSubmitBtnWrapper.appendChild(buttonSubmit);
-
-  // On crée une boucle pour créer les <i> (étoiles) de reviewWrapper
-
-  for (let i = 0; i <= 4; i++) {
-    const iconReviewBtn = document.createElement("i");
-    iconReviewBtn.setAttribute("class", "fas fa-star reviewBtn");
-    divReviewWrapper.appendChild(iconReviewBtn);
-  }
+  oneTeddy += `<div class="row">
+                        <div class="col-lg-6">
+                          <div class="mainImg">
+                            <img class="card-img-top" src="${
+                              lennyAndCarl.imageUrl
+                            }" alt="${lennyAndCarl.name}">
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                          <div class="wrapperHeading">
+                            <h1 class="heading">${lennyAndCarl.name}</h1>
+                              <a class="heartBtn">
+                                <i class="fas fa-heart" aria-hidden="true"></i>
+                              </a>
+                            </div>
+                          <div class="text">${lennyAndCarl.description}</div>
+                          <div class="reviewWrapper">
+                            <i class="fas fa-star reviewBtn" aria-hidden="true"></i>
+                            <i class="fas fa-star reviewBtn" aria-hidden="true"></i>
+                            <i class="fas fa-star reviewBtn" aria-hidden="true"></i>
+                            <i class="fas fa-star reviewBtn" aria-hidden="true"></i>
+                            <i class="fas fa-star reviewBtn" aria-hidden="true"></i>
+                          </div>
+                          <p class="price">${lennyAndCarl.price / 100} €</p>
+                          <div class="colorWrapper">
+                            <select class="productColor">
+                              <option class="productColorOption" selected="true">Choisir la couleur</option>
+                              <option class="productColorOption">${
+                                lennyAndCarl.colors[0]
+                              }</option>
+                            </select>
+                          </div>
+                          <div class="wrapper">
+                            <div class="wrapperQuantity">
+                              <label class="hidden" for="quantity">Quantité</label>
+                                <input class="quantity" type="number" value="1" id="quantity" min="1" max="100">
+                            </div>
+                            <div>
+                              <button class="btn btn-outline-pink btn-lg rounded-0 addCartBtn" type="submit">Ajouter au panier</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>`;
 
   // On affiche les options de couleurs
+  // const selectColor = document.querySelector(".productColor");
+  // let colorsOption = norbert.colors;
 
-  let colorsOption = lennyAndCarl.colors;
+  // colorsOption.forEach((color) => {
+  //   const optionProductColor = document.createElement("option");
+  //   optionProductColor.setAttribute("class", "productColorOption");
+  //   optionProductColor.innerHTML = color;
+  //   console.log(optionProductColor);
+  //   // selectColor.appendChild(optionProductColor);
+  // });
 
-  colorsOption.forEach((color) => {
-    // console.log(color);
-    const optionProductColor = document.createElement("option");
-    optionProductColor.setAttribute("class", "productColorOption");
-    optionProductColor.innerHTML = color;
-    selectColor.appendChild(optionProductColor);
-  });
+  oneBearProduct.innerHTML = oneTeddy;
 });
