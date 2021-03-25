@@ -24,7 +24,7 @@ let bears = getTeddies()
   data.map((bear) => {
     // On stock dans la variable "teddies" les éléments html qui vont permettre d'afficher les datas sur index.html
     teddies += `<div class="col-12 col-lg-3">
-                      <a href="../products/product.html/?nom=${
+                      <a href="../products/product.html?id=${
                         bear._id
                       }" class="productsLink">
                           <div class="card border-0 bearProduct">

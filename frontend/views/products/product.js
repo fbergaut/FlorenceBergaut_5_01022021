@@ -1,7 +1,10 @@
 // On se connecte à l'API et récupère tous les teddies de la base
+let params = new URL(document.location).searchParams;
+let id = params.get("id");
+console.log(id);
 
-async function getTeddies() {
-  let rep = await fetch("http://localhost:3000/api/teddies", {
+async function getTeddy() {
+  let rep = await fetch("http://localhost:3000/api/teddies/" + id, {
     method: "GET",
   });
   let reponse = await rep.json();
@@ -13,26 +16,25 @@ let oneBearProduct = document.querySelector(".productImg");
 
 // On stock dans la variable bears les datas récupérées de l'API
 
-let bears = getTeddies().then((data) => {
+let bears = getTeddy().then((teddy) => {
   // On stock les datas du array[0] dans la variable norbert
-  let lennyAndCarl = data[2];
 
   oneTeddy += `<div class="row">
                         <div class="col-lg-6">
                           <div class="mainImg">
                             <img class="card-img-top" src="${
-                              lennyAndCarl.imageUrl
-                            }" alt="${lennyAndCarl.name}">
+                              teddy.imageUrl
+                            }" alt="${teddy.name}">
                           </div>
                         </div>
                         <div class="col-12 col-lg-6">
                           <div class="wrapperHeading">
-                            <h1 class="heading">${lennyAndCarl.name}</h1>
+                            <h1 class="heading">${teddy.name}</h1>
                               <a class="heartBtn">
                                 <i class="fas fa-heart" aria-hidden="true"></i>
                               </a>
                             </div>
-                          <div class="text">${lennyAndCarl.description}</div>
+                          <div class="text">${teddy.description}</div>
                           <div class="reviewWrapper">
                             <i class="fas fa-star reviewBtn" aria-hidden="true"></i>
                             <i class="fas fa-star reviewBtn" aria-hidden="true"></i>
@@ -40,12 +42,21 @@ let bears = getTeddies().then((data) => {
                             <i class="fas fa-star reviewBtn" aria-hidden="true"></i>
                             <i class="fas fa-star reviewBtn" aria-hidden="true"></i>
                           </div>
-                          <p class="price">${lennyAndCarl.price / 100} €</p>
+                          <p class="price">${teddy.price / 100} €</p>
                           <div class="colorWrapper">
                             <select class="productColor">
                               <option class="productColorOption" selected="true">Choisir la couleur</option>
                               <option class="productColorOption">${
-                                lennyAndCarl.colors[0]
+                                teddy.colors[0]
+                              }</option>
+                              <option class="productColorOption">${
+                                teddy.colors[1]
+                              }</option>
+                              <option class="productColorOption">${
+                                teddy.colors[2]
+                              }</option>
+                              <option class="productColorOption">${
+                                teddy.colors[3]
                               }</option>
                             </select>
                           </div>
