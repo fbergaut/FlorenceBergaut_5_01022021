@@ -8,10 +8,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<link rel="stylesheet" href="css/style.css" />
-<link rel="stylesheet" href="css/carousel.css" />
-
-
+<link rel="stylesheet" href="..\..\..\frontend\css\style.css" />
 
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <script src="https://kit.fontawesome.com/e0b5da58c3.js" crossorigin="anonymous"></script>
@@ -25,8 +22,8 @@
     <div class="row">
 <!-- Navigation -->
         <nav class="col navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-            <a class="navbar-brand" href="index.html">
-                <img src="src\img\logoOrinocoCadreBlc.png" alt="Site logo">
+            <a class="navbar-brand" href="..\home\index.html">
+                <img src="..\..\..\frontend\images\logoOrinocoCadreBlc.png" alt="Site logo">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
                 <span class="navbar-toggler-icon"></span>
@@ -54,43 +51,9 @@
                 <div class="headingCartwrapper">
                     <h1 class="headingCart">Mon Panier</h1>
                 </div>
-                <div class="productCartWrapper">
-                    <div class="imgCartWrapper">
-                        <a href="#">
-                            <img class="imgCart" src="src/img/products/ours1_200x270.jpg"  alt="mini ours1">
-                        </a>
-                    </div>
-                    <div class="infoCartWrapper">
-                        <div class="firstLineCart">
-                            <div class="productName">
-                                <a class="productName_link" href="#">
-                                    <h3 class="productName_heading">Ours en peluche</h3>
-                                </a>
-                                <p class="productName_color">Couleur: marron</p>
-                            </div>
-                            <div class="quantityWrapper">
-                                <select class="productQuantityCart" aria-label="Default select example">
-                                    <option class="productQuantityOption" value="1" selected>1</option>
-                                    <option class="productQuantityOption" value="2">2</option>
-                                    <option class="productQuantityOption" value="3">3</option>
-                                    <option class="productQuantityOption" value="4">4</option>
-                                    <option class="productQuantityOption" value="5">5</option>
-                                    <option class="productQuantityOption" value="6">6</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="secondtLineCart">
-                            <div>
-                                <button type="button" class="deleteCartBtn">Supprimer</button>
-                                <span>|</span>
-                                <button type="button" class="moveCartBtn">Déplacer vers mes favoris</button>
-                            </div>
-                            <div class="cartPrice">
-                                <p>24,90 €</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+                <div class="productCartWrapper"></div>
+                
                 <hr>
             </div>
         
@@ -125,7 +88,7 @@
       <footer>
          <div class="row justify-content-center">
             <div class="col text-center">
-               <img src="src\img\logoOrinocoCadreNoir.png" alt="Site logo"><br>
+               <img src="..\..\..\frontend\images\logoOrinocoCadreNoir.png" alt="Site logo"><br>
                <strong>Contact</strong><br>
                <p>(+33) 00 00 00 00 00 <strong>&middot;</strong> hello@orinoco.com</p>
 
@@ -155,7 +118,7 @@
 
 <!-- Optional JavaScript -->
 
-
+<script src="cart.js"></script>
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

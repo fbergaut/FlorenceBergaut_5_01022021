@@ -1,4 +1,4 @@
-// On crée une variable "params" qui va nous permettre de stocker l'url qui mène vers les pages produits dans lesquelles on fait passer l'_id des produits.
+// On crée une variable "params" qui va nous permettre de stocker l'url des pages produits et on récupère l'_id dans la variable "id".
 let params = new URL(document.location).searchParams;
 let id = params.get("id");
 console.log(id);
@@ -14,16 +14,16 @@ async function getTeddy() {
 
 // On crée une variable "oneTeddy" qui stockera le code html à afficher
 let oneTeddy = "";
-// On crée une variable "oneBearProduct" qui va indiquer où le html dynamique viendra se placer dans la page product.html lorsque le script se lancera.
+
+// On crée une variable "oneBearProduct" qui va indiquer où le html dynamique viendra se placer dans la page product.html.
 let oneBearProduct = document.querySelector(".productImg");
 
-// On stock dans la variable bears les datas récupérées de l'API
+// On stock dans la variable "bears" les datas récupérées de l'API
 let bears = getTeddy()
   // On crée une promesse avec en paramètre "teddy"
   .then((teddy) => {
-    
     //On affiche les options de couleurs
-    const colorsOption = teddy.colors.map(color => {
+    const colorsOption = teddy.colors.map((color) => {
       const optionProductColor = document.createElement("option");
       return (optionProductColor.innerHTML = `<option class="productColorOption">${color}</option>`);
     });
@@ -66,7 +66,8 @@ let bears = getTeddy()
                                 <input class="quantity" type="number" value="1" id="quantity" min="1" max="100">
                             </div>
                             <div>
-                              <button class="btn btn-outline-pink btn-lg rounded-0 addCartBtn" type="submit">Ajouter au panier</button>
+                            <a href="../cart/cart.html?id=${teddy._id}" >
+                              <button class="btn btn-outline-pink btn-lg rounded-0 addCartBtn" type="submit">Ajouter au panier</button></a>
                             </div>
                           </div>
                         </div>
@@ -74,6 +75,14 @@ let bears = getTeddy()
 
     // On insère le code html dynamique "oneTeddy" à l'endroit indiqué par "oneBearProduct".
     oneBearProduct.innerHTML = oneTeddy;
-  });                     
+
+    // Event : choisir la couleur
+
+    // Event : choisir la quantité
+
+    // Event : Ajouter une commande
+  });
+
+  
 
   
