@@ -15,13 +15,11 @@ async function getTeddy() {
 getTeddy()
 .then(teddy => {
     console.log(teddy);
-    const order = new Order(teddy._id, teddy.colors[0], teddy.quantity, teddy.price);
+    const order = new Order(teddy._id, teddy.colors, teddy.quantity, teddy.price);
 }) 
 
 // On crée une variable "oneOrder" qui stockera le code html à afficher
 let oneOrder = "";
-
-console.log("hello cart");
 
 // Création d'une Class Order : Représentera une commande
 
@@ -38,7 +36,24 @@ console.log("hello cart");
 
 class UI {
   static displayOrder() {
-    const orders = Store.getOrders();
+    // const orders = Store.getOrders();
+
+    const StoredOrders = [
+      {
+        id: "21568746823",
+        color: "black",
+        quantity: "1",
+        price: "30",
+      },
+      {
+        id: "56894123486",
+        color: "blue",
+        quantity: "1",
+        price: "19",
+      },
+    ];
+
+    const orders = StoredOrders;
 
     orders.forEach((order) => UI.addOrderToList(order));
   }

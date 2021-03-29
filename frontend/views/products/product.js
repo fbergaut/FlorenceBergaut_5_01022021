@@ -54,22 +54,25 @@ let bears = getTeddy()
                             <i class="fas fa-star reviewBtn" aria-hidden="true"></i>
                           </div>
                           <p class="price">${teddy.price / 100} €</p>
-                          <div class="colorWrapper">
-                            <select class="productColor">
-                              <option class="productColorOption" selected="true">Choisir la couleur</option>
-                              ${colorsOption}
-                            </select>
-                          </div>
-                          <div class="wrapper">
-                            <div class="wrapperQuantity">
-                              <label class="hidden" for="quantity">Quantité</label>
-                                <input class="quantity" type="number" value="1" id="quantity" min="1" max="100">
+                          <form id="order-form">
+                            <div class="colorWrapper">
+                              <select class="productColor">
+                                <option class="productColorOption" selected="true">Choisir la couleur</option>
+                                ${colorsOption}
+                              </select>
                             </div>
-                            <div>
-                            <a href="../cart/cart.html?id=${teddy._id}" >
-                              <button class="btn btn-outline-pink btn-lg rounded-0 addCartBtn" type="submit">Ajouter au panier</button></a>
+                            <div class="wrapper">
+                              <div class="wrapperQuantity">
+                                <label class="hidden" for="quantity">Quantité</label>
+                                  <input class="quantity" type="number" value="1" id="quantity" min="1" max="100">
+                              </div>
+                              <div>
+                                <a href="../cart/cart.html?id=${teddy._id}" >
+                                  <button class="btn btn-outline-pink btn-lg rounded-0 addCartBtn" type="submit">Ajouter au panier</button>
+                                </a>
+                              </div>
                             </div>
-                          </div>
+                          </form>
                         </div>
                       </div>`;
 
