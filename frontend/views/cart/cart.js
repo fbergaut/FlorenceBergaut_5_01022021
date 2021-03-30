@@ -38,28 +38,28 @@ let oneOrder = "";
 
 class UI {
   static displayOrder() {
-    // const orders = Store.getOrders();
+    const orders = Store.getOrders();
 
-    const StoredOrders = [
-      {
-        id: "21568746823",
-        name: "Zoe",
-        image: "http://localhost:3000/images/teddy_1.jpg",
-        color: "black",
-        quantity: "1",
-        price: "30",
-      },
-      {
-        id: "56894123486",
-        name: "Edouard",
-        image: "http://localhost:3000/images/teddy_2.jpg",
-        color: "blue",
-        quantity: "1",
-        price: "19",
-      },
-    ];
+    // const StoredOrders = [
+    //   {
+    //     id: "21568746823",
+    //     name: "Zoe",
+    //     image: "http://localhost:3000/images/teddy_1.jpg",
+    //     color: "black",
+    //     quantity: "1",
+    //     price: "30",
+    //   },
+    //   {
+    //     id: "56894123486",
+    //     name: "Edouard",
+    //     image: "http://localhost:3000/images/teddy_2.jpg",
+    //     color: "blue",
+    //     quantity: "1",
+    //     price: "19",
+    //   },
+    // ];
     
-    const orders = StoredOrders;
+    // const orders = StoredOrders;
 
     orders.forEach((order) => UI.addOrderToList(order));
   }
@@ -116,39 +116,6 @@ class UI {
 }
 
 UI.displayOrder();
-
-// Store Class : gérer le stockage de la commande
-
-    class Store {
-      static getOrders() {
-        let orders;
-        if (localStorage.getItem("orders") === null) {
-          orders = [];
-        } else {
-          orders = JSON.parse(localStorage.getItem("orders"));
-        }
-
-        return orders;
-      }
-
-      static addOrder(order) {
-        const orders = Store.getOrders();
-        orders.push(order);
-        localStorage.setItem("orders", JSON.stringify(orders));
-      }
-
-      static removeOrder(id) {
-        const orders = Store.getOrders();
-
-        orders.forEach((order, index) => {
-          if (order.id === id) {
-            order.splice(index, 1);
-          }
-        });
-
-        localStorage.setItem("orders", JSON.stringify(orders));
-      }
-    }
 
 
 // Event: Afficher les commandes

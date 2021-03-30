@@ -94,9 +94,44 @@ let bears = getTeddy()
     class UI {
       static clearFields() {
         document.querySelector(".productColor").value = "Choisir la couleur";
-        document.querySelector(".quantity").value = '1';
+        document.querySelector(".quantity").value = "1";
       }
     }
+
+    // Store Class : gérer le stockage de la commande
+
+    class Store {
+      static getOrders() {
+        let orders;
+        if (localStorage.getItem("orders") === null) {
+          orders = [];
+        } else {
+          orders = JSON.parse(localStorage.getItem("orders"));
+        }
+
+        return orders;
+      }
+
+      static addOrder(order) {
+        const orders = Store.getOrders();
+        orders.push(order);
+        localStorage.setItem("orders", JSON.stringify(orders));
+      }
+
+      static removeOrder(id) {
+        const orders = Store.getOrders();
+
+        orders.forEach((order, index) => {
+          if (order.id === id) {
+            order.splice(index, 1);
+          }
+        });
+
+        localStorage.setItem("orders", JSON.stringify(orders));
+      }
+    }
+
+
 
     // Event: Ajouter une commande
     document.querySelector("#order-form").addEventListener("submit", (e) => {
@@ -111,6 +146,10 @@ let bears = getTeddy()
       const order = new Order(id, color, quantity);
 
       console.log(order);
+
+      // Ajouter une commande au Store
+
+      Store.addOrder(order);
 
       // Vider les champs du formulaire
 
