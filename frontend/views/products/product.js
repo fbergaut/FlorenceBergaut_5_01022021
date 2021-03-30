@@ -33,14 +33,14 @@ let bears = getTeddy()
     oneTeddy += `<div class="row">
                         <div class="col-lg-6">
                           <div class="mainImg">
-                            <img class="card-img-top" src="${
+                            <img id="image" class="card-img-top" src="${
                               teddy.imageUrl
                             }" alt="${teddy.name}">
                           </div>
                         </div>
                         <div class="col-12 col-lg-6">
                           <div class="wrapperHeading">
-                            <h1 class="heading">${teddy.name}</h1>
+                            <h1 class="heading name">${teddy.name}</h1>
                               <a class="heartBtn">
                                 <i class="fas fa-heart" aria-hidden="true"></i>
                               </a>
@@ -54,7 +54,7 @@ let bears = getTeddy()
                             <i class="fas fa-star reviewBtn" aria-hidden="true"></i>
                           </div>
                           <p class="price">${teddy.price / 100} €</p>
-                          <form id="order-form">
+                          <form method="post" id="order-form">
                             <div class="colorWrapper">
                               <select class="productColor">
                                 <option class="productColorOption" selected="true">Choisir la couleur</option>
@@ -82,8 +82,11 @@ let bears = getTeddy()
     // Création d'une Class Order : Représentera une commande
 
     class Order {
-      constructor(id, color, quantity) {
+      constructor(id, productName, image, price, color, quantity) {
         this.id = id;
+        this.productName = productName;
+        this.image = image;
+        this.price = price;
         this.color = color;
         this.quantity = quantity;
       }
@@ -117,33 +120,24 @@ let bears = getTeddy()
         orders.push(order);
         localStorage.setItem("orders", JSON.stringify(orders));
       }
-
-      static removeOrder(id) {
-        const orders = Store.getOrders();
-
-        orders.forEach((order, index) => {
-          if (order.id === id) {
-            order.splice(index, 1);
-          }
-        });
-
-        localStorage.setItem("orders", JSON.stringify(orders));
-      }
     }
 
 
 
     // Event: Ajouter une commande
-    document.querySelector("#order-form").addEventListener("submit", (e) => {
+    document.querySelector(".row").addEventListener("submit", (e) => {
       // Prevent actual submit
       e.preventDefault();
 
       // Récupérer les valeurs de <form>
+      const productName = document.querySelector(".name").textContent;
+      const image = document.getElementById("image").src;
+      const price = document.querySelector(".price").textContent;
       const color = document.querySelector(".productColor").value;
       const quantity = document.querySelector(".quantity").value;
-
+      console.log(image);
       // Créer des instances de Order
-      const order = new Order(id, color, quantity);
+      const order = new Order(id, productName, image, price, color, quantity);
 
       console.log(order);
 

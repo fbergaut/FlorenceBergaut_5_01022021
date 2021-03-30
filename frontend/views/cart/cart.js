@@ -1,22 +1,11 @@
-// // On crée une variable "params" qui va nous permettre de stocker l'url des pages produits et on récupère l'_id dans la variable "id".
-// let params = new URL(document.location).searchParams;
-// let id = params.get("id");
-// console.log(id);
-
 // // On se connecte à l'API et on récupère tous les teddies de la base + l'_id de chaque teddy.
-// async function getTeddy() {
-//   let rep = await fetch("http://localhost:3000/api/teddies/" + id, {
-//     method: "GET",
-//   });
-//   let reponse = await rep.json();
-//   return reponse;
-// }
-
-// getTeddy()
-// .then(teddy => {
-//     console.log(teddy);
-//     // const order = new Order(teddy._id, teddy.colors, teddy.quantity, teddy.price);
-// }) 
+async function getTeddy() {
+  let rep = await fetch("http://localhost:3000/api/teddies/" + id, {
+    method: "GET",
+  });
+  let reponse = await rep.json();
+  return reponse;
+}
 
 // On crée une variable "oneOrder" qui stockera le code html à afficher
 let oneOrder = "";
@@ -24,20 +13,44 @@ let oneOrder = "";
 // Création d'une Class Order : Représentera une commande
 
     class Order {
-      constructor(id, name, image, color, quantity, price) {
+      constructor(id, color, quantity) {
         this.id = id;
-        this.name = name;
-        this.image = image;
         this.color = color;
         this.quantity = quantity;
-        this.price = price;
       }
     }
+
+// Store Class : gérer le stockage de la commande
+
+class Store {
+  static getOrders() {
+    let orders;
+    if (localStorage.getItem("orders") === null) {
+      orders = [];
+    } else {
+      orders = JSON.parse(localStorage.getItem("orders"));
+    }
+
+    return orders;
+  }
+  
+  static removeOrder(id) {
+    const orders = Store.getOrders();
+
+    orders.forEach((order, index) => {
+      if (order.id === id) {
+        order.splice(index, 1);
+      }
+    });
+
+    localStorage.setItem("orders", JSON.stringify(orders));
+  }
+}
 
 // Création d'une Class UI : gérer les taches de l'UI
 
 class UI {
-  static displayOrder() {
+  static displayOrders() {
     const orders = Store.getOrders();
 
     // const StoredOrders = [
@@ -70,14 +83,14 @@ class UI {
     oneOrder += `<div class="productWrapper">
                     <div class="imgCartWrapper">
                         <a href="#">
-                            <img class="imgCart" src="${order.image}" alt="${order.name}">
+                            <img class="imgCart" src="${order.image}" alt="${order.productName}">
                         </a>
                     </div>
                     <div class="infoCartWrapper">
                         <div class="firstLineCart">
                             <div class="productName">
                                 <a class="productName_link" href="#">
-                                    <h3 class="productName_heading">${order.name}</h3>
+                                    <h3 class="productName_heading">${order.productName}</h3>
                                 </a>
                                 <p class="productName_color">Couleur: ${order.color}</p>
                             </div>
@@ -99,7 +112,7 @@ class UI {
                                 <button type="button" class="moveCartBtn">Déplacer vers mes favoris</button>
                             </div>
                             <div class="cartPrice">
-                                <p>${order.price} €</p>
+                                <p>${order.price}</p>
                             </div>
                         </div>
                     </div>
@@ -115,16 +128,20 @@ class UI {
   }
 }
 
-UI.displayOrder();
 
 
 // Event: Afficher les commandes
-    document.addEventListener('DOMContentLoaded', UI.displayOrders);
+    document.addEventListener('DOMContentLoaded', UI.displayOrders());
 
 // Event: Supprimer une commande
+
+    // Supprimer une commande sur le UI
     document.querySelector(".productWrapper").addEventListener('click', (e) => {
         UI.deleteOrder(e.target);
     });
+
+    // Supprimer une commande du Store
+
 
 
 
