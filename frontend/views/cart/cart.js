@@ -1,22 +1,22 @@
-// On crée une variable "params" qui va nous permettre de stocker l'url des pages produits et on récupère l'_id dans la variable "id".
-let params = new URL(document.location).searchParams;
-let id = params.get("id");
-console.log(id);
+// // On crée une variable "params" qui va nous permettre de stocker l'url des pages produits et on récupère l'_id dans la variable "id".
+// let params = new URL(document.location).searchParams;
+// let id = params.get("id");
+// console.log(id);
 
-// On se connecte à l'API et on récupère tous les teddies de la base + l'_id de chaque teddy.
-async function getTeddy() {
-  let rep = await fetch("http://localhost:3000/api/teddies/" + id, {
-    method: "GET",
-  });
-  let reponse = await rep.json();
-  return reponse;
-}
+// // On se connecte à l'API et on récupère tous les teddies de la base + l'_id de chaque teddy.
+// async function getTeddy() {
+//   let rep = await fetch("http://localhost:3000/api/teddies/" + id, {
+//     method: "GET",
+//   });
+//   let reponse = await rep.json();
+//   return reponse;
+// }
 
-getTeddy()
-.then(teddy => {
-    console.log(teddy);
-    const order = new Order(teddy._id, teddy.colors, teddy.quantity, teddy.price);
-}) 
+// getTeddy()
+// .then(teddy => {
+//     console.log(teddy);
+//     // const order = new Order(teddy._id, teddy.colors, teddy.quantity, teddy.price);
+// }) 
 
 // On crée une variable "oneOrder" qui stockera le code html à afficher
 let oneOrder = "";
@@ -24,8 +24,10 @@ let oneOrder = "";
 // Création d'une Class Order : Représentera une commande
 
     class Order {
-      constructor(id, color, quantity, price) {
+      constructor(id, name, image, color, quantity, price) {
         this.id = id;
+        this.name = name;
+        this.image = image;
         this.color = color;
         this.quantity = quantity;
         this.price = price;
@@ -41,27 +43,32 @@ class UI {
     const StoredOrders = [
       {
         id: "21568746823",
+        name: "Zoe",
+        image: "http://localhost:3000/images/teddy_1.jpg",
         color: "black",
         quantity: "1",
         price: "30",
       },
       {
         id: "56894123486",
+        name: "Edouard",
+        image: "http://localhost:3000/images/teddy_2.jpg",
         color: "blue",
         quantity: "1",
         price: "19",
       },
     ];
-
+    
     const orders = StoredOrders;
 
     orders.forEach((order) => UI.addOrderToList(order));
   }
 
-  static addOrderToList() {
+  static addOrderToList(order) {
     const list = document.querySelector(".productCartWrapper");
 
-    oneOrder += `<div class="imgCartWrapper">
+    oneOrder += `<div class="productWrapper">
+                    <div class="imgCartWrapper">
                         <a href="#">
                             <img class="imgCart" src="${order.image}" alt="${order.name}">
                         </a>
@@ -95,17 +102,20 @@ class UI {
                                 <p>${order.price} €</p>
                             </div>
                         </div>
-                    </div>`;
-
+                    </div>
+                </div>
+                <hr class="strokeBlack">`;
     list.innerHTML = oneOrder;
   }
 
   static deleteOrder(el) {
     if (el.classList.contains("deleteCartBtn")) {
-      el.parentElement.parentElement.remove();
+      el.parentElement.parentElement.parentElement.parentElement.remove();
     }
   }
 }
+
+UI.displayOrder();
 
 // Store Class : gérer le stockage de la commande
 
@@ -139,3 +149,15 @@ class UI {
         localStorage.setItem("orders", JSON.stringify(orders));
       }
     }
+
+
+// Event: Afficher les commandes
+    document.addEventListener('DOMContentLoaded', UI.displayOrders);
+
+// Event: Supprimer une commande
+    document.querySelector(".productWrapper").addEventListener('click', (e) => {
+        UI.deleteOrder(e.target);
+    });
+
+
+

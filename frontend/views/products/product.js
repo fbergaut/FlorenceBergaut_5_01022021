@@ -68,7 +68,7 @@ let bears = getTeddy()
                               </div>
                               <div>
                                 <a href="../cart/cart.html?id=${teddy._id}" >
-                                  <button class="btn btn-outline-pink btn-lg rounded-0 addCartBtn" type="submit">Ajouter au panier</button>
+                                  <input type="submit" value="Ajouter au panier" class="btn btn-outline-pink btn-lg rounded-0 addCartBtn">
                                 </a>
                               </div>
                             </div>
@@ -79,13 +79,41 @@ let bears = getTeddy()
     // On insère le code html dynamique "oneTeddy" à l'endroit indiqué par "oneBearProduct".
     oneBearProduct.innerHTML = oneTeddy;
 
-    // Event : choisir la couleur
+    // Création d'une Class Order : Représentera une commande
 
-    // Event : choisir la quantité
+    class Order {
+      constructor(id, color, quantity) {
+        this.id = id;
+        this.color = color;
+        this.quantity = quantity;
+      }
+    }
 
-    // Event : Ajouter une commande
+    // Création d'une Class UI : gérer les taches de l'UI
+
+    class UI {
+      static clearFields() {
+        document.querySelector(".productColor").value = "Choisir la couleur";
+        document.querySelector(".quantity").value = '1';
+      }
+    }
+
+    // Event: Ajouter une commande
+    document.querySelector("#order-form").addEventListener("submit", (e) => {
+      // Prevent actual submit
+      e.preventDefault();
+
+      // Récupérer les valeurs de <form>
+      const color = document.querySelector(".productColor").value;
+      const quantity = document.querySelector(".quantity").value;
+
+      // Créer des instances de Order
+      const order = new Order(id, color, quantity);
+
+      console.log(order);
+
+      // Vider les champs du formulaire
+
+      UI.clearFields();
+    });
   });
-
-  
-
-  

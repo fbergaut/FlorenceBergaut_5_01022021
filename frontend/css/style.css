@@ -329,7 +329,12 @@ hr.socket {
 
 .productCartWrapper {
   display: flex;
+  flex-direction: column;
+}
 
+.productWrapper {
+  display: flex;
+  margin-top: .8rem;
 }
 
 .headingCart {
@@ -354,7 +359,9 @@ hr.socket {
 }
 
 .imgCart {
-  max-width: 100%;
+  width: 70px;
+  height: 80px;
+  object-fit: cover;
 }
 
 .productName {
