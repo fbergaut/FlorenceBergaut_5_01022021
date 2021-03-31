@@ -27,7 +27,6 @@ let bears = getTeddy()
       const optionProductColor = document.createElement("option");
       return (optionProductColor.innerHTML = `<option class="productColorOption">${color}</option>`);
     });
-    console.log(colorsOption);
 
     // On associe à la variable "oneTeddy" le code html qui viendra s'afficher dynamiquement avec les datas de chaque teddy.
     oneTeddy += `<div class="row">
@@ -68,7 +67,7 @@ let bears = getTeddy()
                               </div>
                               <div>
                                 <a href="../cart/cart.html?id=${teddy._id}" >
-                                  <input type="submit" value="Ajouter au panier" class="btn btn-outline-pink btn-lg rounded-0 addCartBtn">
+                                  <input type="submit" value="Ajouter au panier" class="btn btn-outline-pink btn-lg rounded-0 addCartBtn" id="sendForm">
                                 </a>
                               </div>
                             </div>
@@ -107,6 +106,14 @@ let bears = getTeddy()
         setTimeout(() => document.querySelector(".alert").remove(), 3000);
       }
 
+      static showNumberOfProductInCart() {
+        const divNumberofProduct = document.createElement("div");
+        divNumberofProduct.className = "showNumberOfProductInCart";
+        divNumberofProduct.appendChild(document.createTextNode());
+        const li = document.querySelector("#cart");
+        li.after(divNumberofProduct);
+      }
+
       static clearFields() {
         document.querySelector(".productColor").value = "Choisir la couleur";
         document.querySelector(".quantity").value = "1";
@@ -132,9 +139,19 @@ let bears = getTeddy()
         orders.push(order);
         localStorage.setItem("orders", JSON.stringify(orders));
       }
+
+      static cartNumbers() {
+        let productNumbers = localStorage.getItem("cartNumbers");
+        productNumbers = parseInt(productNumbers);
+        if (productNumbers) {
+          localStorage.setItem("cartNumbers", productNumbers + 1);
+          document.querySelector(".cartNumber span").textContent = productNumbers + 1;
+        } else {
+          localStorage.setItem("cartNumbers", 1);
+          document.querySelector(".cartNumber span").textContent = 1;
+        }
+      }
     }
-
-
 
     // Event: Ajouter une commande
     document.querySelector(".row").addEventListener("submit", (e) => {
@@ -147,10 +164,10 @@ let bears = getTeddy()
       const price = document.querySelector(".price").textContent;
       const color = document.querySelector(".productColor").value;
       const quantity = document.querySelector(".quantity").value;
-      
+
       // Valider le champs choix de couleur
       if (color === "Choisir la couleur") {
-        UI.showAlert('Veuillez choisir une couleur', 'danger')
+        UI.showAlert("Veuillez choisir une couleur", "danger");
       } else {
         // Créer des instances de Order
         const order = new Order(id, productName, image, price, color, quantity);
@@ -165,7 +182,10 @@ let bears = getTeddy()
 
         UI.clearFields();
       }
+    });
 
-      
+    // Event: Ajouter le nombre de commandes qui se trouve dans le panier
+    document.querySelector("#sendForm").addEventListener("click", (e) => {
+      Store.cartNumbers();
     });
   });
