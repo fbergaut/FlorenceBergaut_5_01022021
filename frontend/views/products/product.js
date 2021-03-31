@@ -38,7 +38,7 @@ let bears = getTeddy()
                             }" alt="${teddy.name}">
                           </div>
                         </div>
-                        <div class="col-12 col-lg-6">
+                        <div class="col-12 col-lg-6" id="infoWrapper">
                           <div class="wrapperHeading">
                             <h1 class="heading name">${teddy.name}</h1>
                               <a class="heartBtn">
@@ -95,6 +95,18 @@ let bears = getTeddy()
     // Création d'une Class UI : gérer les taches de l'UI
 
     class UI {
+      static showAlert(message, className) {
+        const div = document.createElement("div");
+        div.className = `alert alert-${className}`;
+        div.appendChild(document.createTextNode(message));
+        const container = document.querySelector("#infoWrapper");
+        const form = document.querySelector("#order-form");
+        container.insertBefore(div, form);
+
+        // Vanish in 3 seconds
+        setTimeout(() => document.querySelector(".alert").remove(), 3000);
+      }
+
       static clearFields() {
         document.querySelector(".productColor").value = "Choisir la couleur";
         document.querySelector(".quantity").value = "1";
@@ -129,24 +141,31 @@ let bears = getTeddy()
       // Prevent actual submit
       e.preventDefault();
 
-      // Récupérer les valeurs de <form>
+      // Récupérer les valeurs du teddy et de son <form>
       const productName = document.querySelector(".name").textContent;
       const image = document.getElementById("image").src;
       const price = document.querySelector(".price").textContent;
       const color = document.querySelector(".productColor").value;
       const quantity = document.querySelector(".quantity").value;
-      console.log(image);
-      // Créer des instances de Order
-      const order = new Order(id, productName, image, price, color, quantity);
+      
+      // Valider le champs choix de couleur
+      if (color === "Choisir la couleur") {
+        UI.showAlert('Veuillez choisir une couleur', 'danger')
+      } else {
+        // Créer des instances de Order
+        const order = new Order(id, productName, image, price, color, quantity);
 
-      console.log(order);
+        console.log(order);
 
-      // Ajouter une commande au Store
+        // Ajouter une commande au Store
 
-      Store.addOrder(order);
+        Store.addOrder(order);
 
-      // Vider les champs du formulaire
+        // Vider les champs du formulaire
 
-      UI.clearFields();
+        UI.clearFields();
+      }
+
+      
     });
   });

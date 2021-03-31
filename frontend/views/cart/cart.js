@@ -10,16 +10,6 @@ async function getTeddy() {
 // On crée une variable "oneOrder" qui stockera le code html à afficher
 let oneOrder = "";
 
-// Création d'une Class Order : Représentera une commande
-
-    class Order {
-      constructor(id, color, quantity) {
-        this.id = id;
-        this.color = color;
-        this.quantity = quantity;
-      }
-    }
-
 // Store Class : gérer le stockage de la commande
 
 class Store {
@@ -34,17 +24,17 @@ class Store {
     return orders;
   }
   
-  static removeOrder(id) {
-    const orders = Store.getOrders();
+//   static removeOrder(id) {
+//     const orders = Store.getOrders();
 
-    orders.forEach((order, index) => {
-      if (order.id === id) {
-        order.splice(index, 1);
-      }
-    });
+//     orders.forEach((order, index) => {
+//       if (order.id === id) {
+//         order.splice(index, 1);
+//       }
+//     });
 
-    localStorage.setItem("orders", JSON.stringify(orders));
-  }
+//     localStorage.setItem("orders", JSON.stringify(orders));
+//   }
 }
 
 // Création d'une Class UI : gérer les taches de l'UI
@@ -134,13 +124,17 @@ class UI {
     document.addEventListener('DOMContentLoaded', UI.displayOrders());
 
 // Event: Supprimer une commande
-
-    // Supprimer une commande sur le UI
     document.querySelector(".productWrapper").addEventListener('click', (e) => {
-        UI.deleteOrder(e.target);
+      // Supprimer une commande sur le UI
+      UI.deleteOrder(e.target);
+
+      // Supprimer une commande du Store
+      Store.removeBook(
+        e.target.parentElement.previousElementSibling.textContent
+      );
     });
 
-    // Supprimer une commande du Store
+    
 
 
 
