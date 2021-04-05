@@ -8,14 +8,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<link rel="stylesheet" href="css/style.css" />
-<link rel="stylesheet" href="css/carousel.css" />
-
-
+<link rel="stylesheet" href="..\..\..\frontend\css\style.css" />
 
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <script src="https://kit.fontawesome.com/e0b5da58c3.js" crossorigin="anonymous"></script>
-
+<script src="../../js/application.js"></script>
+ <!-- <script src="../products/product.js" defer></script>  -->
+<script src="cart.js" defer></script>
 <title>Orinoco - ours en peluche</title>
 </head>
 
@@ -25,8 +24,8 @@
     <div class="row">
 <!-- Navigation -->
         <nav class="col navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-            <a class="navbar-brand" href="index.html">
-                <img src="src\img\logoOrinocoCadreBlc.png" alt="Site logo">
+            <a class="navbar-brand" href="..\home\index.html">
+                <img src="..\..\..\frontend\images\logoOrinocoCadreBlc.png" alt="Site logo">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
                 <span class="navbar-toggler-icon"></span>
@@ -37,7 +36,7 @@
                     <a class="nav-link" href="#contact">Contact</i></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="index.html"><i class="fas fa-heart"></i></a>
+                    <a class="nav-link" href="../home/index.html"><i class="fas fa-heart"></i></a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="cart.html"><i class="fas fa-shopping-bag"></i></a>
@@ -54,44 +53,9 @@
                 <div class="headingCartwrapper">
                     <h1 class="headingCart">Mon Panier</h1>
                 </div>
-                <div class="productCartWrapper">
-                    <div class="imgCartWrapper">
-                        <a href="#">
-                            <img class="imgCart" src="src/img/products/ours1_200x270.jpg"  alt="mini ours1">
-                        </a>
-                    </div>
-                    <div class="infoCartWrapper">
-                        <div class="firstLineCart">
-                            <div class="productName">
-                                <a class="productName_link" href="#">
-                                    <h3 class="productName_heading">Ours en peluche</h3>
-                                </a>
-                                <p class="productName_color">Couleur: marron</p>
-                            </div>
-                            <div class="quantityWrapper">
-                                <select class="productQuantityCart" aria-label="Default select example">
-                                    <option class="productQuantityOption" value="1" selected>1</option>
-                                    <option class="productQuantityOption" value="2">2</option>
-                                    <option class="productQuantityOption" value="3">3</option>
-                                    <option class="productQuantityOption" value="4">4</option>
-                                    <option class="productQuantityOption" value="5">5</option>
-                                    <option class="productQuantityOption" value="6">6</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="secondtLineCart">
-                            <div>
-                                <button type="button" class="deleteCartBtn">Supprimer</button>
-                                <span>|</span>
-                                <button type="button" class="moveCartBtn">Déplacer vers mes favoris</button>
-                            </div>
-                            <div class="cartPrice">
-                                <p>24,90 €</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr>
+
+                <div class="productCartWrapper"></div>
+
             </div>
         
 <!-- total -->
@@ -113,11 +77,88 @@
                         <p><strong>Total (TVA incluse)</strong></p>
                         <p><strong>24,90 €</strong></p>
                     </div>
-                    <button type="submit" class="btn btn-outline-white btn-lg rounded-0 addCartBtn">Commander</button>
+                    <!-- <button type="submit" class="btn btn-outline-white btn-lg rounded-0 addCartBtn">Commander</button> -->
                 </div>
             </div>            
         </div>    
    </div>
+
+<!-- formulaire de commande -->
+
+   <div class="container containerForm">
+        <!-- Heading -->
+        <div class="row">
+        <div class="col-12">
+            <h2 class="heading text-center">Finalisez</h2>
+            <h3 class="heading text-center">Votre commande</h3>
+            <div class="heading-underline"></div>
+        </div>
+        </div>
+        <div class="row">
+            <form class="row g-3 needs-validation" novalidate>
+                <div class="col-md-4 position-relative">
+                    <label for="validationTooltip01" class="form-label">Prénom</label>
+                    <input type="text" class="form-control customForm" id="validationTooltip01" value="" required>
+                    <div class="valid-tooltip">
+                    Looks good!
+                    </div>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label for="validationTooltip02" class="form-label">Nom</label>
+                    <input type="text" class="form-control customForm" id="validationTooltip02" value="" required>
+                    <div class="valid-tooltip">
+                    Looks good!
+                    </div>
+                </div>
+                <div class="col-md-4 position-relative">
+                    <label for="validationTooltipEmail" class="form-label">Email</label>
+                    <div class="input-group has-validation">
+                    <span class="input-group-text" id="validationTooltipEmail">@</span>
+                    <input type="text" class="form-control customForm" id="validationTooltipEmail" aria-describedby="validationTooltipEmail" required>
+                    <div class="invalid-tooltip">
+                        Veuillez indiquer votre email.
+                    </div>
+                    </div>
+                </div>
+                <div class="col-md-6 position-relative mt-4">
+                    <label for="validationTooltipAdress" class="form-label">Adresse</label>
+                    <input type="text" class="form-control customForm" id="validationTooltipAdress" required>
+                    <div class="invalid-tooltip">
+                    Veuillez indiquer votre adresse.
+                    </div>
+                </div>
+                <div class="col-md-6 position-relative mt-4">
+                    <label for="validationTooltip03" class="form-label">Ville</label>
+                    <input type="text" class="form-control customForm" id="validationTooltip03" required>
+                    <div class="invalid-tooltip">
+                    Veuillez indiquer votre ville.
+                    </div>
+                </div>
+                <div class="col-md-3 position-relative mt-4">
+                    <label for="validationTooltip05" class="form-label-cart">Code postal</label>
+                    <input type="text" class="form-control customForm" id="validationTooltip05" required>
+                    <div class="invalid-tooltip">
+                    Veuillez indiquer votre code postal.
+                    </div>
+                </div>
+                <div class="col-md-3 position-relative mt-4">
+                    <label for="validationTooltip04" class="form-label">Pays</label>
+                    <select class="productColor" id="validationTooltip04" required>
+                    <option selected disabled value="">Choisissez votre pays</option>
+                    <option>France</option>
+                    <option>Islande</option>
+                    <option>Les Îles Galapagos</option>
+                    </select>
+                    <div class="invalid-tooltip">
+                    Veuillez indiquer votre pays.
+                    </div>
+                </div>
+                <div class="col-12 mt-4">
+                    <button class="btn btn-outline-white btn-lg rounded-0 addCartBtn" type="submit">Commander</button>
+                </div>
+            </form>
+        </div>
+   </div>    
 
 <!-- Footer -->
    <div id="contact">
@@ -125,7 +166,7 @@
       <footer>
          <div class="row justify-content-center">
             <div class="col text-center">
-               <img src="src\img\logoOrinocoCadreNoir.png" alt="Site logo"><br>
+               <img src="..\..\..\frontend\images\logoOrinocoCadreNoir.png" alt="Site logo"><br>
                <strong>Contact</strong><br>
                <p>(+33) 00 00 00 00 00 <strong>&middot;</strong> hello@orinoco.com</p>
 
@@ -154,6 +195,7 @@
 
 
 <!-- Optional JavaScript -->
+
 
 
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
