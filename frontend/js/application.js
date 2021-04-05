@@ -1,3 +1,9 @@
+let nombreArticle = localStorage.getItem("cartNumbers");
+document.querySelector(
+  ".showNumberOfProductInCart"
+).textContent = nombreArticle;
+
+
 class App{
 
     // obtenir l'id par l'url
@@ -35,7 +41,7 @@ class App{
 
 
     static upDatePrice(e,htmlElt){
-        let val =e.target.value;
-        htmlElt.textContent  = parseInt(val)*price;
+        let val = e.target.value;
+        htmlElt.textContent = parseInt(val)*price;
     }
 }

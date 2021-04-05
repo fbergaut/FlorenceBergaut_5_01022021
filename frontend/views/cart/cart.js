@@ -2,6 +2,9 @@ let oneOrder='';
 
 let list = document.querySelector(".productCartWrapper");
 
+
+
+
   // Création d'une Class CartUI : gérer les taches de la vue panier.html
 
   class CartUI {
@@ -31,7 +34,7 @@ let list = document.querySelector(".productCartWrapper");
 
     static addOrderToList(order) {
       let nbProducts = JSON.parse(localStorage.getItem("orders")).length;
-
+      
       oneOrder += `<div class="productWrapper">
                       <div class="imgCartWrapper">
                           <a href="#">
@@ -64,7 +67,7 @@ let list = document.querySelector(".productCartWrapper");
                                   <button type="button" class="moveCartBtn">Déplacer vers mes favoris</button>
                               </div>
                               <div class="cartPrice">
-                                  <p>${order.price}</p>
+                                  <p><span id="priceInCart" onchange="changePrice(event)">${order.price}</span></p>
                               </div>
                           </div>
                       </div>
@@ -156,20 +159,16 @@ class Store {
     localStorage.setItem("orders", JSON.stringify(orders));
   }
 
-  //---------------------Méthode : Indique le nombre de commande dans le panier
+  //---------------------Méthode : Indique le nombre de commandes dans le panier
 
   static cartNumbers() {
     let productNumbers = localStorage.getItem("cartNumbers");
-    console.log(productNumbers);
-    productNumbers = parseInt(productNumbers);
-    if (productNumbers) {
-      localStorage.setItem("cartNumbers", productNumbers + 1);
-      document.querySelector(".cartNumber span").textContent =
-        productNumbers + 1;
-    } else {
-      localStorage.setItem("cartNumbers", 1);
-      document.querySelector(".cartNumber span").textContent = 1;
+    if(productNumbers === null) {
+      productNumbers = 0;
     }
+    productNumbers = parseInt(productNumbers);
+    localStorage.setItem("cartNumbers", productNumbers + 1);
+    document.querySelector(".showNumberOfProductInCart").textContent = localStorage.getItem("cartNumbers");
   }
 }
 
@@ -186,3 +185,13 @@ if(list){
   }
  
 }
+
+// Event: Mettre à jour le prix en fonction de la quantité
+
+document.querySelector('.productQuantityCart').addEventListener('change', (e) => {
+  e.preventDefault();
+  price = JSON.parse(localStorage.getItem("orders")).price;
+  console.log(price);
+  App.upDatePrice(e, priceInCart);
+});
+

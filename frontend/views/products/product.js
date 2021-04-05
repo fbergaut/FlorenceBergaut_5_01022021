@@ -96,7 +96,6 @@ let bear = App.getProduct("http://localhost:3000/api/teddies/" + id)
       if (color === "Choisir la couleur") {
         CartUI.showAlert('Veuillez choisir une couleur', 'danger')
       } else {
-
         // Créer des instances de Order
 
         let num = 1;
@@ -107,27 +106,46 @@ let bear = App.getProduct("http://localhost:3000/api/teddies/" + id)
           num = items[items.length - 1].numProd + 1;
         }
 
-        const order = new Order(id, productName, image, price, color, quantity, num);
+        const order = new Order(
+          id,
+          productName,
+          image,
+          price,
+          color,
+          quantity,
+          num
+        );
 
         console.log(order);
 
         // Ajouter une commande au Store
-          
+
         Store.addOrder(order);
 
         // Vider les champs du formulaire
 
         CartUI.clearFields();
-        
-    //  console.log("aller vers le panier");
-    //  window.location.assign(window.location.origin + '/frontend/views/cart/cart.html');
-    }});
+
+        // Afficher nombre de commandes dans le cart
+
+        Store.cartNumbers();
+
+        //  console.log("aller vers le panier");
+        //  window.location.assign(window.location.origin + '/frontend/views/cart/cart.html');
+      }});
 
 
     // Event: Ajouter le nombre de commandes qui se trouve dans le panier
-    document.querySelector("#sendForm").addEventListener("click", (e) => {
-      Store.cartNumbers();
-    });
+    // let form = document.querySelector("#sendForm");
+    // console.log(form);
+    // if (form) {
+    //   form.addEventListener("click", (e) => {
+    //     Store.cartNumbers();
+    //   });
+    // }
+    // document.querySelector("#sendForm").addEventListener("click", (e) => {
+    //   Store.cartNumbers();
+    // });
 
 
 
