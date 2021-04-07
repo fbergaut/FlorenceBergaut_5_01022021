@@ -135,18 +135,5 @@ let bear = App.getProduct("http://localhost:3000/api/teddies/" + id)
       }});
 
 
-    // Event: Ajouter le nombre de commandes qui se trouve dans le panier
-    // let form = document.querySelector("#sendForm");
-    // console.log(form);
-    // if (form) {
-    //   form.addEventListener("click", (e) => {
-    //     Store.cartNumbers();
-    //   });
-    // }
-    // document.querySelector("#sendForm").addEventListener("click", (e) => {
-    //   Store.cartNumbers();
-    // });
-
-
 
 

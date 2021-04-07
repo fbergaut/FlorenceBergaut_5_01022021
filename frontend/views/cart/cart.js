@@ -37,14 +37,14 @@ let list = document.querySelector(".productCartWrapper");
       
       oneOrder += `<div class="productWrapper">
                       <div class="imgCartWrapper">
-                          <a href="#">
-                              <img class="imgCart" src="${order.image}" alt="${order.productName}">
+                          <a href="../products/product.html?id=${order.id}">
+                            <img class="imgCart" src="${order.image}" alt="${order.productName}">
                           </a>
                       </div>
                       <div class="infoCartWrapper">
                           <div class="firstLineCart">
                               <div class="productName">
-                                  <a class="productName_link" href="#">
+                                  <a class="productName_link" href="../products/product.html?id=${order.id}">
                                       <h3 class="productName_heading">${order.productName}</h3>
                                   </a>
                                   <p class="productName_color">Couleur: ${order.color}</p>
@@ -67,7 +67,7 @@ let list = document.querySelector(".productCartWrapper");
                                   <button type="button" class="moveCartBtn">Déplacer vers mes favoris</button>
                               </div>
                               <div class="cartPrice">
-                                  <p><span id="priceInCart" onchange="changePrice(event)">${order.price}</span></p>
+                                  <p><span id="priceInCart" onchange="upDatePrice(e,htmlElt)">${order.price}</span></p>
                               </div>
                           </div>
                       </div>
@@ -193,5 +193,6 @@ document.querySelector('.productQuantityCart').addEventListener('change', (e) =>
   price = JSON.parse(localStorage.getItem("orders")).price;
   console.log(price);
   App.upDatePrice(e, priceInCart);
+  
 });
 
