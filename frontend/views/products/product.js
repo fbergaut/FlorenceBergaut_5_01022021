@@ -1,19 +1,15 @@
-// On crée une variable "params" qui va nous permettre de stocker l'url des pages produits et on récupère l'_id dans la variable "id".
-
+// Variable "id" : stock l'url des pages produits + leur id
 let id = App.getIdByUrl();
 console.log(id);
 
-// On crée une variable "oneTeddy" qui stockera le code html à afficher
-
+// Variable "oneTeddy" : stockera le code html à afficher
 let oneTeddy = "";
 
-// On crée une variable "oneBearProduct" qui va indiquer où le html dynamique viendra se placer dans la page product.html.
-
+// Variable "oneBearProduct" : stock le html dynamique de la page product.html.
 let oneBearProduct = document.querySelector(".productImg");
 
-// Variable pour avoir le prix d'un produit teddy
-
-let price = 0;
+// Variable "price" : stockera le prix d'un produit teddy
+// let price = 0;
 
 
 // On se connecte à l'API et on récupère un teddy par son id
@@ -26,8 +22,8 @@ let bear = App.getProduct("http://localhost:3000/api/teddies/" + id)
       const optionProductColor = document.createElement("option");
       return (optionProductColor.innerHTML = `<option class="productColorOption">${color}</option>`);
     });
-       
-    price = teddy.price/100;
+
+    price = teddy.price / 100;
 
     // On associe à la variable "oneTeddy" le code html qui viendra s'afficher dynamiquement avec les datas de chaque teddy.
     oneTeddy += `<div class="row">
@@ -62,7 +58,7 @@ let bear = App.getProduct("http://localhost:3000/api/teddies/" + id)
                             <div class="wrapper">
                               <div class="wrapperQuantity">
                                 <label class="hidden" for="quantity">Quantité</label>
-                                  <input class="quantity" type="number" value="1" id="quantity" min="1" max="100" onchange="changePrice(event)">
+                                  <input class="quantity" type="number" value="1" id="quantity" min="1" max="10" onchange="changePrice(event)">
                               </div>
                               <div>
                                 <input type="submit" value="Ajouter au panier" id="sendForm" class="btn btn-outline-pink btn-lg rounded-0 addCartBtn">
@@ -74,8 +70,7 @@ let bear = App.getProduct("http://localhost:3000/api/teddies/" + id)
 
     // On insère le code html dynamique "oneTeddy" à l'endroit indiqué par "oneBearProduct".
     oneBearProduct.innerHTML = oneTeddy;
-  
-    });
+  });
 
     function changePrice(e){
       App.upDatePrice(e,teddyprice);
