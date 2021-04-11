@@ -1,6 +1,15 @@
-// Variable "id" : stock l'url des pages produits + leur id
+// Variable "id" : stock l'id' du produit en passant par l'Url
 let id = App.getIdByUrl();
 console.log(id);
+
+// Variable "price" : stock le prix du produit en passant par l'Url
+let price = App.getPriceByUrl();
+console.log(price);
+
+
+// Variable "unitPrice" : stock le prix unitaire du produit
+let unitPrice = price;
+console.log(price);
 
 // Variable "oneTeddy" : stockera le code html à afficher
 let oneTeddy = "";
@@ -8,16 +17,13 @@ let oneTeddy = "";
 // Variable "oneBearProduct" : stock le html dynamique de la page product.html.
 let oneBearProduct = document.querySelector(".productImg");
 
-// Variable "price" : stockera le prix d'un produit teddy
-// let price = 0;
-
-
-// On se connecte à l'API et on récupère un teddy par son id
+// Connection à l'API et récupèration d'un teddy par son id
 
 let bear = App.getProduct("http://localhost:3000/api/teddies/" + id)
-  // On crée une promesse avec en paramètre "teddy"
+  // Création d'une promesse avec en paramètre "teddy"
+
   .then((teddy) => {
-    // On affiche les options de couleurs
+    // Affichage des options de couleurs
     const colorsOption = teddy.colors.map((color) => {
       const optionProductColor = document.createElement("option");
       return (optionProductColor.innerHTML = `<option class="productColorOption">${color}</option>`);
@@ -25,7 +31,7 @@ let bear = App.getProduct("http://localhost:3000/api/teddies/" + id)
 
     price = teddy.price / 100;
 
-    // On associe à la variable "oneTeddy" le code html qui viendra s'afficher dynamiquement avec les datas de chaque teddy.
+    // Association à la variable "oneTeddy" du code html qui viendra s'afficher dynamiquement avec les datas de chaque teddy.
     oneTeddy += `<div class="row">
                         <div class="col-lg-6">
                           <div class="mainImg">
@@ -68,67 +74,66 @@ let bear = App.getProduct("http://localhost:3000/api/teddies/" + id)
                         </div>
                       </div>`;
 
-    // On insère le code html dynamique "oneTeddy" à l'endroit indiqué par "oneBearProduct".
+    // Insertion code html dynamique "oneTeddy" à l'endroit indiqué par "oneBearProduct".
     oneBearProduct.innerHTML = oneTeddy;
   });
 
-    function changePrice(e){
-      App.upDatePrice(e,teddyprice);
+// Mise à jour prix en fonction de la quantité
+function changePrice(e) {
+  App.upDatePrice(e, teddyprice);
+}
+
+// Event: Ajouter une commande
+document.querySelector(".row").addEventListener("submit", (e) => {
+  // Prevent actual submit
+  e.preventDefault();
+  // Récupérer les valeurs du teddy et de son <form>
+  const productName = document.querySelector(".name").textContent;
+  const image = document.getElementById("image").src;
+  const price = document.querySelector(".price").textContent;
+  const color = document.querySelector(".productColor").value;
+  const quantity = document.querySelector(".quantity").value;
+
+  // Valider le champs choix de couleur
+  if (color === "Choisir la couleur") {
+    CartUI.showAlert("Veuillez choisir une couleur", "danger");
+  } else {
+    // Créer des instances de Order
+
+    let num = 1;
+    const items = JSON.parse(localStorage.getItem("orders"));
+    if (items === null) {
+      num = 1;
+    } else {
+      num = items[items.length - 1].numProd + 1;
     }
-    
-    // Event: Ajouter une commande
-    document.querySelector(".row").addEventListener("submit", (e) => {
-      // Prevent actual submit
-        e.preventDefault();
-          // Récupérer les valeurs du teddy et de son <form>
-      const productName = document.querySelector(".name").textContent;
-      const image = document.getElementById("image").src;
-      const price = document.querySelector(".price").textContent;
-      const color = document.querySelector(".productColor").value;
-      const quantity = document.querySelector(".quantity").value;
 
-      // Valider le champs choix de couleur
-      if (color === "Choisir la couleur") {
-        CartUI.showAlert('Veuillez choisir une couleur', 'danger')
-      } else {
-        // Créer des instances de Order
+    const order = new Order(
+      id,
+      productName,
+      image,
+      price,
+      color,
+      quantity,
+      unitPrice,
+      num
+    );
 
-        let num = 1;
-        const items = JSON.parse(localStorage.getItem("orders"));
-        if (items === null) {
-          num = 1;
-        } else {
-          num = items[items.length - 1].numProd + 1;
-        }
+    console.log(order);
 
-        const order = new Order(
-          id,
-          productName,
-          image,
-          price,
-          color,
-          quantity,
-          num
-        );
+    // Ajouter une commande au Store
 
-        console.log(order);
+    Store.addOrder(order);
 
-        // Ajouter une commande au Store
+    // Afficher nombre de commandes dans le cart
 
-        Store.addOrder(order);
+    Store.cartNumbers();
 
-        // Vider les champs du formulaire
+    // Vider les champs du formulaire
 
-        CartUI.clearFields();
+    CartUI.clearFields();
 
-        // Afficher nombre de commandes dans le cart
-
-        Store.cartNumbers();
-
-        //  console.log("aller vers le panier");
-        //  window.location.assign(window.location.origin + '/frontend/views/cart/cart.html');
-      }});
-
-
-
-
+    //  console.log("aller vers le panier");
+    //  window.location.assign(window.location.origin + '/frontend/views/cart/cart.html');
+  }
+});

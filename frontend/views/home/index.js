@@ -8,14 +8,15 @@ let products = document.querySelector(".products");
 
 // On stock dans la variable bears les datas récupérées de l'API et on les boucle avec map() afin d'afficher chaque teddy
 
-let bears = App.getAllProducts("http://localhost:3000/api/teddies/").then(
+let bears = App.getAllProducts("http://localhost:3000/api/teddies/")
+.then(
   (allProducts) => {
     allProducts.map((bear) => {
       // On stock dans la variable "teddies" les éléments html qui vont permettre d'afficher les datas sur index.html
       teddies += `<div class="col-12 col-lg-3">
-                      <a href="../products/product.html?id=${
-                        bear._id
-                      }" class="productsLink">
+                      <a href="../products/product.html?id=${bear._id}&price=${
+        bear.price / 100
+      }" class="productsLink">
                           <div class="card border-0 bearProduct">
                             <img class="card-img-top" src="${
                               bear.imageUrl

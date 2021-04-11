@@ -4,7 +4,7 @@ let oneOrderHtml = "";
 // Variable "list" : stock le html dy namique de la page cart.html
 let list = document.querySelector(".productCartWrapper");
 
-// Variable "price" : stockera le prix 
+// Variable "price" : stockera le prix
 let totalHtml = "";
 
 // Variable "list" : stock le html dy namique de la page cart.html
@@ -39,8 +39,7 @@ class CartUI {
 
   static addOrderToList(order) {
     let nbProducts = JSON.parse(localStorage.getItem("orders")).length;
-    // price = nbProducts.price;
-    console.log(nbProducts);
+
     oneOrderHtml += `<div class="productWrapper">
                       <div class="imgCartWrapper">
                           <a href="../products/product.html?id=${order.id}">
@@ -56,14 +55,8 @@ class CartUI {
                                   <p class="productName_color">Couleur: ${order.color}</p>
                               </div>
                               <div class="quantityWrapper">
-                                  <select class="productQuantityCart" aria-label="Default select example" onchange="changePrice(event)">
-                                      <option class="productQuantityOption" value="1" selected>${order.quantity}</option>
-                                      <option class="productQuantityOption" value="2">2</option>
-                                      <option class="productQuantityOption" value="3">3</option>
-                                      <option class="productQuantityOption" value="4">4</option>
-                                      <option class="productQuantityOption" value="5">5</option>
-                                      <option class="productQuantityOption" value="6">6</option>
-                                  </select>
+                                  <label class="hidden" for="quantity">Quantité</label>
+                                  <input class="quantityCart" type="number" value="${order.quantity}" id="quantityCart" min="1" max="10" onclick="changeCartPrice(event)">
                               </div>
                           </div>
                           <div class="secondtLineCart">
@@ -91,17 +84,35 @@ class CartUI {
     document.querySelector(".quantity").value = "1";
   }
 
+  //---------------------Méthode : Mise à jour prix d'une commande selon quantity
+
+  static upDatePriceOrder(e) {
+    const priceInCart = document.querySelector('#priceInCart');
+    const quantityInCart = e.target.value;
+    const orders = JSON.parse(localStorage.getItem("orders"));
+    console.log(orders);
+
+    orders.forEach((order, index) => {
+      let unitPrice = parseInt(order.unitPrice);
+      let newPrice = quantityInCart * unitPrice;
+      console.log(index, unitPrice, newPrice, quantityInCart);
+      priceInCart.textContent = newPrice + " €";
+// Je ne sais pas comment mettre à jour le prix dans l'Order-----> marche pas      
+      
+    });
+    localStorage.setItem("orders", JSON.stringify(orders));
+    console.log(orders);
+  }
+
   //---------------------Méthode : Calcul la somme totale
 
   static totalPrice() {
     const listOrder = JSON.parse(localStorage.getItem("orders"));
-    console.log(listOrder);
     let totalPrice = 0;
     listOrder.forEach((order) => {
       let price = parseInt(order.price);
       totalPrice += price;
     });
-    console.log(totalPrice);
     totalHtml += `<div>
                       <h2 class="headingCart">Total</h2>
                   </div>
@@ -126,13 +137,14 @@ class CartUI {
 // Création d'une Class Order : Représentera une commande
 
 class Order {
-  constructor(id, productName, image, price, color, quantity, numProd) {
+  constructor(id, productName, image, price, color, quantity, unitPrice, numProd) {
     this.id = id;
     this.productName = productName;
     this.image = image;
     this.price = price;
     this.color = color;
     this.quantity = quantity;
+    this.unitPrice = unitPrice;
     this.numProd = numProd;
   }
 }
@@ -140,7 +152,7 @@ class Order {
 // Store Class : gérer le stockage de la commande
 
 class Store {
-  //---------------------Méthode : Récupère et stock les commandes dans localStorage en les transformant en un objet
+  //---------------------Méthode : Récupère et stock les commandes dans localStorage en les transformant en un objet dans un tableau
 
   static getOrders() {
     let orders;
@@ -153,7 +165,7 @@ class Store {
     return orders;
   }
 
-  //---------------------Méthode : On met à jour la commande si une commande du produit a déjà été passée
+  //---------------------Méthode : Ajout de commande dans le localStorage + Mise à jour de la commande si une commande du produit a déjà été passée
 
   static addOrder(userOrder) {
     const orders = Store.getOrders();
@@ -178,7 +190,7 @@ class Store {
     }
   }
 
-  //---------------------Méthode : Supprimer une commande du localStorage
+  //---------------------Méthode : Supprimer une commande du localStorage de la clé Orders
 
   static removeOrder(numP) {
     const orders = Store.getOrders();
@@ -205,11 +217,18 @@ class Store {
       ".showNumberOfProductInCart"
     ).textContent = localStorage.getItem("cartNumbers");
   }
+
+  //---------------------Méthode : Supprimer une commande du localStorage de la clé cartNumbers
+
+  static removeCartNumbers() {}
 }
+
+// Afficher les commandes
 
 if (list) {
   CartUI.displayOrders();
 
+  // Supprimer les commandes de l'UI et du localStorage
   function removeAnOrder(e) {
     const numP = e.target.getAttribute("numProd");
     console.log(numP);
@@ -218,15 +237,12 @@ if (list) {
   }
 }
 
-
-// function changePrice(e) {
-  
-//   console.log(priceInCart[1].innerHTML);
-//   App.upDatePrice(e, priceInCart);
-// }
-
-
-
 // Afficher le total à payer
 
 CartUI.totalPrice();
+
+// Mise à jour prix en fonction de la quantité
+function changeCartPrice(e) {
+  CartUI.upDatePriceOrder(e);
+}
+

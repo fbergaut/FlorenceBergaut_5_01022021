@@ -1,4 +1,4 @@
-let price = 0;
+// let price = 0;
 
 // Afficher le nombre de commande dans le panier à côté du panier sur toutes les pages
 let nombreArticle = localStorage.getItem("cartNumbers");
@@ -14,6 +14,13 @@ class App {
   static getIdByUrl() {
     let urlId = new URLSearchParams(document.location.search).get("id");
     return urlId;
+  }
+
+  //---------------------Méthode :  faire passer le prix par l'url
+
+  static getPriceByUrl() {
+    let urlPrice = new URLSearchParams(document.location.search).get("price");
+    return urlPrice;
   }
 
   //---------------------Méthode :  obtenir les datas de l'api de tous les produits
