@@ -230,16 +230,9 @@ class Store {
 
   //---------------------Méthode : Supprimer une commande du localStorage de la clé cartNumbers
 
-  static removeCartNumbers(numP) {
+  static removeCartNumbers() {
     const productNumbers = Store.cartNumbers();
-    console.log(typeof productNumbers);
-    productNumbers.forEach((productNumber, index) => {
-      if (productNumber.numProd == numP) {
-        productNumbers.splice(index, 1);
-      }
-    });
-
-    localStorage.setItem("orders", JSON.stringify(productNumbers));
+    console.log(productNumbers);
   }
 }
 
