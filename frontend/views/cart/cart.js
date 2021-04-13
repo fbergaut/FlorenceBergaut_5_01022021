@@ -1,4 +1,3 @@
-let orderNumber
 
 // Variable "oneOrder" : stockera le code html à afficher
 let oneOrderHtml = "";
@@ -11,6 +10,7 @@ let totalHtml = "";
 
 // Variable "list" : stock le html dy namique de la page cart.html
 let total = document.querySelector(".totalWrapper");
+// let totalTva = document.querySelector(".totalTva");
 
 // Création d'une Class CartUI : gérer les taches de la vue panier.html
 
@@ -89,20 +89,19 @@ class CartUI {
   //---------------------Méthode : Mise à jour prix d'une commande selon quantity
 
   static upDatePriceOrder(e) {
-    const priceInCart = document.querySelectorAll('.priceInCart');
-    let index = e.target.getAttribute('numProd') - 1;
+    const priceInCart = document.querySelectorAll(".priceInCart");
+    let index = e.target.getAttribute("numProd") - 1;
     const quantityInCart = e.target.value;
     const orders = JSON.parse(localStorage.getItem("orders"));
-    let unitPrice = (orders[index].unitPrice);
+    let unitPrice = orders[index].unitPrice;
 
     let newPrice = quantityInCart * unitPrice;
     console.log(index, unitPrice, newPrice, quantityInCart);
     priceInCart[index].textContent = newPrice + " €";
-    orders[index].price = newPrice;
+    orders[index].price = newPrice + " €";
     orders[index].quantity = quantityInCart;
     localStorage.setItem("orders", JSON.stringify(orders));
     console.log(orders);
-    
   }
 
   //---------------------Méthode : Calcul la somme totale
@@ -114,12 +113,20 @@ class CartUI {
       let price = parseInt(order.price);
       totalPrice += price;
     });
+    return totalPrice;
+  }
+
+  //---------------------Méthode : Affichage de la somme totale
+
+  static displayTotalPrice() {
+    let priceToPay = 0;
+    priceToPay = CartUI.totalPrice();
     totalHtml += `<div>
-                      <h2 class="headingCart">Total</h2>
+                    <h2 class="headingCart">Total</h2>
                   </div>
                   <div class="sous-total">
                       <p>Sous-total</p>
-                      <p>${totalPrice} €</p>
+                      <p>${priceToPay} €</p>
                   </div>
                   <div class="delivery">
                       <p>Livraison</p>
@@ -128,7 +135,7 @@ class CartUI {
                   <hr class="strokeBlack">
                   <div class="totalTva">
                       <p><strong>Total (TVA incluse)</strong></p>
-                      <p id="totalPrice"><strong>${totalPrice} €</strong></p>
+                      <p id="totalPrice"><strong>${priceToPay} €</strong></p>
                   </div>`;
 
     total.innerHTML = totalHtml;
@@ -217,11 +224,23 @@ class Store {
     document.querySelector(
       ".showNumberOfProductInCart"
     ).textContent = localStorage.getItem("cartNumbers");
+
+    return productNumbers;
   }
 
   //---------------------Méthode : Supprimer une commande du localStorage de la clé cartNumbers
 
-  static removeCartNumbers() {}
+  static removeCartNumbers(numP) {
+    const productNumbers = Store.cartNumbers();
+    console.log(typeof productNumbers);
+    productNumbers.forEach((productNumber, index) => {
+      if (productNumber.numProd == numP) {
+        productNumbers.splice(index, 1);
+      }
+    });
+
+    localStorage.setItem("orders", JSON.stringify(productNumbers));
+  }
 }
 
 // Afficher les commandes
@@ -238,13 +257,24 @@ if (list) {
   }
 }
 
-// Afficher le total à payer
+
+// Calculer le total à payer
 
 CartUI.totalPrice();
 
 // Mise à jour prix en fonction de la quantité
 function changeCartPrice(e) {
+  
   CartUI.upDatePriceOrder(e);
   CartUI.totalPrice();
+  e.preventDefault();
+  window.location.reload();
 }
+
+// Afficher le total à payer
+
+CartUI.displayTotalPrice();
+console.log(CartUI.totalPrice());
+
+Store.removeCartNumbers();
 
