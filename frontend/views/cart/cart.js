@@ -1,60 +1,64 @@
-let oneOrder='';
 
+// Variable "oneOrder" : stockera le code html à afficher
+let oneOrderHtml = "";
+
+// Variable "list" : stock le html dy namique de la page cart.html
 let list = document.querySelector(".productCartWrapper");
 
-  // Création d'une Class CartUI : gérer les taches de la vue panier.html
+// Variable "price" : stockera le prix
+let totalHtml = "";
 
-  class CartUI {
-    //---------------------Méthode : Affiche message d'erreur si couleur non sélectionnée
+// Variable "list" : stock le html dy namique de la page cart.html
+let total = document.querySelector(".totalWrapper");
+// let totalTva = document.querySelector(".totalTva");
 
-    static showAlert(message, className) {
-      const div = document.createElement("div");
-      div.className = `alert alert-${className}`;
-      div.appendChild(document.createTextNode(message));
-      const container = document.querySelector("#infoWrapper");
-      const form = document.querySelector("#order-form");
-      container.insertBefore(div, form);
+// Création d'une Class CartUI : gérer les taches de la vue panier.html
 
-      // Vanish in 3 seconds
-      setTimeout(() => document.querySelector(".alert").remove(), 3000);
-    }
+class CartUI {
+  //---------------------Méthode : Affiche message d'erreur si couleur non sélectionnée
 
-    //---------------------Méthode : Affiche chaque commande du localStorage
+  static showAlert(message, className) {
+    const div = document.createElement("div");
+    div.className = `alert alert-${className}`;
+    div.appendChild(document.createTextNode(message));
+    const container = document.querySelector("#infoWrapper");
+    const form = document.querySelector("#order-form");
+    container.insertBefore(div, form);
 
-    static displayOrders() {
-      const orders = Store.getOrders();
+    // Disparait au bout de 3 seconds
+    setTimeout(() => document.querySelector(".alert").remove(), 3000);
+  }
 
-      orders.forEach((order) => CartUI.addOrderToList(order));
-    }
+  //---------------------Méthode : Affiche chaque commande du localStorage
 
-    //---------------------Méthode : Affiche les commandes
+  static displayOrders() {
+    const orders = Store.getOrders();
 
-    static addOrderToList(order) {
-      let nbProducts = JSON.parse(localStorage.getItem("orders")).length;
+    orders.forEach((order) => CartUI.addOrderToList(order));
+  }
 
-      oneOrder += `<div class="productWrapper">
+  //---------------------Méthode : Affiche les commandes
+
+  static addOrderToList(order) {
+    let nbProducts = JSON.parse(localStorage.getItem("orders")).length;
+
+    oneOrderHtml += `<div class="productWrapper">
                       <div class="imgCartWrapper">
-                          <a href="#">
-                              <img class="imgCart" src="${order.image}" alt="${order.productName}">
+                          <a href="../products/product.html?id=${order.id}">
+                            <img class="imgCart" src="${order.image}" alt="${order.productName}">
                           </a>
                       </div>
                       <div class="infoCartWrapper">
                           <div class="firstLineCart">
                               <div class="productName">
-                                  <a class="productName_link" href="#">
+                                  <a class="productName_link" href="../products/product.html?id=${order.id}">
                                       <h3 class="productName_heading">${order.productName}</h3>
                                   </a>
                                   <p class="productName_color">Couleur: ${order.color}</p>
                               </div>
                               <div class="quantityWrapper">
-                                  <select class="productQuantityCart" aria-label="Default select example" >
-                                      <option class="productQuantityOption" value="1" selected>${order.quantity}</option>
-                                      <option class="productQuantityOption" value="2">2</option>
-                                      <option class="productQuantityOption" value="3">3</option>
-                                      <option class="productQuantityOption" value="4">4</option>
-                                      <option class="productQuantityOption" value="5">5</option>
-                                      <option class="productQuantityOption" value="6">6</option>
-                                  </select>
+                                  <label class="hidden" for="quantity">Quantité</label>
+                                  <input class="quantityCart" type="number" value="${order.quantity}" id="quantityCart" min="1" max="10" onclick="changeCartPrice(event)" numProd="${order.numProd}">
                               </div>
                           </div>
                           <div class="secondtLineCart">
@@ -64,45 +68,99 @@ let list = document.querySelector(".productCartWrapper");
                                   <button type="button" class="moveCartBtn">Déplacer vers mes favoris</button>
                               </div>
                               <div class="cartPrice">
-                                  <p>${order.price}</p>
+                                  <p><span class="priceInCart">${order.price}</span></p>
                               </div>
                           </div>
                       </div>
                   </div>
-                  <hr class="strokeBlack">`;
+                  <hr class="strokeBlack">
+                  `;
 
-      list.innerHTML = oneOrder;
-    }
-
-    //---------------------Méthode : Réinitialise les champs lorsque la commande est envoyée
-
-    static clearFields() {
-      document.querySelector(".productColor").value = "Choisir la couleur";
-      document.querySelector(".quantity").value = "1";
-    }
+    list.innerHTML = oneOrderHtml;
   }
 
+  //---------------------Méthode : Réinitialise les champs lorsque la commande est envoyée
 
-   // Création d'une Class Order : Représentera une commande
-
-   class Order {
-    
-    constructor(id, productName, image, price, color, quantity,numProd) {
-      this.id = id;
-      this.productName = productName;
-      this.image = image;
-      this.price = price;
-      this.color = color;
-      this.quantity = quantity;
-      this.numProd = numProd;
-    }
+  static clearFields() {
+    document.querySelector(".productColor").value = "Choisir la couleur";
+    document.querySelector(".quantity").value = "1";
   }
 
+  //---------------------Méthode : Mise à jour prix d'une commande selon quantity
+
+  static upDatePriceOrder(e) {
+    const priceInCart = document.querySelectorAll(".priceInCart");
+    let index = e.target.getAttribute("numProd") - 1;
+    const quantityInCart = e.target.value;
+    const orders = JSON.parse(localStorage.getItem("orders"));
+    let unitPrice = orders[index].unitPrice;
+
+    let newPrice = quantityInCart * unitPrice;
+    console.log(index, unitPrice, newPrice, quantityInCart);
+    priceInCart[index].textContent = newPrice + " €";
+    orders[index].price = newPrice + " €";
+    orders[index].quantity = quantityInCart;
+    localStorage.setItem("orders", JSON.stringify(orders));
+    console.log(orders);
+  }
+
+  //---------------------Méthode : Calcul la somme totale
+
+  static totalPrice() {
+    const listOrder = JSON.parse(localStorage.getItem("orders"));
+    let totalPrice = 0;
+    listOrder.forEach((order) => {
+      let price = parseInt(order.price);
+      totalPrice += price;
+    });
+    return totalPrice;
+  }
+
+  //---------------------Méthode : Affichage de la somme totale
+
+  static displayTotalPrice() {
+    let priceToPay = 0;
+    priceToPay = CartUI.totalPrice();
+    totalHtml += `<div>
+                    <h2 class="headingCart">Total</h2>
+                  </div>
+                  <div class="sous-total">
+                      <p>Sous-total</p>
+                      <p>${priceToPay} €</p>
+                  </div>
+                  <div class="delivery">
+                      <p>Livraison</p>
+                      <p>Gratuite</p>
+                  </div>
+                  <hr class="strokeBlack">
+                  <div class="totalTva">
+                      <p><strong>Total (TVA incluse)</strong></p>
+                      <p id="totalPrice"><strong>${priceToPay} €</strong></p>
+                  </div>`;
+
+    total.innerHTML = totalHtml;
+  }
+}
+
+// Création d'une Class Order : Représentera une commande
+
+class Order {
+  constructor(id, productName, image, price, color, quantity, unitPrice, numProd) {
+    this.id = id;
+    this.productName = productName;
+    this.image = image;
+    this.price = price;
+    this.color = color;
+    this.quantity = quantity;
+    this.unitPrice = unitPrice;
+    this.numProd = numProd;
+  }
+}
 
 // Store Class : gérer le stockage de la commande
 
 class Store {
-  //---------------------Méthode : Récupère et stock les commandes dans localStorage en les transformant en un objet
+  //---------------------Méthode : Récupère et stock les commandes dans localStorage en les transformant en un objet dans un tableau
 
   static getOrders() {
     let orders;
@@ -115,13 +173,11 @@ class Store {
     return orders;
   }
 
-  //---------------------Méthode : On met à jour la commande si une commande du produit a déjà été passée
+  //---------------------Méthode : Ajout de commande dans le localStorage + Mise à jour de la commande si une commande du produit a déjà été passée
 
   static addOrder(userOrder) {
     const orders = Store.getOrders();
     let prodExist = false;
-    // ici je voudrais faire plus compliquer mais c'est pas obligatoire
-    // tu peux commenter si tu veux
     // ici on controle si un type de teddy de la même couleur existe déjà--> si oui on met à jour la base
     orders.forEach((order, index) => {
       if (order.id === userOrder.id && order.color === userOrder.color) {
@@ -142,7 +198,7 @@ class Store {
     }
   }
 
-  //---------------------Méthode : Supprimer une commande du localStorage
+  //---------------------Méthode : Supprimer une commande du localStorage de la clé Orders
 
   static removeOrder(numP) {
     const orders = Store.getOrders();
@@ -156,33 +212,62 @@ class Store {
     localStorage.setItem("orders", JSON.stringify(orders));
   }
 
-  //---------------------Méthode : Indique le nombre de commande dans le panier
+  //---------------------Méthode : Indique le nombre de commandes dans le panier
 
   static cartNumbers() {
     let productNumbers = localStorage.getItem("cartNumbers");
-    console.log(productNumbers);
-    productNumbers = parseInt(productNumbers);
-    if (productNumbers) {
-      localStorage.setItem("cartNumbers", productNumbers + 1);
-      document.querySelector(".cartNumber span").textContent =
-        productNumbers + 1;
-    } else {
-      localStorage.setItem("cartNumbers", 1);
-      document.querySelector(".cartNumber span").textContent = 1;
+    if (productNumbers === null) {
+      productNumbers = 0;
     }
+    productNumbers = parseInt(productNumbers);
+    localStorage.setItem("cartNumbers", productNumbers + 1);
+    document.querySelector(
+      ".showNumberOfProductInCart"
+    ).textContent = localStorage.getItem("cartNumbers");
+
+    return productNumbers;
+  }
+
+  //---------------------Méthode : Supprimer une commande du localStorage de la clé cartNumbers
+
+  static removeCartNumbers() {
+    const productNumbers = Store.cartNumbers();
+    console.log(productNumbers);
   }
 }
 
+// Afficher les commandes
 
-if(list){
-   
+if (list) {
   CartUI.displayOrders();
 
-  function removeAnOrder(e){
-    const numP = e.target.getAttribute('numProd');
+  // Supprimer les commandes de l'UI et du localStorage
+  function removeAnOrder(e) {
+    const numP = e.target.getAttribute("numProd");
     console.log(numP);
     Store.removeOrder(numP);
     window.location.reload();
   }
- 
 }
+
+
+// Calculer le total à payer
+
+CartUI.totalPrice();
+
+// Mise à jour prix en fonction de la quantité
+function changeCartPrice(e) {
+  
+  CartUI.upDatePriceOrder(e);
+  CartUI.totalPrice();
+  e.preventDefault();
+  window.location.reload();
+}
+
+// Afficher le total à payer
+
+CartUI.displayTotalPrice();
+console.log(CartUI.totalPrice());
+
+Store.removeCartNumbers();
+

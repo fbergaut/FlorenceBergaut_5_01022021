@@ -262,6 +262,12 @@ h5.card-title {
   width: 200px;
 }
 
+.quantityCart {
+  border: solid .1rem black;
+  padding: .5rem;
+  width: 100px;
+}
+
 /*---------form----------*/
 
 .customForm {
