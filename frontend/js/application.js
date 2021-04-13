@@ -1,5 +1,3 @@
-// let price = 0;
-
 // Afficher le nombre de commande dans le panier à côté du panier sur toutes les pages
 let nombreArticle = localStorage.getItem("cartNumbers");
 document.querySelector(

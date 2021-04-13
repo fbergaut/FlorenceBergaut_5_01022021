@@ -1,3 +1,5 @@
+let orderNumber
+
 // Variable "oneOrder" : stockera le code html à afficher
 let oneOrderHtml = "";
 
@@ -56,7 +58,7 @@ class CartUI {
                               </div>
                               <div class="quantityWrapper">
                                   <label class="hidden" for="quantity">Quantité</label>
-                                  <input class="quantityCart" type="number" value="${order.quantity}" id="quantityCart" min="1" max="10" onclick="changeCartPrice(event)">
+                                  <input class="quantityCart" type="number" value="${order.quantity}" id="quantityCart" min="1" max="10" onclick="changeCartPrice(event)" numProd="${order.numProd}">
                               </div>
                           </div>
                           <div class="secondtLineCart">
@@ -66,7 +68,7 @@ class CartUI {
                                   <button type="button" class="moveCartBtn">Déplacer vers mes favoris</button>
                               </div>
                               <div class="cartPrice">
-                                  <p><span id="priceInCart">${order.price}</span></p>
+                                  <p><span class="priceInCart">${order.price}</span></p>
                               </div>
                           </div>
                       </div>
@@ -87,21 +89,20 @@ class CartUI {
   //---------------------Méthode : Mise à jour prix d'une commande selon quantity
 
   static upDatePriceOrder(e) {
-    const priceInCart = document.querySelector('#priceInCart');
+    const priceInCart = document.querySelectorAll('.priceInCart');
+    let index = e.target.getAttribute('numProd') - 1;
     const quantityInCart = e.target.value;
     const orders = JSON.parse(localStorage.getItem("orders"));
-    console.log(orders);
+    let unitPrice = (orders[index].unitPrice);
 
-    orders.forEach((order, index) => {
-      let unitPrice = parseInt(order.unitPrice);
-      let newPrice = quantityInCart * unitPrice;
-      console.log(index, unitPrice, newPrice, quantityInCart);
-      priceInCart.textContent = newPrice + " €";
-// Je ne sais pas comment mettre à jour le prix dans l'Order-----> marche pas      
-      
-    });
+    let newPrice = quantityInCart * unitPrice;
+    console.log(index, unitPrice, newPrice, quantityInCart);
+    priceInCart[index].textContent = newPrice + " €";
+    orders[index].price = newPrice;
+    orders[index].quantity = quantityInCart;
     localStorage.setItem("orders", JSON.stringify(orders));
     console.log(orders);
+    
   }
 
   //---------------------Méthode : Calcul la somme totale
@@ -244,5 +245,6 @@ CartUI.totalPrice();
 // Mise à jour prix en fonction de la quantité
 function changeCartPrice(e) {
   CartUI.upDatePriceOrder(e);
+  CartUI.totalPrice();
 }
 
