@@ -140,7 +140,137 @@ class CartUI {
 
     total.innerHTML = totalHtml;
   }
+
+  //---------------------Méthode : Sécurisation des champs de saisies côté UI
+
+  static validPrenom(inputPrenom) {
+    let prenomRegExp = new RegExp("^[a-zA-Zçéèêëàâä -]{2,30}$", "g");
+    let userMessagePrenom = inputPrenom.nextElementSibling;
+
+    if (prenomRegExp.test(inputPrenom.value)) {
+      userMessagePrenom.innerHTML = "Votre prénom est enregistré";
+      userMessagePrenom.classList.remove("text-danger");
+      userMessagePrenom.classList.add("text-success");
+      return true;
+    } else {
+      userMessagePrenom.innerHTML = "Prénom invalide";
+      userMessagePrenom.classList.remove("text-success");
+      userMessagePrenom.classList.add("text-danger");
+      return false;
+    }
+  }
+
+  static validNom(inputNom) {
+    let nomRegExp = new RegExp("^[a-zA-Zçéèêëàâä -]{2,30}$", "g");
+    let userMessageNom = inputNom.nextElementSibling;
+
+    if (nomRegExp.test(inputNom.value)) {
+      userMessageNom.innerHTML = "Votre nom est enregistré";
+      userMessageNom.classList.remove("text-danger");
+      userMessageNom.classList.add("text-success");
+      return true;
+    } else {
+      userMessageNom.innerHTML = "Nom invalide";
+      userMessageNom.classList.remove("text-success");
+      userMessageNom.classList.add("text-danger");
+      return false;
+    }
+  }
+
+  static validEmail(inputEmail) {
+    let emailRegExp = new RegExp(
+      "^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$",
+      "g"
+    );
+    let userMessageEmail = inputEmail.nextElementSibling;
+
+    if (emailRegExp.test(inputEmail.value)) {
+      userMessageEmail.innerHTML = "Votre email est enregistré";
+      userMessageEmail.classList.remove("text-danger");
+      userMessageEmail.classList.add("text-success");
+      return true;
+    } else {
+      userMessageEmail.innerHTML = "Email invalide";
+      userMessageEmail.classList.remove("text-success");
+      userMessageEmail.classList.add("text-danger");
+      return false;
+    }
+  }
+
+  static validAdresse(inputAdresse) {
+    let AdresseRegExp = new RegExp("^[a-zA-Z0-9.-_ çéèêëàâä]{5,100}$", "g");
+    let userMessageAdresse = inputAdresse.nextElementSibling;
+
+    if (AdresseRegExp.test(inputAdresse.value)) {
+      userMessageAdresse.innerHTML = "Votre adresse est enregistrée";
+      userMessageAdresse.classList.remove("text-danger");
+      userMessageAdresse.classList.add("text-success");
+      return true;
+    } else {
+      userMessageAdresse.innerHTML = "Adresse invalide";
+      userMessageAdresse.classList.remove("text-success");
+      userMessageAdresse.classList.add("text-danger");
+      return false;
+    }
+  }
+
+  static validVille(inputVille) {
+    let villeRegExp = new RegExp("^[a-zA-Z0-9.-_çéèêëàâä ]{5,60}$", "g");
+    let userMessageVille = inputVille.nextElementSibling;
+
+    if (villeRegExp.test(inputVille.value)) {
+      userMessageVille.innerHTML = "Votre ville est enregistrée";
+      userMessageVille.classList.remove("text-danger");
+      userMessageVille.classList.add("text-success");
+      return true;
+    } else {
+      userMessageVille.innerHTML = "Ville invalide";
+      userMessageVille.classList.remove("text-success");
+      userMessageVille.classList.add("text-danger");
+      return false;
+    }
+  }
+
+  static validCodePostal(inputCodePostal) {
+    let codePostalRegExp = new RegExp("^[0-9]{5}$", "g");
+    let userMessageCodePostal = inputCodePostal.nextElementSibling;
+
+    if (codePostalRegExp.test(inputCodePostal.value)) {
+      userMessageCodePostal.innerHTML = "Votre code postal est enregistré";
+      userMessageCodePostal.classList.remove("text-danger");
+      userMessageCodePostal.classList.add("text-success");
+      return true;
+    } else {
+      userMessageCodePostal.innerHTML = "Code postal invalide";
+      userMessageCodePostal.classList.remove("text-success");
+      userMessageCodePostal.classList.add("text-danger");
+      return false;
+    }
+  }
+
+  static validPays(inputPays) {
+    const pays = document.querySelector(".pays").value;
+    console.log(pays);
+    let userMessageCodePostal = inputPays.nextElementSibling;
+
+    if (pays === "Choisissez votre pays") {
+      userMessageCodePostal.innerHTML = "Pays invalide";
+      userMessageCodePostal.classList.remove("text-success");
+      userMessageCodePostal.classList.add("text-danger");
+      return false;
+    } else {
+      userMessageCodePostal.innerHTML = "Votre pays est enregistré";
+      userMessageCodePostal.classList.remove("text-danger");
+      userMessageCodePostal.classList.add("text-success");
+      return true;
+    }
+  }
 }
+
+//---------------------Méthode : Sécurisation des champs de saisies
+
+
+
 
 // Création d'une Class Order : Représentera une commande
 
@@ -256,18 +386,86 @@ if (list) {
 CartUI.totalPrice();
 
 // Mise à jour prix en fonction de la quantité
+
 function changeCartPrice(e) {
-  
   CartUI.upDatePriceOrder(e);
   CartUI.totalPrice();
-  e.preventDefault();
   window.location.reload();
 }
 
 // Afficher le total à payer
 
 CartUI.displayTotalPrice();
-console.log(CartUI.totalPrice());
 
-Store.removeCartNumbers();
+//Event : Sécurisation champs de saisies form
+
+let form = document.querySelector("#orderForm");
+
+form.prenom.addEventListener('change', function () {
+  CartUI.validPrenom(this);
+});
+form.nom.addEventListener("change", function () {
+  CartUI.validNom(this);
+});
+form.email.addEventListener("change", function () {
+  CartUI.validEmail(this);
+});
+form.adresse.addEventListener("change", function () {
+  CartUI.validAdresse(this);
+});
+form.ville.addEventListener("change", function () {
+  CartUI.validVille(this);
+});
+form.codePostal.addEventListener("change", function () {
+  CartUI.validCodePostal(this);
+});
+form.pays.addEventListener("change", function () {
+  CartUI.validPays(this);
+});
+
+//Event : Bloque envoi form si champs non-valides
+
+let sendBtn = document.querySelector(".addCartBtn");
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  if (
+    CartUI.validPrenom(form.prenom) &&
+    CartUI.validNom(form.nom) &&
+    CartUI.validEmail(form.email) &&
+    CartUI.validAdresse(form.adresse) &&
+    CartUI.validVille(form.ville) &&
+    CartUI.validCodePostal(form.codePostal) &&
+    CartUI.validPays(form.pays)
+  ) {
+    form.submit();
+  };
+});
+
+  //----------------------------------------------------------------------------------------------------------------------------------------------//
+
+  // Bootstrap code : Contrôle le remplissage des champs et impossible d'envoyer le formulaire si pas fait
+
+//   (function () {
+//     "use strict";
+
+//     // Fetch all the forms we want to apply custom Bootstrap validation styles to
+//     var forms = document.querySelectorAll(".needs-validation");
+
+//     // Loop over them and prevent submission
+//     Array.prototype.slice.call(forms).forEach(function (form) {
+//       form.addEventListener(
+//         "submit",
+//         function (event) {
+//           if (!form.checkValidity()) {
+//             event.preventDefault();
+//             event.stopPropagation();
+//           }
+
+//           form.classList.add("was-validated");
+//         },
+//         false
+//       );
+//     });
+//   }
+// )();
 
