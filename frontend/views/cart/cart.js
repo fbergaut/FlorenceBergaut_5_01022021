@@ -161,7 +161,7 @@ class CartUI {
   }
 
   static validNom(inputNom) {
-    let nomRegExp = new RegExp("^[a-zA-Zçéèêëàâä -]{2,30}$", "g");
+    let nomRegExp = new RegExp("^[a-zA-Zçéèêëàâä -]{2,60}$", "g");
     let userMessageNom = inputNom.nextElementSibling;
 
     if (nomRegExp.test(inputNom.value)) {
@@ -215,7 +215,7 @@ class CartUI {
   }
 
   static validVille(inputVille) {
-    let villeRegExp = new RegExp("^[a-zA-Z0-9.-_çéèêëàâä ]{5,60}$", "g");
+    let villeRegExp = new RegExp("^[a-zA-Z.-_ çéèêëàâä]{2,60}$", "g");
     let userMessageVille = inputVille.nextElementSibling;
 
     if (villeRegExp.test(inputVille.value)) {
@@ -250,7 +250,6 @@ class CartUI {
 
   static validPays(inputPays) {
     const pays = document.querySelector(".pays").value;
-    console.log(pays);
     let userMessageCodePostal = inputPays.nextElementSibling;
 
     if (pays === "Choisissez votre pays") {
@@ -287,6 +286,20 @@ class Order {
   }
 }
 
+// Création d'une Class Contact : Représentera les infos du user qui passe commande
+
+class Contact {
+  constructor(firstName, lastName, address, zipCode, city, country, userEmail) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.address = address;
+    this.zipCode = zipCode;
+    this.city = city;
+    this.country = country;
+    this.userEmail = userEmail;
+  }
+}
+
 // Store Class : gérer le stockage de la commande
 
 class Store {
@@ -301,6 +314,19 @@ class Store {
     }
 
     return orders;
+  }
+
+  //---------------------Méthode : Récupère et stock le user contact dans localStorage en le transformant en un objet dans un tableau
+
+  static getContact() {
+    let contact;
+    if (localStorage.getItem("contact") === null) {
+      contact = [];
+    } else {
+      contact = JSON.parse(localStorage.getItem("contact"));
+    }
+
+    return contact;
   }
 
   //---------------------Méthode : Ajout de commande dans le localStorage + Mise à jour de la commande si une commande du produit a déjà été passée
@@ -326,6 +352,17 @@ class Store {
       orders.push(userOrder);
       localStorage.setItem("orders", JSON.stringify(orders));
     }
+  }
+
+  //---------------------Méthode : Ajout du contact dans le localStorage
+
+  static addContact(userContact) {
+    const contact = Store.getContact();
+    
+      //alert('nouveau produit nouvelle couleur');
+      contact.push(userContact);
+      localStorage.setItem("contact", JSON.stringify(contact));
+    
   }
 
   //---------------------Méthode : Supprimer une commande du localStorage de la clé Orders
@@ -380,7 +417,6 @@ if (list) {
   }
 }
 
-
 // Calculer le total à payer
 
 CartUI.totalPrice();
@@ -399,47 +435,92 @@ CartUI.displayTotalPrice();
 
 //Event : Sécurisation champs de saisies form
 
-let form = document.querySelector("#orderForm");
+const form = document.querySelector("#orderForm");
+const prenom = document.querySelector(".prenom");
+const nom = document.querySelector(".nom");
+const email = document.querySelector(".email");
+const adresse = document.querySelector(".adresse");
+const ville = document.querySelector(".ville");
+const codePostal  = document.querySelector(".codePostal");
+const pays = document.querySelector(".pays");
 
-form.prenom.addEventListener('change', function () {
-  CartUI.validPrenom(this);
+  // On récupère tous les inputs et on les mets dans un array
+const inputs = document.querySelectorAll('.form-control');
+let inputsArray = Array.prototype.slice.call(inputs);
+console.log(inputsArray);
+
+  // On loop sur le inputsArray pour écouter ce qu'il se passe dans les inputs
+inputsArray.forEach((input) => {
+  input.addEventListener('change', () => {
+    CartUI.validPrenom(prenom);
+    CartUI.validNom(nom);
+    CartUI.validEmail(email);
+    CartUI.validAdresse(adresse);
+    CartUI.validVille(ville);
+    CartUI.validCodePostal(codePostal);
+  });
 });
-form.nom.addEventListener("change", function () {
-  CartUI.validNom(this);
-});
-form.email.addEventListener("change", function () {
-  CartUI.validEmail(this);
-});
-form.adresse.addEventListener("change", function () {
-  CartUI.validAdresse(this);
-});
-form.ville.addEventListener("change", function () {
-  CartUI.validVille(this);
-});
-form.codePostal.addEventListener("change", function () {
-  CartUI.validCodePostal(this);
-});
-form.pays.addEventListener("change", function () {
-  CartUI.validPays(this);
+  // On écoute ce qu'il se passe sur le select
+pays.addEventListener("change", () => {
+  CartUI.validPays(pays);
 });
 
-//Event : Bloque envoi form si champs non-valides
+//Event : Envoi une commande
 
-let sendBtn = document.querySelector(".addCartBtn");
-form.addEventListener("submit", function (e) {
+form.addEventListener("submit", (e) => {
   e.preventDefault();
+
+  // Récupérer les valeurs du contact form
+  const firstName = document.querySelector(".prenom").value;
+  const lastName = document.querySelector(".nom").value;
+  const userEmail = document.querySelector(".email").value;
+  const address = document.querySelector(".adresse").value;
+  const city = document.querySelector(".ville").value;
+  const zipCode = document.querySelector(".codePostal").value;
+  const country = document.querySelector(".pays").value;
+
+  // Créer une instance de Contact
+
+  const contact = new Contact(
+    firstName,
+    lastName,
+    address,
+    zipCode,
+    city,
+    country,
+    userEmail
+  );
+
+  // Bloque envoi form si champs non-valides
   if (
-    CartUI.validPrenom(form.prenom) &&
-    CartUI.validNom(form.nom) &&
-    CartUI.validEmail(form.email) &&
-    CartUI.validAdresse(form.adresse) &&
-    CartUI.validVille(form.ville) &&
-    CartUI.validCodePostal(form.codePostal) &&
-    CartUI.validPays(form.pays)
+    CartUI.validPrenom(prenom) &&
+    CartUI.validNom(nom) &&
+    CartUI.validEmail(email) &&
+    CartUI.validAdresse(adresse) &&
+    CartUI.validVille(ville) &&
+    CartUI.validCodePostal(codePostal) &&
+    CartUI.validPays(pays)
   ) {
-    form.submit();
-  };
+    console.log(contact);
+    console.log("aller vers le panier");
+    window.location.assign(window.location.origin + '/frontend/views/orderConfirmation/orderConfirmation.html');
+    // form.submit();
+  } else {
+    CartUI.validPrenom(prenom);
+    CartUI.validNom(nom);
+    CartUI.validEmail(email);
+    CartUI.validAdresse(adresse);
+    CartUI.validVille(ville);
+    CartUI.validCodePostal(codePostal);
+    CartUI.validPays(pays);
+  }
+
+  Store.addContact(contact);
 });
+
+  
+
+
 
   //----------------------------------------------------------------------------------------------------------------------------------------------//
 
