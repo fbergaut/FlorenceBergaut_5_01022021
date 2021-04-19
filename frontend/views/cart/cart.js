@@ -462,7 +462,7 @@ pays.addEventListener("change", () => {
   CartUI.validPays(pays);
 });
 
-// Event : Envoi une commande et infos client
+// Event : Envoi une commande et infos client depuis UI
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -501,10 +501,11 @@ form.addEventListener("submit", (e) => {
     CartUI.validPays(pays)
   ) {
     console.log(contact);
-    // window.location.assign(
-    //   window.location.origin +
-    //     "/frontend/views/orderConfirmation/orderConfirmation.html"
-    // );
+    window.location.assign(
+      window.location.origin +
+        "/frontend/views/orderConfirmation/orderConfirmation.html"
+    );
+    localStorage.removeItem("cartNumbers");
     // form.submit();
   } else {
     CartUI.validPrenom(prenom);
@@ -519,6 +520,43 @@ form.addEventListener("submit", (e) => {
   // Ajouter un contact au Store
 
   Store.addContact(contact);
+});
+
+// Event : Envoi une commande et infos client la requête
+
+form.addEventListener("load", function () {
+  function sendData() {
+    var XHR = new XMLHttpRequest();
+
+    // Liez l'objet FormData et l'élément form
+    var FD = new FormData(form);
+
+    // Définissez ce qui se passe si la soumission s'est opérée avec succès
+    XHR.addEventListener("load", function (event) {
+      alert(event.target.responseText);
+    });
+
+    // Definissez ce qui se passe en cas d'erreur
+    XHR.addEventListener("error", function (event) {
+      alert("Oups! Quelque chose s'est mal passé.");
+    });
+
+    // Configurez la requête
+    XHR.open("POST", "https://example.com/cors.php");
+
+    // Les données envoyées sont ce que l'utilisateur a mis dans le formulaire
+    XHR.send(FD);
+  }
+
+  // Accédez à l'élément form …
+  var form = document.getElementById("orderForm");
+
+  // … et prenez en charge l'événement submit.
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    sendData();
+  });
 });
 
 
