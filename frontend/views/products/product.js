@@ -132,8 +132,5 @@ document.querySelector(".row").addEventListener("submit", (e) => {
     // Vider les champs du formulaire
 
     CartUI.clearFields();
-
-    //  console.log("aller vers le panier");
-    //  window.location.assign(window.location.origin + '/frontend/views/cart/cart.html');
   }
 });

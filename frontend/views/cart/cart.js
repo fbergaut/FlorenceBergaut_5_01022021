@@ -8,9 +8,8 @@ let list = document.querySelector(".productCartWrapper");
 // Variable "price" : stockera le prix
 let totalHtml = "";
 
-// Variable "list" : stock le html dy namique de la page cart.html
+// Variable "list" : stock le html dynamique de la page cart.html
 let total = document.querySelector(".totalWrapper");
-// let totalTva = document.querySelector(".totalTva");
 
 // Création d'une Class CartUI : gérer les taches de la vue panier.html
 
@@ -266,10 +265,6 @@ class CartUI {
   }
 }
 
-//---------------------Méthode : Sécurisation des champs de saisies
-
-
-
 
 // Création d'une Class Order : Représentera une commande
 
@@ -300,7 +295,7 @@ class Contact {
   }
 }
 
-// Store Class : gérer le stockage de la commande
+// Store Class : gérer le stockage de la commande et des infos client
 
 class Store {
   //---------------------Méthode : Récupère et stock les commandes dans localStorage en les transformant en un objet dans un tableau
@@ -358,11 +353,8 @@ class Store {
 
   static addContact(userContact) {
     const contact = Store.getContact();
-    
-      //alert('nouveau produit nouvelle couleur');
-      contact.push(userContact);
-      localStorage.setItem("contact", JSON.stringify(contact));
-    
+    contact.push(userContact);
+    localStorage.setItem("contact", JSON.stringify(contact));
   }
 
   //---------------------Méthode : Supprimer une commande du localStorage de la clé Orders
@@ -409,6 +401,7 @@ if (list) {
   CartUI.displayOrders();
 
   // Supprimer les commandes de l'UI et du localStorage
+
   function removeAnOrder(e) {
     const numP = e.target.getAttribute("numProd");
     console.log(numP);
@@ -433,7 +426,7 @@ function changeCartPrice(e) {
 
 CartUI.displayTotalPrice();
 
-//Event : Sécurisation champs de saisies form
+// Event : Sécurisation champs de saisies form
 
 const form = document.querySelector("#orderForm");
 const prenom = document.querySelector(".prenom");
@@ -444,12 +437,14 @@ const ville = document.querySelector(".ville");
 const codePostal  = document.querySelector(".codePostal");
 const pays = document.querySelector(".pays");
 
-  // On récupère tous les inputs et on les mets dans un array
+  // Récupèrer tous les inputs et les mettre dans un array
+
 const inputs = document.querySelectorAll('.form-control');
 let inputsArray = Array.prototype.slice.call(inputs);
 console.log(inputsArray);
 
-  // On loop sur le inputsArray pour écouter ce qu'il se passe dans les inputs
+  // Looper sur le inputsArray pour écouter ce qu'il se passe dans les inputs
+
 inputsArray.forEach((input) => {
   input.addEventListener('change', () => {
     CartUI.validPrenom(prenom);
@@ -460,17 +455,20 @@ inputsArray.forEach((input) => {
     CartUI.validCodePostal(codePostal);
   });
 });
+
   // On écoute ce qu'il se passe sur le select
+
 pays.addEventListener("change", () => {
   CartUI.validPays(pays);
 });
 
-//Event : Envoi une commande
+// Event : Envoi une commande et infos client
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 
   // Récupérer les valeurs du contact form
+
   const firstName = document.querySelector(".prenom").value;
   const lastName = document.querySelector(".nom").value;
   const userEmail = document.querySelector(".email").value;
@@ -491,7 +489,8 @@ form.addEventListener("submit", (e) => {
     userEmail
   );
 
-  // Bloque envoi form si champs non-valides
+  // Bloquer envoi form si champs non-valides sinon va vers page confirmation de commande
+
   if (
     CartUI.validPrenom(prenom) &&
     CartUI.validNom(nom) &&
@@ -502,8 +501,10 @@ form.addEventListener("submit", (e) => {
     CartUI.validPays(pays)
   ) {
     console.log(contact);
-    console.log("aller vers le panier");
-    window.location.assign(window.location.origin + '/frontend/views/orderConfirmation/orderConfirmation.html');
+    // window.location.assign(
+    //   window.location.origin +
+    //     "/frontend/views/orderConfirmation/orderConfirmation.html"
+    // );
     // form.submit();
   } else {
     CartUI.validPrenom(prenom);
@@ -515,38 +516,9 @@ form.addEventListener("submit", (e) => {
     CartUI.validPays(pays);
   }
 
+  // Ajouter un contact au Store
+
   Store.addContact(contact);
 });
 
-  
-
-
-
-  //----------------------------------------------------------------------------------------------------------------------------------------------//
-
-  // Bootstrap code : Contrôle le remplissage des champs et impossible d'envoyer le formulaire si pas fait
-
-//   (function () {
-//     "use strict";
-
-//     // Fetch all the forms we want to apply custom Bootstrap validation styles to
-//     var forms = document.querySelectorAll(".needs-validation");
-
-//     // Loop over them and prevent submission
-//     Array.prototype.slice.call(forms).forEach(function (form) {
-//       form.addEventListener(
-//         "submit",
-//         function (event) {
-//           if (!form.checkValidity()) {
-//             event.preventDefault();
-//             event.stopPropagation();
-//           }
-
-//           form.classList.add("was-validated");
-//         },
-//         false
-//       );
-//     });
-//   }
-// )();
 
