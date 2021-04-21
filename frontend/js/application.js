@@ -4,7 +4,11 @@ document.querySelector(
   ".showNumberOfProductInCart"
 ).textContent = nombreArticle;
 
-// Création d'une Class App : gérer les récupérations et transmission de données
+
+
+///////////////////////////////////////////////////////////////////////////////////////
+//// Création d'une Class App : gérer les récupérations et transmission de données ////
+///////////////////////////////////////////////////////////////////////////////////////
 
 class App {
   //---------------------Méthode :  faire passer l'id produit par l'url

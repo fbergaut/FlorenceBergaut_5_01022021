@@ -1,14 +1,18 @@
-// On crée la variable "teddies" qui nous permettra d'afficher les éléments html
-
+// Variable "teddies" : afficher les éléments html
 let teddies = "";
 
-// On crée la variable "products" qui nous permettra d'insérer les éléments html au bon endroit de la page index
-
+// Variable "products" : insérer les éléments html au bon endroit de la page index
 let products = document.querySelector(".products");
 
-// On stock dans la variable bears les datas récupérées de l'API et on les boucle avec map() afin d'afficher chaque teddy
 
+
+///______________________________///
+/// Connection API Teddies : GET ///
+///______________________________///
+
+// Variable "bears" :  récupérer les datas 'teddies' de l'API et on les boucle avec map() afin d'afficher chaque teddy
 let bears = App.getAllProducts("http://localhost:3000/api/teddies/")
+
 .then(
   (allProducts) => {
     allProducts.map((bear) => {
@@ -32,9 +36,9 @@ let bears = App.getAllProducts("http://localhost:3000/api/teddies/")
                     </div>`;
     });
 
+    // Insertion code html dynamique "teddies" à l'endroit indiqué par "products".
     products.innerHTML = teddies;
-  }
-);
+  });
 
      
 

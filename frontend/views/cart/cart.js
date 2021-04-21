@@ -10,7 +10,9 @@ let totalHtml = "";
 // Variable "list" : stock le html dynamique de la page cart.html
 let total = document.querySelector(".totalWrapper");
 
-// Création d'une Class CartUI : gérer les taches de la vue panier.html
+//////////////////////////////////////////////////////////////////////////////
+//// Création d'une Class CartUI : gérer les taches de la vue cart.html ////
+//////////////////////////////////////////////////////////////////////////////
 
 class CartUI {
   //---------------------Méthode : Affiche message d'erreur si couleur non sélectionnée
@@ -264,8 +266,9 @@ class CartUI {
   }
 }
 
-
-// Création d'une Class Order : Représentera une commande
+////////////////////////////////////////////////////////////////
+//// Création d'une Class Order : Représentera une commande ////
+////////////////////////////////////////////////////////////////
 
 class Order {
   constructor(id, productName, image, price, color, quantity, unitPrice, numProd) {
@@ -280,7 +283,9 @@ class Order {
   }
 }
 
-// Création d'une Class Contact : Représentera les infos du user qui passe commande
+//////////////////////////////////////////////////////////////////////////////////////////
+//// Création d'une Class Contact : Représentera les infos du user qui passe commande ////
+//////////////////////////////////////////////////////////////////////////////////////////
 
 class Contact {
   constructor(firstName, lastName, address, zipCode, city, country, userEmail) {
@@ -294,7 +299,9 @@ class Contact {
   }
 }
 
-// Store Class : gérer le stockage de la commande et des infos client
+//////////////////////////////////////////////////////////////////////////////////////////
+//// Création d'une Class Store : gérer le stockage de la commande et des infos client ////
+//////////////////////////////////////////////////////////////////////////////////////////
 
 class Store {
   //---------------------Méthode : Récupère et stock les commandes dans localStorage en les transformant en un objet dans un tableau
@@ -394,13 +401,17 @@ class Store {
   }
 }
 
-// Afficher les commandes
 
+
+//////.....................//////
+////// Appel des fonctions //////
+//////.....................//////
+
+// Afficher les commandes
 if (list) {
   CartUI.displayOrders();
 
   // Supprimer les commandes de l'UI et du localStorage
-
   function removeAnOrder(e) {
     const numP = e.target.getAttribute("numProd");
     console.log(numP);
@@ -410,11 +421,9 @@ if (list) {
 }
 
 // Calculer le total à payer
-
 CartUI.totalPrice();
 
 // Mise à jour prix en fonction de la quantité
-
 function changeCartPrice(e) {
   CartUI.upDatePriceOrder(e);
   CartUI.totalPrice();
@@ -422,10 +431,13 @@ function changeCartPrice(e) {
 }
 
 // Afficher le total à payer
-
 CartUI.displayTotalPrice();
 
-// Event : Sécurisation champs de saisies form
+
+
+///---------------------------------------------///
+/// Event : Sécurisation champs de saisies form ///
+///---------------------------------------------///
 
 const form = document.querySelector("#orderForm");
 const prenom = document.querySelector(".prenom");
@@ -437,13 +449,11 @@ const codePostal  = document.querySelector(".codePostal");
 const pays = document.querySelector(".pays");
 
   // Récupèrer tous les inputs et les mettre dans un array
-
 const inputs = document.querySelectorAll('.form-control');
 let inputsArray = Array.prototype.slice.call(inputs);
 console.log(inputsArray);
 
   // Looper sur le inputsArray pour écouter ce qu'il se passe dans les inputs
-
 inputsArray.forEach((input) => {
   input.addEventListener('change', () => {
     CartUI.validPrenom(prenom);
@@ -456,18 +466,20 @@ inputsArray.forEach((input) => {
 });
 
   // On écoute ce qu'il se passe sur le select
-
 pays.addEventListener("change", () => {
   CartUI.validPays(pays);
 });
 
-// Event : Envoi une commande et infos client depuis UI
+
+
+///------------------------------------------------------///
+/// Event : Envoi une commande et infos client depuis UI ///
+///------------------------------------------------------///
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 
   // Récupérer les valeurs du contact form
-
   const firstName = document.querySelector(".prenom").value;
   const lastName = document.querySelector(".nom").value;
   const userEmail = document.querySelector(".email").value;
@@ -477,7 +489,6 @@ form.addEventListener("submit", (e) => {
   const country = document.querySelector(".pays").value;
 
   // Créer une instance de Contact
-
   const contact = new Contact(
     firstName,
     lastName,
@@ -489,7 +500,6 @@ form.addEventListener("submit", (e) => {
   );
 
   // Bloquer envoi form si champs non-valides sinon va vers page confirmation de commande
-
   if (
     CartUI.validPrenom(prenom) &&
     CartUI.validNom(nom) &&
@@ -517,35 +527,31 @@ form.addEventListener("submit", (e) => {
   }
 
   // Ajouter un contact au Store
-
   Store.addContact(contact);
 
-  // Envoi datas
-
-  // Récupérer la commande stocker dans localStorage
-
+  // Récupérer la commande et le contactUser stockés dans localStorage
   const contactUser = JSON.parse(localStorage.getItem("contact"));
   const products = JSON.parse(localStorage.getItem("orders"));
 
   // Créer un objet comprenant les infos du client et sa commande
-
   const datas = {
     contactUser,
     products,
   };
 
   // Transformer l'objet en chaîne de caractères
-
   const data = JSON.stringify(datas);
   console.log(data);
 
   // Variable "orderConfirmationHtml" : stockera le code html à afficher
-
   let orderConfirmationHtml = "";
 
-  // Variable "oneBearProduct" : stock le html dynamique de la page product.html.
+  // Variable "orderConfirmation" : indique où le html dynamique devra s'afficher dans la page product.html.
+  let orderConfirmation = document.querySelector(".cart");
 
-  let orderConfirmation = document.querySelector('.cart');
+  ///______________________________________///
+  /// Connection API Teddies : POST /order ///
+  ///______________________________________///
 
   App.postDatas("http://localhost:3000/api/teddies/order", data).then(
     (data) => {
@@ -575,8 +581,7 @@ form.addEventListener("submit", (e) => {
                             `;
 
       orderConfirmation.innerHTML = orderConfirmationHtml;
-    }
-  );
+    });
 });
 
 
