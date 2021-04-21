@@ -14,7 +14,7 @@ console.log(price);
 // Variable "oneTeddy" : stockera le code html à afficher
 let oneTeddy = "";
 
-// Variable "oneBearProduct" : stock le html dynamique de la page product.html.
+// Variable "oneBearProduct" : indique où doevra se placer le html dynamique de la page product.html.
 let oneBearProduct = document.querySelector(".productImg");
 
 // Connection à l'API et récupèration d'un teddy par son id

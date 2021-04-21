@@ -1,4 +1,3 @@
-
 // Variable "oneOrder" : stockera le code html à afficher
 let oneOrderHtml = "";
 
@@ -520,43 +519,64 @@ form.addEventListener("submit", (e) => {
   // Ajouter un contact au Store
 
   Store.addContact(contact);
-});
 
-// Event : Envoi une commande et infos client la requête
+  // Envoi datas
 
-form.addEventListener("load", function () {
-  function sendData() {
-    var XHR = new XMLHttpRequest();
+  // Récupérer la commande stocker dans localStorage
 
-    // Liez l'objet FormData et l'élément form
-    var FD = new FormData(form);
+  const contactUser = JSON.parse(localStorage.getItem("contact"));
+  const products = JSON.parse(localStorage.getItem("orders"));
 
-    // Définissez ce qui se passe si la soumission s'est opérée avec succès
-    XHR.addEventListener("load", function (event) {
-      alert(event.target.responseText);
-    });
+  // Créer un objet comprenant les infos du client et sa commande
 
-    // Definissez ce qui se passe en cas d'erreur
-    XHR.addEventListener("error", function (event) {
-      alert("Oups! Quelque chose s'est mal passé.");
-    });
+  const datas = {
+    contactUser,
+    products,
+  };
 
-    // Configurez la requête
-    XHR.open("POST", "https://example.com/cors.php");
+  // Transformer l'objet en chaîne de caractères
 
-    // Les données envoyées sont ce que l'utilisateur a mis dans le formulaire
-    XHR.send(FD);
-  }
+  const data = JSON.stringify(datas);
+  console.log(data);
 
-  // Accédez à l'élément form …
-  var form = document.getElementById("orderForm");
+  // Variable "orderConfirmationHtml" : stockera le code html à afficher
 
-  // … et prenez en charge l'événement submit.
-  form.addEventListener("submit", function (event) {
-    event.preventDefault();
+  let orderConfirmationHtml = "";
 
-    sendData();
-  });
+  // Variable "oneBearProduct" : stock le html dynamique de la page product.html.
+
+  let orderConfirmation = document.querySelector('.cart');
+
+  App.postDatas("http://localhost:3000/api/teddies/order", data).then(
+    (data) => {
+      console.log(data);
+      orderConfirmationHtml += `<div class="row">
+                                  <div class="col-lg-12">
+                                      <div class="userName">
+                                        <h2 class="thankYou">Merci pour votre commande ${data.contact.firstName} ${data.contact.lastName}!</h2>
+                                      </div>
+                                      <hr>
+                                  </div>
+                              </div>
+                              <div class="row totalCommandRecap">
+                                  <div> 
+                                      <div>
+                                          <h3 class="commandNumber">Numéro de commande ${data.orderId}</h3>
+                                      </div>
+                                      <div class="gifBear">
+                                          <iframe src="https://giphy.com/embed/12mPLWvJNrEIlG" width="480" height="435" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><a href="https://giphy.com/gifs/ours-12mPLWvJNrEIlG"></a>
+                                      </div>
+                                      <div class="commandRecap">
+                                          <p class="commandRecap_paragraph"><strong>Total (TVA incluse)</strong></p>
+                                          <p class="commandRecap_paragraph"><strong>${data.products.price} €</strong></p>
+                                      </div>
+                                  </div>
+                              </div>
+                            `;
+
+      orderConfirmation.innerHTML = orderConfirmationHtml;
+    }
+  );
 });
 
 

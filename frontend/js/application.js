@@ -47,6 +47,29 @@ class App {
     return response;
   };
 
+  //---------------------Méthode :  envoyer les datas de l'api d'un produit
+
+  static postDatas = async (url, data) => {
+    try {
+      let response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: data,
+      });
+      if (response.ok) {
+        let responseData = response.json();
+        console.log(responseData);
+        return responseData;
+      } else {
+        console.error("Problème du serveur : " + response.status);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   //---------------------Méthode :  mettre à jour le prix
 
   static upDatePrice(e, htmlElt) {
