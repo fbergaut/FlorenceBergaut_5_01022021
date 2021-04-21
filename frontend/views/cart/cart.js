@@ -10,9 +10,11 @@ let totalHtml = "";
 // Variable "list" : stock le html dynamique de la page cart.html
 let total = document.querySelector(".totalWrapper");
 
-//////////////////////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////////////////////////
 //// Création d'une Class CartUI : gérer les taches de la vue cart.html ////
-//////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
 class CartUI {
   //---------------------Méthode : Affiche message d'erreur si couleur non sélectionnée
@@ -101,7 +103,6 @@ class CartUI {
     orders[index].price = newPrice + " €";
     orders[index].quantity = quantityInCart;
     localStorage.setItem("orders", JSON.stringify(orders));
-    console.log(orders);
   }
 
   //---------------------Méthode : Calcul la somme totale
@@ -266,6 +267,8 @@ class CartUI {
   }
 }
 
+
+
 ////////////////////////////////////////////////////////////////
 //// Création d'une Class Order : Représentera une commande ////
 ////////////////////////////////////////////////////////////////
@@ -283,6 +286,8 @@ class Order {
   }
 }
 
+
+
 //////////////////////////////////////////////////////////////////////////////////////////
 //// Création d'une Class Contact : Représentera les infos du user qui passe commande ////
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -299,9 +304,11 @@ class Contact {
   }
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////////////////////////
 //// Création d'une Class Store : gérer le stockage de la commande et des infos client ////
-//////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 class Store {
   //---------------------Méthode : Récupère et stock les commandes dans localStorage en les transformant en un objet dans un tableau
@@ -335,7 +342,8 @@ class Store {
   static addOrder(userOrder) {
     const orders = Store.getOrders();
     let prodExist = false;
-    // ici on controle si un type de teddy de la même couleur existe déjà--> si oui on met à jour la base
+
+    // On controle si un type de teddy de la même couleur existe déjà--> si oui on met à jour la base
     orders.forEach((order, index) => {
       if (order.id === userOrder.id && order.color === userOrder.color) {
         orders[index].price =
@@ -392,13 +400,6 @@ class Store {
 
     return productNumbers;
   }
-
-  //---------------------Méthode : Supprimer une commande du localStorage de la clé cartNumbers
-
-  static removeCartNumbers() {
-    const productNumbers = Store.cartNumbers();
-    console.log(productNumbers);
-  }
 }
 
 
@@ -451,7 +452,6 @@ const pays = document.querySelector(".pays");
   // Récupèrer tous les inputs et les mettre dans un array
 const inputs = document.querySelectorAll('.form-control');
 let inputsArray = Array.prototype.slice.call(inputs);
-console.log(inputsArray);
 
   // Looper sur le inputsArray pour écouter ce qu'il se passe dans les inputs
 inputsArray.forEach((input) => {
@@ -475,113 +475,59 @@ pays.addEventListener("change", () => {
 ///------------------------------------------------------///
 /// Event : Envoi une commande et infos client depuis UI ///
 ///------------------------------------------------------///
+if (form)
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
+    // Récupérer les valeurs du contact form
+    const firstName = document.querySelector(".prenom").value;
+    const lastName = document.querySelector(".nom").value;
+    const userEmail = document.querySelector(".email").value;
+    const address = document.querySelector(".adresse").value;
+    const city = document.querySelector(".ville").value;
+    const zipCode = document.querySelector(".codePostal").value;
+    const country = document.querySelector(".pays").value;
 
-  // Récupérer les valeurs du contact form
-  const firstName = document.querySelector(".prenom").value;
-  const lastName = document.querySelector(".nom").value;
-  const userEmail = document.querySelector(".email").value;
-  const address = document.querySelector(".adresse").value;
-  const city = document.querySelector(".ville").value;
-  const zipCode = document.querySelector(".codePostal").value;
-  const country = document.querySelector(".pays").value;
-
-  // Créer une instance de Contact
-  const contact = new Contact(
-    firstName,
-    lastName,
-    address,
-    zipCode,
-    city,
-    country,
-    userEmail
-  );
-
-  // Bloquer envoi form si champs non-valides sinon va vers page confirmation de commande
-  if (
-    CartUI.validPrenom(prenom) &&
-    CartUI.validNom(nom) &&
-    CartUI.validEmail(email) &&
-    CartUI.validAdresse(adresse) &&
-    CartUI.validVille(ville) &&
-    CartUI.validCodePostal(codePostal) &&
-    CartUI.validPays(pays)
-  ) {
-    console.log(contact);
-    window.location.assign(
-      window.location.origin +
-        "/frontend/views/orderConfirmation/orderConfirmation.html"
+    // Créer une instance de Contact
+    const contact = new Contact(
+      firstName,
+      lastName,
+      address,
+      zipCode,
+      city,
+      userEmail
     );
-    localStorage.removeItem("cartNumbers");
-    // form.submit();
-  } else {
-    CartUI.validPrenom(prenom);
-    CartUI.validNom(nom);
-    CartUI.validEmail(email);
-    CartUI.validAdresse(adresse);
-    CartUI.validVille(ville);
-    CartUI.validCodePostal(codePostal);
-    CartUI.validPays(pays);
-  }
 
-  // Ajouter un contact au Store
-  Store.addContact(contact);
+    // Bloquer envoi form si champs non-valides sinon va vers page confirmation de commande
+    if (
+      CartUI.validPrenom(prenom) &&
+      CartUI.validNom(nom) &&
+      CartUI.validEmail(email) &&
+      CartUI.validAdresse(adresse) &&
+      CartUI.validVille(ville) &&
+      CartUI.validCodePostal(codePostal) &&
+      CartUI.validPays(pays)
+    ) {
 
-  // Récupérer la commande et le contactUser stockés dans localStorage
-  const contactUser = JSON.parse(localStorage.getItem("contact"));
-  const products = JSON.parse(localStorage.getItem("orders"));
+      // sauvegarde du contact dans le
+      Store.addContact(contact);
+      window.location.assign(
+        window.location.origin +
+          "/frontend/views/orderConfirmation/orderConfirmation.html"
+      );
+      console.log(contact);
+      localStorage.removeItem("cartNumbers");
+      // form.submit();
+    } else {
+      CartUI.validPrenom(prenom);
+      CartUI.validNom(nom);
+      CartUI.validEmail(email);
+      CartUI.validAdresse(adresse);
+      CartUI.validVille(ville);
+      CartUI.validCodePostal(codePostal);
+      CartUI.validPays(pays);
+    }
 
-  // Créer un objet comprenant les infos du client et sa commande
-  const datas = {
-    contactUser,
-    products,
-  };
-
-  // Transformer l'objet en chaîne de caractères
-  const data = JSON.stringify(datas);
-  console.log(data);
-
-  // Variable "orderConfirmationHtml" : stockera le code html à afficher
-  let orderConfirmationHtml = "";
-
-  // Variable "orderConfirmation" : indique où le html dynamique devra s'afficher dans la page product.html.
-  let orderConfirmation = document.querySelector(".cart");
-
-  ///______________________________________///
-  /// Connection API Teddies : POST /order ///
-  ///______________________________________///
-
-  App.postDatas("http://localhost:3000/api/teddies/order", data).then(
-    (data) => {
-      console.log(data);
-      orderConfirmationHtml += `<div class="row">
-                                  <div class="col-lg-12">
-                                      <div class="userName">
-                                        <h2 class="thankYou">Merci pour votre commande ${data.contact.firstName} ${data.contact.lastName}!</h2>
-                                      </div>
-                                      <hr>
-                                  </div>
-                              </div>
-                              <div class="row totalCommandRecap">
-                                  <div> 
-                                      <div>
-                                          <h3 class="commandNumber">Numéro de commande ${data.orderId}</h3>
-                                      </div>
-                                      <div class="gifBear">
-                                          <iframe src="https://giphy.com/embed/12mPLWvJNrEIlG" width="480" height="435" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><a href="https://giphy.com/gifs/ours-12mPLWvJNrEIlG"></a>
-                                      </div>
-                                      <div class="commandRecap">
-                                          <p class="commandRecap_paragraph"><strong>Total (TVA incluse)</strong></p>
-                                          <p class="commandRecap_paragraph"><strong>${data.products.price} €</strong></p>
-                                      </div>
-                                  </div>
-                              </div>
-                            `;
-
-      orderConfirmation.innerHTML = orderConfirmationHtml;
-    });
-});
+  });
 
 

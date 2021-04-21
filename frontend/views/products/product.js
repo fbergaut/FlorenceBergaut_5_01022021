@@ -1,15 +1,11 @@
 // Variable "id" : stock l'id' du produit en passant par l'Url
 let id = App.getIdByUrl();
-console.log(id);
 
 // Variable "price" : stock le prix du produit en passant par l'Url
 let price = App.getPriceByUrl();
-console.log(price);
-
 
 // Variable "unitPrice" : stock le prix unitaire du produit
 let unitPrice = price;
-console.log(price);
 
 // Variable "oneTeddy" : stockera le code html à afficher
 let oneTeddy = "";
@@ -138,8 +134,6 @@ document.querySelector(".row").addEventListener("submit", (e) => {
       unitPrice,
       num
     );
-
-    console.log(order);
 
     // Ajouter une commande au Store
     Store.addOrder(order);
