@@ -8,13 +8,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<link rel="stylesheet" href="css/style.css" />
-<link rel="stylesheet" href="css/carousel.css" />
-
-
+<link rel="stylesheet" href="..\..\..\frontend\css\style.css" />
 
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <script src="https://kit.fontawesome.com/e0b5da58c3.js" crossorigin="anonymous"></script>
+<script src="../../js/application.js" defer></script>
+<!-- <script src="../products/product.js" defer></script> -->
+<script src="../cart/cart.js" defer></script>
+<script src="orderConfirmation.js" defer></script>
 
 <title>Orinoco - ours en peluche</title>
 </head>
@@ -25,8 +26,8 @@
     <div class="row">
 <!-- Navigation -->
         <nav class="col navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-            <a class="navbar-brand" href="index.html">
-                <img src="src\img\logoOrinocoCadreBlc.png" alt="Site logo">
+            <a class="navbar-brand" href="..\home\index.html">
+                <img src="..\..\..\frontend\images\logoOrinocoCadreBlc.png" alt="Site logo">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
                 <span class="navbar-toggler-icon"></span>
@@ -37,10 +38,10 @@
                     <a class="nav-link" href="#contact">Contact</i></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="index.html"><i class="fas fa-heart"></i></a>
+                    <a class="nav-link" href="../home/index.html"><i class="fas fa-heart"></i></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="cart.html"><i class="fas fa-shopping-bag"></i></a>
+                    <a class="nav-link" href="../cart/cart.html"><i class="fas fa-shopping-bag"></i><span class="showNumberOfProductInCart">0</span></a>
                 </li>
                 </ul>
             </div>
@@ -51,9 +52,7 @@
     <div class="container cart">
         <div class="row">
             <div class="col-lg-12">
-                <div class="">
-                    <h2 class="thankYou">Merci pour votre commande !</h2>
-                </div>
+                <div class="userName"></div>
                 <hr>
             </div>
         </div>
@@ -79,7 +78,7 @@
       <footer>
          <div class="row justify-content-center">
             <div class="col text-center">
-               <img src="src\img\logoOrinocoCadreNoir.png" alt="Site logo"><br>
+               <img src="..\..\..\frontend\images\logoOrinocoCadreNoir.png" alt="Site logo"><br>
                <strong>Contact</strong><br>
                <p>(+33) 00 00 00 00 00 <strong>&middot;</strong> hello@orinoco.com</p>
 

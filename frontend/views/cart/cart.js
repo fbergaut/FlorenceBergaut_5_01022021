@@ -1,4 +1,3 @@
-
 // Variable "oneOrder" : stockera le code html à afficher
 let oneOrderHtml = "";
 
@@ -8,9 +7,8 @@ let list = document.querySelector(".productCartWrapper");
 // Variable "price" : stockera le prix
 let totalHtml = "";
 
-// Variable "list" : stock le html dy namique de la page cart.html
+// Variable "list" : stock le html dynamique de la page cart.html
 let total = document.querySelector(".totalWrapper");
-// let totalTva = document.querySelector(".totalTva");
 
 // Création d'une Class CartUI : gérer les taches de la vue panier.html
 
@@ -140,7 +138,132 @@ class CartUI {
 
     total.innerHTML = totalHtml;
   }
+
+  //---------------------Méthode : Sécurisation des champs de saisies côté UI
+
+  static validPrenom(inputPrenom) {
+    let prenomRegExp = new RegExp("^[a-zA-Zçéèêëàâä -]{2,30}$", "g");
+    let userMessagePrenom = inputPrenom.nextElementSibling;
+
+    if (prenomRegExp.test(inputPrenom.value)) {
+      userMessagePrenom.innerHTML = "Votre prénom est enregistré";
+      userMessagePrenom.classList.remove("text-danger");
+      userMessagePrenom.classList.add("text-success");
+      return true;
+    } else {
+      userMessagePrenom.innerHTML = "Prénom invalide";
+      userMessagePrenom.classList.remove("text-success");
+      userMessagePrenom.classList.add("text-danger");
+      return false;
+    }
+  }
+
+  static validNom(inputNom) {
+    let nomRegExp = new RegExp("^[a-zA-Zçéèêëàâä -]{2,60}$", "g");
+    let userMessageNom = inputNom.nextElementSibling;
+
+    if (nomRegExp.test(inputNom.value)) {
+      userMessageNom.innerHTML = "Votre nom est enregistré";
+      userMessageNom.classList.remove("text-danger");
+      userMessageNom.classList.add("text-success");
+      return true;
+    } else {
+      userMessageNom.innerHTML = "Nom invalide";
+      userMessageNom.classList.remove("text-success");
+      userMessageNom.classList.add("text-danger");
+      return false;
+    }
+  }
+
+  static validEmail(inputEmail) {
+    let emailRegExp = new RegExp(
+      "^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$",
+      "g"
+    );
+    let userMessageEmail = inputEmail.nextElementSibling;
+
+    if (emailRegExp.test(inputEmail.value)) {
+      userMessageEmail.innerHTML = "Votre email est enregistré";
+      userMessageEmail.classList.remove("text-danger");
+      userMessageEmail.classList.add("text-success");
+      return true;
+    } else {
+      userMessageEmail.innerHTML = "Email invalide";
+      userMessageEmail.classList.remove("text-success");
+      userMessageEmail.classList.add("text-danger");
+      return false;
+    }
+  }
+
+  static validAdresse(inputAdresse) {
+    let AdresseRegExp = new RegExp("^[a-zA-Z0-9.-_ çéèêëàâä]{5,100}$", "g");
+    let userMessageAdresse = inputAdresse.nextElementSibling;
+
+    if (AdresseRegExp.test(inputAdresse.value)) {
+      userMessageAdresse.innerHTML = "Votre adresse est enregistrée";
+      userMessageAdresse.classList.remove("text-danger");
+      userMessageAdresse.classList.add("text-success");
+      return true;
+    } else {
+      userMessageAdresse.innerHTML = "Adresse invalide";
+      userMessageAdresse.classList.remove("text-success");
+      userMessageAdresse.classList.add("text-danger");
+      return false;
+    }
+  }
+
+  static validVille(inputVille) {
+    let villeRegExp = new RegExp("^[a-zA-Z.-_ çéèêëàâä]{2,60}$", "g");
+    let userMessageVille = inputVille.nextElementSibling;
+
+    if (villeRegExp.test(inputVille.value)) {
+      userMessageVille.innerHTML = "Votre ville est enregistrée";
+      userMessageVille.classList.remove("text-danger");
+      userMessageVille.classList.add("text-success");
+      return true;
+    } else {
+      userMessageVille.innerHTML = "Ville invalide";
+      userMessageVille.classList.remove("text-success");
+      userMessageVille.classList.add("text-danger");
+      return false;
+    }
+  }
+
+  static validCodePostal(inputCodePostal) {
+    let codePostalRegExp = new RegExp("^[0-9]{5}$", "g");
+    let userMessageCodePostal = inputCodePostal.nextElementSibling;
+
+    if (codePostalRegExp.test(inputCodePostal.value)) {
+      userMessageCodePostal.innerHTML = "Votre code postal est enregistré";
+      userMessageCodePostal.classList.remove("text-danger");
+      userMessageCodePostal.classList.add("text-success");
+      return true;
+    } else {
+      userMessageCodePostal.innerHTML = "Code postal invalide";
+      userMessageCodePostal.classList.remove("text-success");
+      userMessageCodePostal.classList.add("text-danger");
+      return false;
+    }
+  }
+
+  static validPays(inputPays) {
+    const pays = document.querySelector(".pays").value;
+    let userMessageCodePostal = inputPays.nextElementSibling;
+
+    if (pays === "Choisissez votre pays") {
+      userMessageCodePostal.innerHTML = "Pays invalide";
+      userMessageCodePostal.classList.remove("text-success");
+      userMessageCodePostal.classList.add("text-danger");
+      return false;
+    } else {
+      userMessageCodePostal.innerHTML = "Votre pays est enregistré";
+      userMessageCodePostal.classList.remove("text-danger");
+      userMessageCodePostal.classList.add("text-success");
+      return true;
+    }
+  }
 }
+
 
 // Création d'une Class Order : Représentera une commande
 
@@ -157,7 +280,21 @@ class Order {
   }
 }
 
-// Store Class : gérer le stockage de la commande
+// Création d'une Class Contact : Représentera les infos du user qui passe commande
+
+class Contact {
+  constructor(firstName, lastName, address, zipCode, city, country, userEmail) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.address = address;
+    this.zipCode = zipCode;
+    this.city = city;
+    this.country = country;
+    this.userEmail = userEmail;
+  }
+}
+
+// Store Class : gérer le stockage de la commande et des infos client
 
 class Store {
   //---------------------Méthode : Récupère et stock les commandes dans localStorage en les transformant en un objet dans un tableau
@@ -171,6 +308,19 @@ class Store {
     }
 
     return orders;
+  }
+
+  //---------------------Méthode : Récupère et stock le user contact dans localStorage en le transformant en un objet dans un tableau
+
+  static getContact() {
+    let contact;
+    if (localStorage.getItem("contact") === null) {
+      contact = [];
+    } else {
+      contact = JSON.parse(localStorage.getItem("contact"));
+    }
+
+    return contact;
   }
 
   //---------------------Méthode : Ajout de commande dans le localStorage + Mise à jour de la commande si une commande du produit a déjà été passée
@@ -196,6 +346,14 @@ class Store {
       orders.push(userOrder);
       localStorage.setItem("orders", JSON.stringify(orders));
     }
+  }
+
+  //---------------------Méthode : Ajout du contact dans le localStorage
+
+  static addContact(userContact) {
+    const contact = Store.getContact();
+    contact.push(userContact);
+    localStorage.setItem("contact", JSON.stringify(contact));
   }
 
   //---------------------Méthode : Supprimer une commande du localStorage de la clé Orders
@@ -242,6 +400,7 @@ if (list) {
   CartUI.displayOrders();
 
   // Supprimer les commandes de l'UI et du localStorage
+
   function removeAnOrder(e) {
     const numP = e.target.getAttribute("numProd");
     console.log(numP);
@@ -250,24 +409,174 @@ if (list) {
   }
 }
 
-
 // Calculer le total à payer
 
 CartUI.totalPrice();
 
 // Mise à jour prix en fonction de la quantité
+
 function changeCartPrice(e) {
-  
   CartUI.upDatePriceOrder(e);
   CartUI.totalPrice();
-  e.preventDefault();
   window.location.reload();
 }
 
 // Afficher le total à payer
 
 CartUI.displayTotalPrice();
-console.log(CartUI.totalPrice());
 
-Store.removeCartNumbers();
+// Event : Sécurisation champs de saisies form
+
+const form = document.querySelector("#orderForm");
+const prenom = document.querySelector(".prenom");
+const nom = document.querySelector(".nom");
+const email = document.querySelector(".email");
+const adresse = document.querySelector(".adresse");
+const ville = document.querySelector(".ville");
+const codePostal  = document.querySelector(".codePostal");
+const pays = document.querySelector(".pays");
+
+  // Récupèrer tous les inputs et les mettre dans un array
+
+const inputs = document.querySelectorAll('.form-control');
+let inputsArray = Array.prototype.slice.call(inputs);
+console.log(inputsArray);
+
+  // Looper sur le inputsArray pour écouter ce qu'il se passe dans les inputs
+
+inputsArray.forEach((input) => {
+  input.addEventListener('change', () => {
+    CartUI.validPrenom(prenom);
+    CartUI.validNom(nom);
+    CartUI.validEmail(email);
+    CartUI.validAdresse(adresse);
+    CartUI.validVille(ville);
+    CartUI.validCodePostal(codePostal);
+  });
+});
+
+  // On écoute ce qu'il se passe sur le select
+
+pays.addEventListener("change", () => {
+  CartUI.validPays(pays);
+});
+
+// Event : Envoi une commande et infos client depuis UI
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  // Récupérer les valeurs du contact form
+
+  const firstName = document.querySelector(".prenom").value;
+  const lastName = document.querySelector(".nom").value;
+  const userEmail = document.querySelector(".email").value;
+  const address = document.querySelector(".adresse").value;
+  const city = document.querySelector(".ville").value;
+  const zipCode = document.querySelector(".codePostal").value;
+  const country = document.querySelector(".pays").value;
+
+  // Créer une instance de Contact
+
+  const contact = new Contact(
+    firstName,
+    lastName,
+    address,
+    zipCode,
+    city,
+    country,
+    userEmail
+  );
+
+  // Bloquer envoi form si champs non-valides sinon va vers page confirmation de commande
+
+  if (
+    CartUI.validPrenom(prenom) &&
+    CartUI.validNom(nom) &&
+    CartUI.validEmail(email) &&
+    CartUI.validAdresse(adresse) &&
+    CartUI.validVille(ville) &&
+    CartUI.validCodePostal(codePostal) &&
+    CartUI.validPays(pays)
+  ) {
+    console.log(contact);
+    window.location.assign(
+      window.location.origin +
+        "/frontend/views/orderConfirmation/orderConfirmation.html"
+    );
+    localStorage.removeItem("cartNumbers");
+    // form.submit();
+  } else {
+    CartUI.validPrenom(prenom);
+    CartUI.validNom(nom);
+    CartUI.validEmail(email);
+    CartUI.validAdresse(adresse);
+    CartUI.validVille(ville);
+    CartUI.validCodePostal(codePostal);
+    CartUI.validPays(pays);
+  }
+
+  // Ajouter un contact au Store
+
+  Store.addContact(contact);
+
+  // Envoi datas
+
+  // Récupérer la commande stocker dans localStorage
+
+  const contactUser = JSON.parse(localStorage.getItem("contact"));
+  const products = JSON.parse(localStorage.getItem("orders"));
+
+  // Créer un objet comprenant les infos du client et sa commande
+
+  const datas = {
+    contactUser,
+    products,
+  };
+
+  // Transformer l'objet en chaîne de caractères
+
+  const data = JSON.stringify(datas);
+  console.log(data);
+
+  // Variable "orderConfirmationHtml" : stockera le code html à afficher
+
+  let orderConfirmationHtml = "";
+
+  // Variable "oneBearProduct" : stock le html dynamique de la page product.html.
+
+  let orderConfirmation = document.querySelector('.cart');
+
+  App.postDatas("http://localhost:3000/api/teddies/order", data).then(
+    (data) => {
+      console.log(data);
+      orderConfirmationHtml += `<div class="row">
+                                  <div class="col-lg-12">
+                                      <div class="userName">
+                                        <h2 class="thankYou">Merci pour votre commande ${data.contact.firstName} ${data.contact.lastName}!</h2>
+                                      </div>
+                                      <hr>
+                                  </div>
+                              </div>
+                              <div class="row totalCommandRecap">
+                                  <div> 
+                                      <div>
+                                          <h3 class="commandNumber">Numéro de commande ${data.orderId}</h3>
+                                      </div>
+                                      <div class="gifBear">
+                                          <iframe src="https://giphy.com/embed/12mPLWvJNrEIlG" width="480" height="435" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><a href="https://giphy.com/gifs/ours-12mPLWvJNrEIlG"></a>
+                                      </div>
+                                      <div class="commandRecap">
+                                          <p class="commandRecap_paragraph"><strong>Total (TVA incluse)</strong></p>
+                                          <p class="commandRecap_paragraph"><strong>${data.products.price} €</strong></p>
+                                      </div>
+                                  </div>
+                              </div>
+                            `;
+
+      orderConfirmation.innerHTML = orderConfirmationHtml;
+    }
+  );
+});
+
 
