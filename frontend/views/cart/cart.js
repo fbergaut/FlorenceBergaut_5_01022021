@@ -35,7 +35,6 @@ class CartUI {
 
   static displayOrders() {
     const orders = Store.getOrders();
-
     orders.forEach((order) => CartUI.addOrderToList(order));
   }
 
