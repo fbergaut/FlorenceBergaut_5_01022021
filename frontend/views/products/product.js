@@ -1,12 +1,6 @@
 // Variable "id" : stock l'id' du produit en passant par l'Url
 let id = App.getIdByUrl();
 
-// Variable "price" : stock le prix du produit en passant par l'Url
-let price = App.getPriceByUrl();
-
-// Variable "unitPrice" : stock le prix unitaire du produit
-let unitPrice = price;
-
 // Variable "oneTeddy" : stockera le code html à afficher
 let oneTeddy = "";
 

@@ -38,7 +38,7 @@ let priceOrderConf = document.querySelector(".commandRecap");
 
   // Transformer l'objet en chaîne de caractères
   const datas = JSON.stringify(datasOrder);
- 
+ console.log(datas);
   // Variable "orderConfirmationHtml" : stockera le code html à afficher
   let orderConfirmationHtml = "";
 

@@ -10,6 +10,12 @@ let totalHtml = "";
 // Variable "list" : stock le html dynamique de la page cart.html
 let total = document.querySelector(".totalWrapper");
 
+// Variable "price" : stock le prix du produit en passant par l'Url
+let price = App.getPriceByUrl();
+
+// Variable "unitPrice" : stock le prix unitaire du produit
+let unitPrice = price;
+
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -292,13 +298,12 @@ class Order {
 //////////////////////////////////////////////////////////////////////////////////////////
 
 class Contact {
-  constructor(firstName, lastName, address, zipCode, city, country, userEmail) {
+  constructor(firstName, lastName, address, zipCode, city, userEmail) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.address = address;
     this.zipCode = zipCode;
     this.city = city;
-    this.country = country;
     this.userEmail = userEmail;
   }
 }
@@ -485,7 +490,6 @@ if (form)
     const address = document.querySelector(".adresse").value;
     const city = document.querySelector(".ville").value;
     const zipCode = document.querySelector(".codePostal").value;
-    const country = document.querySelector(".pays").value;
 
     // Créer une instance de Contact
     const contact = new Contact(
