@@ -10,12 +10,6 @@ let totalHtml = "";
 // Variable "list" : stock le html dynamique de la page cart.html
 let total = document.querySelector(".totalWrapper");
 
-// Variable "price" : stock le prix du produit en passant par l'Url
-let price = App.getPriceByUrl();
-
-// Variable "unitPrice" : stock le prix unitaire du produit
-let unitPrice = price;
-
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -105,15 +99,20 @@ class CartUI {
     let newPrice = quantityInCart * unitPrice;
     console.log(index, unitPrice, newPrice, quantityInCart);
     priceInCart[index].textContent = newPrice + " €";
-    orders[index].price = newPrice + " €";
+    orders[index].price = newPrice;
     orders[index].quantity = quantityInCart;
     localStorage.setItem("orders", JSON.stringify(orders));
+    console.log(orders);
   }
 
   //---------------------Méthode : Calcul la somme totale
 
   static totalPrice() {
     const listOrder = JSON.parse(localStorage.getItem("orders"));
+
+    if (listOrder === null) {
+      return;
+    }
     let totalPrice = 0;
     listOrder.forEach((order) => {
       let price = parseInt(order.price);
@@ -144,8 +143,9 @@ class CartUI {
                       <p id="totalPrice"><strong>${priceToPay} €</strong></p>
                   </div>`;
 
-    total.innerHTML = totalHtml;
+    if (total) total.innerHTML = totalHtml;
   }
+
 
   //---------------------Méthode : Sécurisation des champs de saisies côté UI
 
@@ -189,7 +189,7 @@ class CartUI {
       "g"
     );
     let userMessageEmail = inputEmail.nextElementSibling;
-
+    console.log(userMessageEmail);
     if (emailRegExp.test(inputEmail.value)) {
       userMessageEmail.innerHTML = "Votre email est enregistré";
       userMessageEmail.classList.remove("text-danger");
@@ -298,13 +298,12 @@ class Order {
 //////////////////////////////////////////////////////////////////////////////////////////
 
 class Contact {
-  constructor(firstName, lastName, address, zipCode, city, userEmail) {
+  constructor(firstName, lastName, address, city, email) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.address = address;
-    this.zipCode = zipCode;
     this.city = city;
-    this.userEmail = userEmail;
+    this.email = email;
   }
 }
 
@@ -333,7 +332,7 @@ class Store {
   static getContact() {
     let contact;
     if (localStorage.getItem("contact") === null) {
-      contact = [];
+      contact = "";
     } else {
       contact = JSON.parse(localStorage.getItem("contact"));
     }
@@ -347,7 +346,7 @@ class Store {
     const orders = Store.getOrders();
     let prodExist = false;
 
-    // On controle si un type de teddy de la même couleur existe déjà--> si oui on met à jour la base
+    // ici on controle si un type de teddy de la même couleur existe déjà--> si oui on met à jour la base
     orders.forEach((order, index) => {
       if (order.id === userOrder.id && order.color === userOrder.color) {
         orders[index].price =
@@ -370,8 +369,11 @@ class Store {
   //---------------------Méthode : Ajout du contact dans le localStorage
 
   static addContact(userContact) {
-    const contact = Store.getContact();
-    contact.push(userContact);
+    let contact = Store.getContact();
+
+    if (!contact) {
+      contact = userContact;
+    }
     localStorage.setItem("contact", JSON.stringify(contact));
   }
 
@@ -417,6 +419,7 @@ if (list) {
   CartUI.displayOrders();
 
   // Supprimer les commandes de l'UI et du localStorage
+
   function removeAnOrder(e) {
     const numP = e.target.getAttribute("numProd");
     console.log(numP);
@@ -447,7 +450,7 @@ CartUI.displayTotalPrice();
 const form = document.querySelector("#orderForm");
 const prenom = document.querySelector(".prenom");
 const nom = document.querySelector(".nom");
-const email = document.querySelector(".email");
+const userEmail = document.querySelector(".email");
 const adresse = document.querySelector(".adresse");
 const ville = document.querySelector(".ville");
 const codePostal  = document.querySelector(".codePostal");
@@ -462,7 +465,7 @@ inputsArray.forEach((input) => {
   input.addEventListener('change', () => {
     CartUI.validPrenom(prenom);
     CartUI.validNom(nom);
-    CartUI.validEmail(email);
+    CartUI.validEmail(userEmail);
     CartUI.validAdresse(adresse);
     CartUI.validVille(ville);
     CartUI.validCodePostal(codePostal);
@@ -470,9 +473,10 @@ inputsArray.forEach((input) => {
 });
 
   // On écoute ce qu'il se passe sur le select
-pays.addEventListener("change", () => {
-  CartUI.validPays(pays);
-});
+if (pays)
+  pays.addEventListener("change", () => {
+    CartUI.validPays(pays);
+  });
 
 
 
@@ -486,32 +490,29 @@ if (form)
     // Récupérer les valeurs du contact form
     const firstName = document.querySelector(".prenom").value;
     const lastName = document.querySelector(".nom").value;
-    const userEmail = document.querySelector(".email").value;
+    const email = document.querySelector(".email").value;
     const address = document.querySelector(".adresse").value;
     const city = document.querySelector(".ville").value;
-    const zipCode = document.querySelector(".codePostal").value;
 
     // Créer une instance de Contact
-    const contact = new Contact(
+    let contact = new Contact(
       firstName,
       lastName,
       address,
-      zipCode,
       city,
-      userEmail
+      email
     );
 
     // Bloquer envoi form si champs non-valides sinon va vers page confirmation de commande
     if (
       CartUI.validPrenom(prenom) &&
       CartUI.validNom(nom) &&
-      CartUI.validEmail(email) &&
+      CartUI.validEmail(userEmail) &&
       CartUI.validAdresse(adresse) &&
       CartUI.validVille(ville) &&
       CartUI.validCodePostal(codePostal) &&
       CartUI.validPays(pays)
     ) {
-
       // sauvegarde du contact dans le
       Store.addContact(contact);
       window.location.assign(
@@ -524,13 +525,12 @@ if (form)
     } else {
       CartUI.validPrenom(prenom);
       CartUI.validNom(nom);
-      CartUI.validEmail(email);
+      CartUI.validEmail(userEmail);
       CartUI.validAdresse(adresse);
       CartUI.validVille(ville);
       CartUI.validCodePostal(codePostal);
       CartUI.validPays(pays);
     }
-
   });
 
 

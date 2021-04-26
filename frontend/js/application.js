@@ -64,6 +64,7 @@ class App {
       });
       if (response.ok) {
         let responseData = response.json();
+
         return responseData;
       } else {
         console.error("Problème du serveur : " + response.status);

@@ -79,7 +79,7 @@
         </div>
         </div>
         <div class="row">
-            <form  id="orderForm" class="row g-3 needs-validation" novalidate>
+            <form  action="http://localhost:3000/api/teddies/order" method="POST" id="orderForm" class="row g-3 needs-validation" novalidate>
                 <div class="col-md-4 position-relative">
                     <label for="prenom" class="form-label">Prénom</label>
                     <input type="text" class="form-control prenom" name="prenom" value="" required>
@@ -91,7 +91,7 @@
                     <div class="userMessageNom"></div>
                 </div>
                 <div class="col-md-4 position-relative">
-                    <label for="email" class="form-label">Email</label>
+                    <label for="userEmail" class="form-label">Email</label>
                     <div class="input-group has-validation">
                         <span class="input-group-text" id="email">@</span>
                         <input type="email" class="form-control email" name="email" aria-describedby="email" required>

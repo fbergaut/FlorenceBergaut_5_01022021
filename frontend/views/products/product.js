@@ -1,6 +1,12 @@
 // Variable "id" : stock l'id' du produit en passant par l'Url
 let id = App.getIdByUrl();
 
+// Variable "price" : stock le prix du produit en passant par l'Url
+let price = App.getPriceByUrl();
+
+// Variable "unitPrice" : stock le prix unitaire du produit
+let unitPrice = price;
+
 // Variable "oneTeddy" : stockera le code html à afficher
 let oneTeddy = "";
 
@@ -30,46 +36,46 @@ let bear = App.getProduct("http://localhost:3000/api/teddies/" + id)
 
   // Association à la variable "oneTeddy" du code html qui viendra s'afficher dynamiquement avec les datas de chaque teddy.
   oneTeddy += `<div class="row">
-                      <div class="col-lg-6">
-                        <div class="mainImg">
-                          <img id="image" class="card-img-top" src="${teddy.imageUrl}" alt="${teddy.name}">
+                        <div class="col-lg-6">
+                          <div class="mainImg">
+                            <img id="image" class="card-img-top" src="${teddy.imageUrl}" alt="${teddy.name}">
+                          </div>
                         </div>
-                      </div>
-                      <div class="col-12 col-lg-6" id="infoWrapper">
-                        <div class="wrapperHeading">
-                          <h1 class="heading name">${teddy.name}</h1>
-                            <a class="heartBtn">
-                              <i class="fas fa-heart" aria-hidden="true"></i>
-                            </a>
+                        <div class="col-12 col-lg-6" id="infoWrapper">
+                          <div class="wrapperHeading">
+                            <h1 class="heading name">${teddy.name}</h1>
+                              <a class="heartBtn">
+                                <i class="fas fa-heart" aria-hidden="true"></i>
+                              </a>
+                            </div>
+                          <div class="text">${teddy.description}</div>
+                          <div class="reviewWrapper">
+                            <i class="fas fa-star reviewBtn" aria-hidden="true"></i>
+                            <i class="fas fa-star reviewBtn" aria-hidden="true"></i>
+                            <i class="fas fa-star reviewBtn" aria-hidden="true"></i>
+                            <i class="fas fa-star reviewBtn" aria-hidden="true"></i>
+                            <i class="fas fa-star reviewBtn" aria-hidden="true"></i>
                           </div>
-                        <div class="text">${teddy.description}</div>
-                        <div class="reviewWrapper">
-                          <i class="fas fa-star reviewBtn" aria-hidden="true"></i>
-                          <i class="fas fa-star reviewBtn" aria-hidden="true"></i>
-                          <i class="fas fa-star reviewBtn" aria-hidden="true"></i>
-                          <i class="fas fa-star reviewBtn" aria-hidden="true"></i>
-                          <i class="fas fa-star reviewBtn" aria-hidden="true"></i>
+                          <p class="price"><span id="teddyprice">${price}</span> €</p>
+                         <form method="post" id="order-form">
+                            <div class="colorWrapper">
+                              <select class="productColor">
+                                <option class="productColorOption" selected="true">Choisir la couleur</option>
+                                ${colorsOption}
+                              </select>
+                            </div>
+                            <div class="wrapper">
+                              <div class="wrapperQuantity">
+                                <label class="hidden" for="quantity">Quantité</label>
+                                  <input class="quantity" type="number" value="1" id="quantity" min="1" max="10" onchange="changePrice(event)">
+                              </div>
+                              <div>
+                                <input type="submit" value="Ajouter au panier" id="sendForm" class="btn btn-outline-pink btn-lg rounded-0 addCartBtn">
+                              </div>
+                            </div>
+                        </form>
                         </div>
-                        <p class="price"><span id="teddyprice">${price}</span> €</p>
-                        <form method="post" id="order-form">
-                          <div class="colorWrapper">
-                            <select class="productColor">
-                              <option class="productColorOption" selected="true">Choisir la couleur</option>
-                              ${colorsOption}
-                            </select>
-                          </div>
-                          <div class="wrapper">
-                            <div class="wrapperQuantity">
-                              <label class="hidden" for="quantity">Quantité</label>
-                                <input class="quantity" type="number" value="1" id="quantity" min="1" max="10" onchange="changePrice(event)">
-                            </div>
-                            <div>
-                              <input type="submit" value="Ajouter au panier" id="sendForm" class="btn btn-outline-pink btn-lg rounded-0 addCartBtn">
-                            </div>
-                          </div>
-                      </form>
-                      </div>
-                    </div>`;
+                      </div>`;
 
   // Insertion code html dynamique "oneTeddy" à l'endroit indiqué par "oneBearProduct".
   oneBearProduct.innerHTML = oneTeddy;
@@ -100,7 +106,7 @@ document.querySelector(".row").addEventListener("submit", (e) => {
   // Récupérer les valeurs du teddy et de son <form>
   const productName = document.querySelector(".name").textContent;
   const image = document.getElementById("image").src;
-  const price = document.querySelector(".price").textContent;
+  const price = document.querySelector(".price").textContent.replace(" €", "");
   const color = document.querySelector(".productColor").value;
   const quantity = document.querySelector(".quantity").value;
 
